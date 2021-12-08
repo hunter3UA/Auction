@@ -41,7 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Login\CustomPrincipal.cs" />
+    <Compile Include="Login\ICustomPrincipal.cs" />
+    <Compile Include="Login\UserSerializationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mapper\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Auction.DAL\Auction.DAL.csproj">
+      <Project>{CF588295-08BA-4F7C-8862-E107AE343308}</Project>
+      <Name>Auction.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
