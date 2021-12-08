@@ -52,19 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionDbContext.cs" />
-    <Compile Include="Migrations\202112081054333_test1.cs" />
-    <Compile Include="Migrations\202112081054333_test1.designer.cs">
-      <DependentUpon>202112081054333_test1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112081059395_test2.cs" />
-    <Compile Include="Migrations\202112081059395_test2.designer.cs">
-      <DependentUpon>202112081059395_test2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112081100409_test3.cs" />
-    <Compile Include="Migrations\202112081100409_test3.designer.cs">
-      <DependentUpon>202112081100409_test3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Login.cs" />
@@ -72,26 +59,19 @@
     <Compile Include="Models\ShopptingCart.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Abstract\IGenricRepository.cs" />
+    <Compile Include="Repositories\Abstract\ILotRepository.cs" />
+    <Compile Include="Repositories\Abstract\IUserRepository.cs" />
+    <Compile Include="Repositories\LotRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="UoW\IUnitOfWork.cs" />
+    <Compile Include="UoW\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="UoW\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112081054333_test1.resx">
-      <DependentUpon>202112081054333_test1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112081059395_test2.resx">
-      <DependentUpon>202112081059395_test2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112081100409_test3.resx">
-      <DependentUpon>202112081100409_test3.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

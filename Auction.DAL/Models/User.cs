@@ -20,6 +20,8 @@ namespace Auction.DAL.Models
         [Required]
         public DateTime RegistredAt { get; set; }
 
+        public bool IsEnabled { get; set; }
+
 
         [Column("fk_LoginId")]
         public int? LoginId { get; set; }   

@@ -20,8 +20,8 @@ namespace Auction.DAL.Models
         public DateTime CreatedAt { get; set; } 
       
         public DateTime SoldAt { get; set; }
-
-
+        [Required]
+        public Guid LotCode { get; set; }
         
         [Column("fk_SellerId")]
         public int? SellerId { get; set; }
