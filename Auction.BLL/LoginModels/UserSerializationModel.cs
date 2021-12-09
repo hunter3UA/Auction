@@ -1,6 +1,6 @@
 ﻿using Auction.DAL.Models;
 
-namespace Auction.BLL.Login
+namespace Auction.BLL.LoginModels
 {
     public class UserSerializationModel
     {

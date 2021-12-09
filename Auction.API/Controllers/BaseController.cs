@@ -1,4 +1,4 @@
-﻿using Auction.BLL.Login;
+﻿using Auction.BLL.LoginModels;
 using System.Web.Mvc;
 
 namespace Auction.API.Controllers

@@ -1,7 +1,7 @@
 ﻿using Auction.DAL.Models;
 using System.Security.Principal;
 
-namespace Auction.BLL.Login
+namespace Auction.BLL.LoginModels
 {
     public interface ICustomPrincipal:IPrincipal
     {

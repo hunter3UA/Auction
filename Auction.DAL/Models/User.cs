@@ -19,7 +19,7 @@ namespace Auction.DAL.Models
         public double Balance { get; set; }
         [Required]
         public DateTime RegistredAt { get; set; }
-
+        [Required]
         public bool IsEnabled { get; set; }
 
 
