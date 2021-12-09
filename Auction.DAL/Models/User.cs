@@ -13,14 +13,13 @@ namespace Auction.DAL.Models
         public string FirstName { get; set; }
         [Required,MaxLength(100),MinLength(2)]
         public string LastName { get; set; }    
-        [Required,Phone]     
+        [Phone]     
         public string PhoneNumber { get; set; }
         [Required]
         public double Balance { get; set; }
         [Required]
         public DateTime RegistredAt { get; set; }
-        [Required]
-        public bool IsEnabled { get; set; }
+      
 
 
         [Column("fk_LoginId")]

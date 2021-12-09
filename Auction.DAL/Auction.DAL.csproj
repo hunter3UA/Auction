@@ -52,6 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionDbContext.cs" />
+    <Compile Include="Migrations\202112091717094_test.cs" />
+    <Compile Include="Migrations\202112091717094_test.designer.cs">
+      <DependentUpon>202112091717094_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Login.cs" />
@@ -59,9 +64,12 @@
     <Compile Include="Models\ShopptingCart.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Abstract\IAccountTypeRepository.cs" />
     <Compile Include="Repositories\Abstract\IGenricRepository.cs" />
     <Compile Include="Repositories\Abstract\ILotRepository.cs" />
     <Compile Include="Repositories\Abstract\IUserRepository.cs" />
+    <Compile Include="Repositories\AccountTypeRepository.cs" />
+    <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\LotRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
@@ -71,7 +79,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202112091717094_test.resx">
+      <DependentUpon>202112091717094_test.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

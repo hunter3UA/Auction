@@ -19,8 +19,8 @@ namespace Auction.DAL.Repositories
         }    
         public User Get(Func<User, bool> predicate)
         {
-            User userToSearch= _dbContext.Users.FirstOrDefault(predicate);      
-            return userToSearch.IsEnabled? userToSearch : new User();
+            User userToSearch= _dbContext.Users.Include("Login") .FirstOrDefault(predicate);      
+            return userToSearch!=null ? userToSearch : new User();
         }
         public IEnumerable<User> GetAll()
         {
@@ -37,12 +37,12 @@ namespace Auction.DAL.Repositories
         /// <returns></returns>
         public bool Delete(Func<User, bool> predicate)
         {
-            User user = _dbContext.Users.FirstOrDefault(predicate);
-            if(user!= null)
-            {
-                user.IsEnabled = false;
-                return true;
-            }
+            //User user = _dbContext.Users.FirstOrDefault(predicate);
+            //if(user!= null)
+            //{
+            //    user.IsEnabled = false;
+            //    return true;
+            //}
             return false;
         }
     }

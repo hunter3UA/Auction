@@ -1,4 +1,6 @@
-﻿using Auction.DAL.UoW;
+﻿using Auction.BLL.Services;
+using Auction.BLL.Services.Abstract;
+using Auction.DAL.UoW;
 using Ninject.Modules;
 
 namespace Auction.API
@@ -8,6 +10,7 @@ namespace Auction.API
         public override void Load()
         {
             Bind<IUnitOfWork>().To<UnitOfWork>();
+            Bind<IAccountService>().To<AccountService>();
         }
     }
 }

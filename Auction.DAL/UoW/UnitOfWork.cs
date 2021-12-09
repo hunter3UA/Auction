@@ -1,4 +1,5 @@
-﻿using Auction.DAL.Repositories;
+﻿using Auction.DAL.Models;
+using Auction.DAL.Repositories;
 using Auction.DAL.Repositories.Abstract;
 using System;
 using System.Threading.Tasks;
@@ -17,6 +18,17 @@ namespace Auction.DAL.UoW
 
         private IUserRepository _userRepository;
         private ILotRepository _lotRepository;
+        private IGenricRepository<Login> _loginRepository;
+        private IAccountTypeRepository _accountTypeRepository;
+        public IGenricRepository<Login> LoginRepository
+        {
+            get
+            {
+                if (_loginRepository == null)
+                    _loginRepository = new LoginRepository(_dbContext);
+                return _loginRepository;
+            }
+        }
 
         public IUserRepository UserRepository
         {
@@ -36,6 +48,17 @@ namespace Auction.DAL.UoW
                 return _lotRepository;
             }
         }
+
+        public IAccountTypeRepository AccountTypeRepository
+        {
+            get
+            {
+                if(_accountTypeRepository == null)
+                    _accountTypeRepository= new AccountTypeRepository(_dbContext);
+                return _accountTypeRepository;
+            }
+        }
+
         private bool disposed = false;
 
         public virtual void Dispose(bool disposing)

@@ -24,9 +24,16 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Информация", "About", "Home")</li>
                     <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
-
-
-                    <li>@Html.ActionLink("Register","Register","Account")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                       
+                        <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "btn btn-info" })</li>
+                        <li>@Html.ActionLink("Увійти", "Login", "Account", null, new { @class = "btn btn-success" }) </li>
+                    }
                 </ul>
             </div>
         </div>

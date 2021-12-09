@@ -1,0 +1,34 @@
+﻿@model Auction.BLL.ViewModels.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form" }))
+{
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Email, "Логін користувача: ", new { @class = "col-sm-4" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Password, "Пароль: ", new { @class = "col-sm-4" })
+        <div class="col">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <input type="submit" value="Enter" class="btn btn-info" />
+
+}
