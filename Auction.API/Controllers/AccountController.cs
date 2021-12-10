@@ -1,6 +1,6 @@
-﻿using Auction.BLL.Services.Abstract;
+﻿using Auction.API.Filters;
+using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
-using Auction.DAL.UoW;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -15,8 +15,13 @@ namespace Auction.API.Controllers
             _accountService = accountService;
         }
 
+        [HttpGet, Authentication(true)]
+        public new ActionResult Profile()
+        {
+            return View();
+        }
 
-        [HttpGet]
+        [HttpGet,Authentication(false)]
         public ActionResult Register()
         {  
             return View();
@@ -31,8 +36,8 @@ namespace Auction.API.Controllers
             }         
             return View(registerModel);
         }
-        [HttpGet]
 
+        [HttpGet,Authentication(false)]
         public ActionResult Login()
         {
             return View();
@@ -43,13 +48,20 @@ namespace Auction.API.Controllers
             if (ModelState.IsValid)
             {
                 _accountService.Login(loginModel);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Profile", "Account");
 
             }
             return View(loginModel);
         }
 
       
+        [HttpGet,MyAuth("Admin")]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
+
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();

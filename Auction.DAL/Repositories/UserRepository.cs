@@ -19,7 +19,7 @@ namespace Auction.DAL.Repositories
         }    
         public User Get(Func<User, bool> predicate)
         {
-            User userToSearch= _dbContext.Users.Include("Login") .FirstOrDefault(predicate);      
+            User userToSearch= _dbContext.Users.Include("Login").FirstOrDefault(predicate);      
             return userToSearch!=null ? userToSearch : new User();
         }
         public IEnumerable<User> GetAll()

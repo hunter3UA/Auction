@@ -57,17 +57,13 @@ namespace Auction.BLL.Services
                 saltedHash.Salt = userToLogin.Login.PasswordSalt;
                 if (Security.HashHMACSHA1.CheckSaltedHash(loginModel.Password, saltedHash))
                 {
-                    SetLoginCookie(userToLogin.Login);
+                    Login login = _unitOfWork.LoginRepository.Get(l => l.LoginId == userToLogin.LoginId);
+                    SetLoginCookie(login);
                     return userToLogin;
                 }
              }
             return null;
         }
-
-       
-
-
-
         public void SetLoginCookie(Login login)
         {
             UserSerializationModel serializationModel = new UserSerializationModel();

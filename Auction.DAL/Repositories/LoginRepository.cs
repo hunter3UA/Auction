@@ -2,6 +2,7 @@
 using Auction.DAL.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 //!!! Изменить наследование 
 namespace Auction.DAL.Repositories
 {
@@ -25,7 +26,7 @@ namespace Auction.DAL.Repositories
 
         public Login Get(Func<Login, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _dbContext.Logins.Include("AccountType").FirstOrDefault(predicate);
         }
 
         public IEnumerable<Login> GetAll()
