@@ -26,9 +26,11 @@ namespace Auction.DAL.Repositories
         {
             return _dbContext.Users.ToList();
         }
-        public User Update(User item)
+        public User Update(User user)
         {
-            throw new NotImplementedException();
+            _dbContext.Entry(user).State=System.Data.Entity.EntityState.Modified;
+            return user;
+            
         } 
         /// <summary>
         /// Встановлює поле IsEnabled в значення false

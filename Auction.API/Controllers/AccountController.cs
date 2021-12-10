@@ -18,8 +18,19 @@ namespace Auction.API.Controllers
         [HttpGet, Authentication(true)]
         public new ActionResult Profile()
         {
-            return View();
+            UserModel model = _accountService.GetUser(User.LoginId);
+            return View(model);
         }
+        [HttpPost]
+        public new async Task<ActionResult> Profile(UserModel updateUserModel)
+        {
+            updateUserModel.Email=User.Identity.Name;
+            await _accountService.Update(updateUserModel,User.LoginId);
+            return View(updateUserModel);
+        }
+
+
+
 
         [HttpGet,Authentication(false)]
         public ActionResult Register()

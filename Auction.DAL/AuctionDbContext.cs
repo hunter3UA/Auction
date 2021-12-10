@@ -1,10 +1,5 @@
 ﻿using Auction.DAL.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.DAL
 {
@@ -19,14 +14,7 @@ namespace Auction.DAL
         }
         public AuctionDbContext() : base("AuctionDb") { }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            
-                
-
-
-            
-
-        }
+      
+       
     }
 }

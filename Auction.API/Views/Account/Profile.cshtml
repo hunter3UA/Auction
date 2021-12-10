@@ -1,7 +1,49 @@
-﻿
+﻿@model Auction.BLL.ViewModels.UserModel
+
 @{
     ViewBag.Title = "Profile";
 }
 
 <h2>Profile</h2>
 
+@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form" }))
+{
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Email, "Email: ", htmlAttributes: new { @class = "col-sm-4" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Email,htmlAttributes: new { @class = "form-control", id="txtEmail" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.FirstName, "Ім'я: ", htmlAttributes: new { @class = "col-sm-4" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @class = "form-control"})
+            <small>
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.LastName, "Прізвище: ", htmlAttributes: new { @class = "col-sm-4" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @class = "form-control"})
+            <small>
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <input type="submit" value="Enter" class="btn btn-info" />
+
+}
+
+<script>
+
+
+    let email = document.querySelector("#txtEmail");
+    email.disabled = true;
+
+</script>

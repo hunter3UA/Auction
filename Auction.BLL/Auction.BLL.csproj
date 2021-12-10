@@ -67,6 +67,8 @@
     <Compile Include="Services\PasswordService.cs" />
     <Compile Include="ViewModels\LoginModel.cs" />
     <Compile Include="ViewModels\RegisterModel.cs" />
+    <Compile Include="ViewModels\UpdateUserModel.cs" />
+    <Compile Include="ViewModels\UserModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

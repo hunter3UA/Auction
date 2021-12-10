@@ -108,6 +108,21 @@ namespace Auction.BLL.Services
             HttpContext.Current.Response.Cookies.Add(loginCookie);
         }
 
-      
+        public UserModel GetUser(int loginId)
+        {
+            User userToSearch= _unitOfWork.UserRepository.Get(u=>u.LoginId== loginId);
+            UserModel model= _mapper.Map<UserModel>(userToSearch);
+            model.Email = userToSearch.Login.Email;
+            return model;
+        }
+
+        public async Task Update(UserModel userModel,int loginId)
+        {
+            User userToSearch= _unitOfWork.UserRepository.Get(u=>u.LoginId == loginId);
+            userToSearch.FirstName = userModel.FirstName;
+            userToSearch.LastName = userModel.LastName;
+            _unitOfWork.UserRepository.Update(userToSearch);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

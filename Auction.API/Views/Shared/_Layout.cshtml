@@ -27,6 +27,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                        
+                        <li>@Html.ActionLink("Профіль","Profile","Account",null,new {@clas="btn btn-info"})</li>
                         <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
                     }
                     else

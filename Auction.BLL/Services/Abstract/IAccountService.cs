@@ -9,5 +9,7 @@ namespace Auction.BLL.Services.Abstract
         Task<User> CreateUser(RegisterModel registerModel);
 
         User Login(LoginModel loginModel);
+        UserModel GetUser(int loginId);
+        Task Update(UserModel userModel, int loginId);
     }
 }
