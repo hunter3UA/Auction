@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+
+
+
+
+<script>
+
+
+    function getCategories() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://localhost:44328/Dictionary/Categories");
+        xhr.send();
+        xhr.onload = function () {
+            const categories = JSON.parse(xhr.responseText);
+            console.log(categories);
+
+
+
+        }
+
+
+
+
+    }
+    getCategories();
+
+
+
+</script>

@@ -30,8 +30,6 @@ namespace Auction.API.Controllers
         }
 
 
-
-
         [HttpGet,Authentication(false)]
         public ActionResult Register()
         {  

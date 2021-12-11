@@ -10,6 +10,7 @@ namespace Auction.DAL.UoW
         ILotRepository LotRepository { get; }
         IGenricRepository<Login> LoginRepository { get; }
         IAccountTypeRepository AccountTypeRepository { get; }
+        ICategoryRepository CategoryRepository { get; }
         Task SaveAsync();
     }
 }

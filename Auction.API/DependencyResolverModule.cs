@@ -11,6 +11,7 @@ namespace Auction.API
         {
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<IAccountService>().To<AccountService>();
+            Bind<ILotService>().To<LotService>();
         }
     }
 }

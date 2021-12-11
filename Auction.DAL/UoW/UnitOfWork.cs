@@ -20,6 +20,19 @@ namespace Auction.DAL.UoW
         private ILotRepository _lotRepository;
         private IGenricRepository<Login> _loginRepository;
         private IAccountTypeRepository _accountTypeRepository;
+        private ICategoryRepository _categoryRepository;
+        
+
+
+        public ICategoryRepository CategoryRepository
+        {
+            get
+            {
+                if (_categoryRepository == null)
+                    _categoryRepository = new CategoryRepository(_dbContext);
+                return _categoryRepository;
+            }
+        }
         public IGenricRepository<Login> LoginRepository
         {
             get

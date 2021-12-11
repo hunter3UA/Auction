@@ -65,10 +65,12 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstract\IAccountTypeRepository.cs" />
+    <Compile Include="Repositories\Abstract\ICategoryRepository.cs" />
     <Compile Include="Repositories\Abstract\IGenricRepository.cs" />
     <Compile Include="Repositories\Abstract\ILotRepository.cs" />
     <Compile Include="Repositories\Abstract\IUserRepository.cs" />
     <Compile Include="Repositories\AccountTypeRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\LotRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

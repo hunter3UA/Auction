@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - приложение ASP.NET</title>
+    <title>@ViewBag.Title - Torg-company</title>
     @Styles.Render("~/Content/css")
-  
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,9 +26,15 @@
                     <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                       
-                        <li>@Html.ActionLink("Профіль","Profile","Account",null,new {@clas="btn btn-info"})</li>
-                        <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
+                        <div class="dropdown">
+                            <button onclick="myFunction()" class="dropbtn">Профіль</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @class = "btn btn-success" })</li>
+                                <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
+                                @*<li>@Html.ActionLink("Мої лоти","GetLots","Lot",)</li>*@
+                            </div>
+                        </div>
+                    
                     }
                     else
                     {
@@ -51,3 +57,38 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+
+
+
+@*<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Информация", "About", "Home")</li>
+                <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+
+                    <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @clas = "btn btn-info" })</li>
+                    <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "btn btn-info" })</li>
+                    <li>@Html.ActionLink("Увійти", "Login", "Account", null, new { @class = "btn btn-success" }) </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>*@
