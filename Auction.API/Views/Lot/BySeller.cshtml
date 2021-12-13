@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Auction.BLL.ViewModels.LotModel>
+
+@{
+    ViewBag.Title = "BySeller";
+}
+
+<h2>Мої лоти</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Назва:
+        </th>
+        <th>
+            Ціна:
+        </th>
+        <th>
+            Опис
+        </th>
+        <th>
+            Категорія
+        </th>
+        <th>
+            Продано:
+        </th>
+        <th>
+            Код:
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LotName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsSoldOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LotCode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Page", "Page")
+        </td>
+    </tr>
+}
+
+</table>

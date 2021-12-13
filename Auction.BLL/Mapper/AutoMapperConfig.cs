@@ -16,6 +16,9 @@ namespace Auction.BLL.Mapper
                     cfg.CreateMap<User,UserModel>();
                     cfg.CreateMap<UserModel, User>();
                     cfg.CreateMap<LotModel, Lot>();
+                    cfg.CreateMap<Lot, LotModel>().ForMember(l=>l.Seller,lm=>lm.Ignore());
+                
+                    cfg.CreateMap<CreateLotModel, Lot>();
                    
                 });
             return config;

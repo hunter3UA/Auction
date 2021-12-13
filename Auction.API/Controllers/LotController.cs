@@ -29,11 +29,27 @@ namespace Auction.API.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(LotModel lotModel)
+        public async Task<ActionResult> Create(CreateLotModel lotModel)
         {
             await _lotService.CreateLot(lotModel,User.LoginId);
             return RedirectToAction("Profile","Account");
         }
+
+
+        [HttpGet]
+        public ActionResult BySeller()
+        {
+            return View(_lotService.GetLotsBySellerId(User.LoginId));
+        }
+
+
+        [HttpGet]
+        public ActionResult LotPage(int lotId)
+        {
+            LotModel lotModel =  _lotService.GetLot(lotId);
+            return View(lotModel);
+        }
+
 
     }
 }

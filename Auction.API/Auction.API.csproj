@@ -152,6 +152,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -198,7 +199,10 @@
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Lot\Create.cshtml" />
-    <Content Include="Views\Lot\ByUser.cshtml" />
+    <Content Include="Views\Lot\LotPage.cshtml" />
+    <Content Include="Views\Lot\BySeller.cshtml" />
+    <Content Include="Views\Lot\Edit.cshtml" />
+    <Content Include="Views\Lot\LotDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@ namespace Auction.DAL.UoW
     {
         IUserRepository UserRepository { get; }
         ILotRepository LotRepository { get; }
-        IGenricRepository<Login> LoginRepository { get; }
+        ILoginRepository LoginRepository { get; }
         IAccountTypeRepository AccountTypeRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         Task SaveAsync();

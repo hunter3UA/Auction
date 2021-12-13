@@ -70,8 +70,11 @@
     <Compile Include="Services\LotService.cs" />
     <Compile Include="Services\PasswordService.cs" />
     <Compile Include="ViewModels\CategoriesModel.cs" />
+    <Compile Include="ViewModels\CreateLotModel.cs" />
+    <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\LoginModel.cs" />
     <Compile Include="ViewModels\LotModel.cs" />
+    <Compile Include="ViewModels\PageInfo.cs" />
     <Compile Include="ViewModels\RegisterModel.cs" />
     <Compile Include="ViewModels\UpdateUserModel.cs" />
     <Compile Include="ViewModels\UserModel.cs" />

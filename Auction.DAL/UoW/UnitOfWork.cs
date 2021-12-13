@@ -18,7 +18,7 @@ namespace Auction.DAL.UoW
 
         private IUserRepository _userRepository;
         private ILotRepository _lotRepository;
-        private IGenricRepository<Login> _loginRepository;
+        private ILoginRepository _loginRepository;
         private IAccountTypeRepository _accountTypeRepository;
         private ICategoryRepository _categoryRepository;
         
@@ -33,7 +33,7 @@ namespace Auction.DAL.UoW
                 return _categoryRepository;
             }
         }
-        public IGenricRepository<Login> LoginRepository
+        public ILoginRepository LoginRepository
         {
             get
             {

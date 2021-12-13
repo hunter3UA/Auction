@@ -21,19 +21,24 @@ namespace Auction.DAL.Repositories
            return _dbContext.Lots.Add(lotToAdd);
         }
 
-        public bool Delete(Func<Lot, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public Lot Get(Func<Lot, bool> predicate)
         {
-            return _dbContext.Lots.FirstOrDefault(predicate);
+            return _dbContext.Lots.Include("Category").Include("Seller").FirstOrDefault(predicate);
         }
 
         public IEnumerable<Lot> GetAll()
         {
             return _dbContext.Lots.ToList();
+        }
+        public List<Lot> GetAllBySellerId(int sellerId)
+        {
+            return _dbContext.Lots.Include("Category").Where(l=>l.SellerId==sellerId).ToList();
+        }
+
+        public bool Delete(Func<Lot, bool> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public Lot Update(Lot lotToUpdate)

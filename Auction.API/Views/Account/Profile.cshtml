@@ -6,7 +6,7 @@
 
 <div style="display:block">
     @Html.ActionLink("Створити лот","Create","Lot",null,new { @class="btn btn-success"})
-    @Html.ActionLink("Мої лоти","GetAll","Lot",null,new { @class= "btn btn-info" })
+    @Html.ActionLink("Мої лоти","BySeller","Lot",null,new { @class= "btn btn-info" })
 </div>
 
 @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form" }))
