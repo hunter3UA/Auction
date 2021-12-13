@@ -198,6 +198,7 @@
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Lot\Create.cshtml" />
+    <Content Include="Views\Lot\ByUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

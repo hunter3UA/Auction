@@ -17,7 +17,8 @@ namespace Auction.DAL.Repositories
 
         public Lot Add(Lot lotToAdd)
         {
-           return  _dbContext.Lots.Add(lotToAdd);
+          
+           return _dbContext.Lots.Add(lotToAdd);
         }
 
         public bool Delete(Func<Lot, bool> predicate)

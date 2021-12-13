@@ -7,11 +7,11 @@
 <h2>Login</h2>
 
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form" }))
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form", style="margin-right:auto;margin-left:auto" }))
 {
     <div class="row form-group">
 
-        @Html.LabelFor(m => m.Email, "Логін користувача: ", new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.Email, "Email: ", new { @class = "col-sm-1" })
         <div class="col">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             <small>
@@ -21,7 +21,7 @@
     </div>
     <div class="row form-group">
 
-        @Html.LabelFor(m => m.Password, "Пароль: ", new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.Password, "Пароль: ", new { @class = "col-sm-1" })
         <div class="col">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             <small>

@@ -17,32 +17,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Головна", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                 
                     <li>@Html.ActionLink("Информация", "About", "Home")</li>
-                    <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Контакти", "Contact", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="dropdown">
                             <button onclick="myFunction()" class="dropbtn">Профіль</button>
                             <div id="myDropdown" class="dropdown-content">
-                                <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @class = "btn btn-success" })</li>
-                                <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
-                                @*<li>@Html.ActionLink("Мої лоти","GetLots","Lot",)</li>*@
-                            </div>
-                        </div>
-                    
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "btn btn-info" })</li>
-                        <li>@Html.ActionLink("Увійти", "Login", "Account", null, new { @class = "btn btn-success" }) </li>
-                    }
-                </ul>
+                        <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @class = "btn btn-success" })</li>
+                        <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
+                        @*<li>@Html.ActionLink("Мої лоти","GetLots","Lot",)</li>*@
+                </div>
             </div>
+
+        }
+        else
+        {
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Профіль</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <li>@Html.ActionLink("Увійти", "Login", "Account", null, new { @class = "btn btn-success" }) </li>
+                    <li>@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "btn btn-info" })</li>
+               </div>
+            </div>
+           
+        }
+                    </ul>
+                </div>
         </div>
     </div>
     <div class="container body-content">

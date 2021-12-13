@@ -52,9 +52,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionDbContext.cs" />
-    <Compile Include="Migrations\202112091717094_test.cs" />
-    <Compile Include="Migrations\202112091717094_test.designer.cs">
-      <DependentUpon>202112091717094_test.cs</DependentUpon>
+    <Compile Include="Migrations\202112121457163_test.cs" />
+    <Compile Include="Migrations\202112121457163_test.designer.cs">
+      <DependentUpon>202112121457163_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112121504575_test2.cs" />
+    <Compile Include="Migrations\202112121504575_test2.designer.cs">
+      <DependentUpon>202112121504575_test2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112121509225_test3.cs" />
+    <Compile Include="Migrations\202112121509225_test3.designer.cs">
+      <DependentUpon>202112121509225_test3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112121533056_test4.cs" />
+    <Compile Include="Migrations\202112121533056_test4.designer.cs">
+      <DependentUpon>202112121533056_test4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112130947145_test5.cs" />
+    <Compile Include="Migrations\202112130947145_test5.designer.cs">
+      <DependentUpon>202112130947145_test5.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
@@ -82,8 +98,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112091717094_test.resx">
-      <DependentUpon>202112091717094_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112121457163_test.resx">
+      <DependentUpon>202112121457163_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112121504575_test2.resx">
+      <DependentUpon>202112121504575_test2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112121509225_test3.resx">
+      <DependentUpon>202112121509225_test3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112121533056_test4.resx">
+      <DependentUpon>202112121533056_test4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112130947145_test5.resx">
+      <DependentUpon>202112130947145_test5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

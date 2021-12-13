@@ -21,5 +21,10 @@ namespace Auction.DAL.Repositories
             return _dbContext.Categories.ToList();
         }
 
+        public Category Get(Func<Category,bool> predicate)
+        {
+            return _dbContext.Categories.FirstOrDefault(predicate);
+        }
+
     }
 }

@@ -8,7 +8,7 @@
 {
     <div class="row form-group">
 
-        @Html.LabelFor(m => m.FirstName, "Ім'я: ", new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.FirstName, "Ім'я: ", new { @class = "col-sm-2" })
         <div class="col">
             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
             <small>
@@ -18,7 +18,7 @@
     </div>
     <div class="row form-group">
 
-        @Html.LabelFor(m => m.LastName, "Прізвище: ", new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.LastName, "Прізвище: ", new { @class = "col-sm-2" })
         <div class="col">
             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
             <small>
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="row form-group">
-        @Html.LabelFor(m => m.Email, "Пошта: ", new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.Email, "Пошта: ", new { @class = "col-sm-2" })
         <div class="col">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             <small>
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="row form-group">
-        @Html.LabelFor(m => m.Password, "Пароль: ", new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.Password, "Пароль: ", new { @class = "col-sm-2" })
         <div class="col">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             <small>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="row form-group">
-        @Html.LabelFor(m => m.PasswordRepeat, "Повторення: ", new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.PasswordRepeat, "Повторення: ", new { @class = "col-sm-2" })
         <div class="col">
             @Html.PasswordFor(m => m.PasswordRepeat, new { @class = "form-control" })
             <small>

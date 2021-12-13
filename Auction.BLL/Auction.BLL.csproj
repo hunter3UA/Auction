@@ -69,6 +69,7 @@
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\LotService.cs" />
     <Compile Include="Services\PasswordService.cs" />
+    <Compile Include="ViewModels\CategoriesModel.cs" />
     <Compile Include="ViewModels\LoginModel.cs" />
     <Compile Include="ViewModels\LotModel.cs" />
     <Compile Include="ViewModels\RegisterModel.cs" />

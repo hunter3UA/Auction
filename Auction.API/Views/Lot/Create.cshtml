@@ -1,36 +1,91 @@
-﻿
+﻿@model Auction.BLL.ViewModels.LotModel
+@using Auction.BLL.ViewModels;
+
+
+
 @{
-    ViewBag.Title = "Create";
+    List<SelectListItem> selectCategories = new List<SelectListItem>();
+    CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
+    foreach (var category in categories.Categories)
+    {
+        selectCategories.Add(new SelectListItem
+        {
+            Value = category.CategoryId.ToString(),
+            Text = category.CategoryName
+        });
+    }
 }
 
-<h2>Create</h2>
+
+
+
+
+
+@using (Html.BeginForm("Create", "Lot", FormMethod.Post))
+{
+
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.LotName, "Назва: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.LotName, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.LotName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Description, "Опис: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Price, "Ціна: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", min = 0, value = 0.00 })
+            <small>
+                @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.CategoryId, "Категорія: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.DropDownList("CategoryId", selectCategories, new { id = "CategoryDDL" })
+        </div>
+    </div>
+    <input type="submit" value="Enter" class="btn btn-info" />
+
+
+
+
+
+}
 
 
 
 
 
 
-<script>
-
-
-    function getCategories() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://localhost:44328/Dictionary/Categories");
-        xhr.send();
-        xhr.onload = function () {
-            const categories = JSON.parse(xhr.responseText);
-            console.log(categories);
-
-
-
-        }
 
 
 
 
-    }
-    getCategories();
 
 
 
-</script>
+
+
+
+
+
+
+
+

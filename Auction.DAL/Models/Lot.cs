@@ -18,11 +18,10 @@ namespace Auction.DAL.Models
         public bool IsSoldOut { get; set; }        
         [Required]
         public DateTime CreatedAt { get; set; } 
-      
-        public DateTime SoldAt { get; set; }
         [Required]
-        public Guid LotCode { get; set; }
-        
+        public long LotCode { get; set; }      
+        public DateTime? SoldAt { get; set; }
+         
         [Column("fk_SellerId")]
         public int? SellerId { get; set; }
         [Required,ForeignKey(nameof(SellerId))]    
