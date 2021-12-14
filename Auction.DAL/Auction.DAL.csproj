@@ -84,6 +84,7 @@
     <Compile Include="Repositories\Abstract\IAccountTypeRepository.cs" />
     <Compile Include="Repositories\Abstract\ICategoryRepository.cs" />
     <Compile Include="Repositories\Abstract\IGenricRepository.cs" />
+    <Compile Include="Repositories\Abstract\ILoginRepository.cs" />
     <Compile Include="Repositories\Abstract\ILotRepository.cs" />
     <Compile Include="Repositories\Abstract\IUserRepository.cs" />
     <Compile Include="Repositories\AccountTypeRepository.cs" />

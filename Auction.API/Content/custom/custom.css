@@ -14,6 +14,7 @@
 .dropdown {
     position: relative;
     display: inline-block;
+   
 }
 
 .dropdown-content {
@@ -51,3 +52,20 @@
 }
 
 
+.flex-container {
+    display: flex;
+}
+
+.flex-item-row {
+    border:1px solid black;
+    text-align: center;
+    font-size: 1.1em;
+    padding: 1.5em;
+    width:100%;
+}
+.flex-item-col{
+    flex-direction:column
+}
+.filters-item{
+    width:30%;
+}
