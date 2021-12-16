@@ -31,6 +31,8 @@ namespace Auction.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateLotModel lotModel)
         {
+
+            var files=Request.Files;
             await _lotService.CreateLot(lotModel,User.LoginId);
             return RedirectToAction("Profile","Account");
         }

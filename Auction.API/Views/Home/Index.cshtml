@@ -1,89 +1,120 @@
 ﻿@model Auction.BLL.ViewModels.IndexViewModel
+@using Auction.BLL.ViewModels;
 @using Auction.API.Helpers
+@using Newtonsoft.Json;
 @{
-    ViewBag.Title = "Головна";
+
+    CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
+
 }
 
 <div class="flex-container">
     <div class="flex-item-row filters-item">
-        Filters
-    </div>
-    <div class="flex-item-row">
-        <div class="flex-container flex-item-col">
-            <div class="flex-item-row">
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="~/Content/img/aukcion_2-690x450.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="~/Content/img/aukcion_2-690x450.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="~/Content/img/aukcion_2-690x450.jpg" class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Предыдущий</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Следующий</span>
-                    </button>
-                </div>
-            </div>  
-            <div class="flex-item-row">
-                fdsfs
-            </div>
 
+
+
+        <label> Фільтри:</label>
+        <div class="flex-container flex-item-col">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+                <div class="flex-item-row">
+                    Категорія:
+
+                    @foreach (var item in categories.Categories)
+                    {
+                        <p>
+                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName"
+
+                            
+
+                        </p>
+                    }
+                </div>
+                <div class="flex-item-row">
+
+                    <input type="submit" value="Enter" class="btn btn-info" />
+
+                </div>
+
+            }
+
+
+
+
+            @Html.ActionLink("Скинути фільтри", "Index", "Home", new { page = 1, Filters="" }, null)
 
         </div>
 
+    </div>
 
 
 
 
-        @*@foreach (var item in Model.Lots)
+
+
+
+
+    <div class="flex-item-row">
+        <div class="flex-container flex-item-col">
+            <div class="flex-item-row">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel style="height:300px">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active" style="height:300px;">
+                            <img src="~/Content/img/Internet-Shopping.jpg" height="300px;">
+                            <div class="carousel-caption">
+                                <h3>Caption Text</h3>
+                            </div>
+                        </div>
+                        <div class="item" style="height:300px;">
+                            <img src="~/Content/img/Internet-Shopping.jpg" height="300px;">
+                            <div class="carousel-caption">
+                                <h3>Caption Text</h3>
+                            </div>
+                        </div>
+                        <div class="item" style="height:300px;">
+                            <img src="~/Content/img/Internet-Shopping.jpg" height="300px;">
+                            <div class="carousel-caption">
+                                <h3>Caption Text</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div> <!-- Carousel -->
+            </div>
+            <div class="flex-item-row">
+                fdsfs
+            </div>
+        </div>
+        @foreach (var item in Model.Lots)
         {
             <div id="lotItem">
                 @item.LotName
-
-
-
-
-
             </div>
-
-
-
-        }*@
+        }
 
     </div>
-
-
-
-
-
 </div>
-
-@*@foreach (var item in Model.Lots)
-{
-    <div id="lotItem">
-        @item.LotName
-
-
-
-
-
-    </div>
-
-
-
-}*@
-
-
 <br />
+
 <div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+    @for(int i = 1; i <= Model.PageInfo.TotalPages;i++)
+    {
+        var str = JsonConvert.SerializeObject(Model.FiltersModel);
+        @Html.ActionLink($"{i}", "Index", "Home", new { page = i, Filters=str },null);
+    }
 </div>

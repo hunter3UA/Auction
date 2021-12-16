@@ -15,7 +15,7 @@ namespace Auction.API
                 .Include("~/Scripts/custom.js")
                 );                        
 
-            bundles.Add(new StyleBundle("~/Content/css").Include( "~/Content/bootstrap.css","~/Content/site.css","~/Content/custom/custom.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include( "~/Content/bootstrap.css","~/Content/Site.css","~/Content/custom/custom.css"));
                 
             BundleTable.EnableOptimizations = true;
                       

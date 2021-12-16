@@ -4,6 +4,7 @@ using Auction.BLL.ViewModels;
 using Auction.DAL.Models;
 using Auction.DAL.UoW;
 using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,35 @@ namespace Auction.BLL.Services
             return lotModels;
 
         }
+        
+        public List<LotModel> GetByFilters(FiltersModel filtersModel)
+        {
+            List<Lot> allLots = _unitOfWork.LotRepository.GetAll().ToList();
+            if (filtersModel != null && filtersModel.Categories != null)
+            {
+                allLots = allLots.Where(l => filtersModel.Categories.Contains(l.Category.CategoryName)).ToList();
+            }
+            List<LotModel> lotModels = _mapper.Map<List<LotModel>>(allLots);
+            return lotModels;
+        }
+
+
+        
+        public IndexViewModel GetPageOfLots(int page, string Filters, FiltersModel filtersModel)
+        {
+
+            FiltersModel FiltersModel = filtersModel;
+            if (!string.IsNullOrEmpty(Filters))
+                FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(Filters);
+            int pageSize = 3;
+            List<LotModel> models = GetByFilters(FiltersModel);
+            IEnumerable<LotModel> lotsPerpages = models.Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = models.Count };
+            IndexViewModel ivm = new IndexViewModel { PageInfo = pageInfo, Lots = lotsPerpages.ToList() };
+            ivm.FiltersModel = FiltersModel;
+            return ivm;
+        }
+
 
     }
 }

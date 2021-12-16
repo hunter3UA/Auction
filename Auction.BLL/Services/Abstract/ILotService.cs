@@ -12,6 +12,8 @@ namespace Auction.BLL.Services.Abstract
         List<LotModel> GetAll();
         LotModel GetLot(int lotId);
         List<LotModel> GetLotsBySellerId(int sellerId);
+        List<LotModel> GetByFilters(FiltersModel filtersModel);
+        IndexViewModel GetPageOfLots(int page, string Filters, FiltersModel filtersModel);
 
     }
 }

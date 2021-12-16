@@ -10,5 +10,7 @@ namespace Auction.BLL.ViewModels
     {
         public List<LotModel> Lots { get; set; }
         public PageInfo PageInfo { get; set; }
+
+        public FiltersModel FiltersModel { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Auction.API.Helpers
             {
                 TagBuilder tag = new TagBuilder("a");
                 tag.MergeAttribute("href", pageUrl(i));
+             
                 tag.InnerHtml = i.ToString();
                
                 if (i == pageInfo.PageNumber)

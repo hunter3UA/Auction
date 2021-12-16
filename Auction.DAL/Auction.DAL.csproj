@@ -72,9 +72,14 @@
     <Compile Include="Migrations\202112130947145_test5.designer.cs">
       <DependentUpon>202112130947145_test5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112161444563_test7.cs" />
+    <Compile Include="Migrations\202112161444563_test7.designer.cs">
+      <DependentUpon>202112161444563_test7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Lot.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -114,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112130947145_test5.resx">
       <DependentUpon>202112130947145_test5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112161444563_test7.resx">
+      <DependentUpon>202112161444563_test7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -29,7 +29,7 @@ namespace Auction.DAL.Repositories
 
         public IEnumerable<Lot> GetAll()
         {
-            return _dbContext.Lots.ToList();
+            return _dbContext.Lots.Include("Category").ToList();
         }
         public List<Lot> GetAllBySellerId(int sellerId)
         {
