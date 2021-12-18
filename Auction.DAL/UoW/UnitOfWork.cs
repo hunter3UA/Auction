@@ -23,10 +23,6 @@ namespace Auction.DAL.UoW
         private ICategoryRepository _categoryRepository;
         private IPictureRepository _pictureRepository;
 
-
-
-
-
         public IPictureRepository PictureRepository
         {
             get
@@ -36,8 +32,6 @@ namespace Auction.DAL.UoW
                 return _pictureRepository;
             }
         }
-
-
         public ICategoryRepository CategoryRepository
         {
             get
@@ -56,7 +50,6 @@ namespace Auction.DAL.UoW
                 return _loginRepository;
             }
         }
-
         public IUserRepository UserRepository
         {
             get

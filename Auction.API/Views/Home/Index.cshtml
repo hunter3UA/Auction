@@ -56,6 +56,7 @@
 
     <div class="flex-item-row">
         <div class="flex-container flex-item-col">
+            @*Заменить слайдер на свой*@
             <div class="flex-item-row">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel style="height:300px">
                     <!-- Indicators -->
@@ -97,15 +98,35 @@
                 </div> <!-- Carousel -->
             </div>
             <div class="flex-item-row">
-                fdsfs
+                @*Убрать гавнокод*@
+                @foreach (var item in Model.Lots)
+                {
+                    string path = string.Empty;
+                    var obj = item.Pictures.Where(p => p.IsTittle).FirstOrDefault();
+                    path = Path.GetFileNameWithoutExtension("") + "_" + "search" + Path.GetExtension("");
+                    if (obj != null)
+                    {
+
+                        path = obj.LotId + "/" + Path.GetFileNameWithoutExtension(obj.Name) + "_" + "search" + Path.GetExtension(obj.Name);
+                    }
+                    @item.LotName<div id="lotItem" class="flex-container">
+                        <div class="flex-item-row">
+                            <img src="~/Pictures/@path" />
+                        </div>
+                        <div class="flex-item-row">
+                           
+
+
+
+                         
+
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-        @foreach (var item in Model.Lots)
-        {
-            <div id="lotItem">
-                @item.LotName
-            </div>
-        }
+
+
 
     </div>
 </div>

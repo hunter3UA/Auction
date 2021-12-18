@@ -2,26 +2,31 @@
 
 
 @{ 
-    string pictureName= string.Empty;
+    string picturePrevName= string.Empty;
+    string pictureMainName = string.Empty;
+
 }
 
-<ul id="lightSlider">
+<ul id="lightSlider" >
 
     @{ 
         foreach (var picture in Model)
         {
             {
-                    pictureName = Path.GetFileNameWithoutExtension(picture.Name)
-                    + "_"
-                    + "gallery"
-                    + Path.GetExtension(picture.Name);
-
+                picturePrevName = Path.GetFileNameWithoutExtension(picture.Name)
+                + "_"
+                + "gallery"
+                + Path.GetExtension(picture.Name);
+                pictureMainName = Path.GetFileNameWithoutExtension(picture.Name)
+                + "_"
+                + "main"
+                + Path.GetExtension(picture.Name);
 
             }
 
-            <li data-thumb="~/Pictures/@picture.LotId/@pictureName">
-
-                <img src="~/Pictures/@picture.LotId/@picture.Name"  />
+            <li data-thumb="/Pictures/@picture.LotId/@picturePrevName"  style="border:1px solid green">
+                <img src="~/Pictures/@picture.LotId/@pictureMainName"  />
+                <input type="button" value="Позначити в якості головної"  id="btnSetTittle"/>
             </li>
         }
 
@@ -30,6 +35,37 @@
 
     }
 </ul>
+
+    
+<script>
+
+    
+
+
+   
+    @*var btnSetTittle = document.querySelector("#btnSetTittle");
+    btnSetTittle.addEventListener('click', function () {
+        
+        let url = `/Lot/PictureSetAsTittle/@Model.First().LotId/@Model.First().PictureId`;
+        console.log(url);
+        let xhrRequest = new XMLHttpRequest();
+        xhrRequest.open("GET", url);
+
+
+        xhrRequest.send();
+
+
+
+
+
+    })*@
+
+
+
+</script>    
+    
+    
+    
 
 
 

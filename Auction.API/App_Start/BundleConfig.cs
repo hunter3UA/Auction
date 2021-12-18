@@ -9,10 +9,11 @@ namespace Auction.API
         {
             bundles.Add(new ScriptBundle("~/bundles/js")
                 .Include("~/Scripts/jquery-{version}.js")
-                .Include("~/Scripts/jquery.validate*") 
-                .Include("~/Scripts/bootstrap.js")
-                .Include("~/Scripts/custom.js")
+                .Include("~/Scripts/jquery.validate*")  
                 .Include("~/Scripts/jquery-ui-{version}.js")
+                .Include("~/Scripts/Slider/lightslider.min.js")
+                .Include("~/Scripts/bootstrap.js")
+                .Include("~/Scripts/custom.js")              
                 .Include("~/Scripts/modernizr-*")
                 );                        
 
@@ -20,7 +21,8 @@ namespace Auction.API
                 .Include( "~/Content/bootstrap.css")               
                 .Include("~/Content/Site.css")
                 .Include("~/Content/custom/custom.css")
-                .Include("~/Content/themes/base/all.css")
+                .Include("~/Content/themes/base/jquery-ui.min.css")
+                .Include("~/Content/Slider/lightslider.min.css")
                );
                 
             BundleTable.EnableOptimizations = true;

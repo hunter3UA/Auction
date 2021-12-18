@@ -2,6 +2,7 @@
 using Auction.DAL.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,13 @@ namespace Auction.DAL.Repositories
         public List<Picture> GetPicturesByLotId(int lotId)
         {
             return _dbContext.Pictures.Where(p=>p.LotId == lotId).ToList();
+        }
+
+        public void SetPictureAsTittle(int lotId, int pictureId)
+        {
+            SqlParameter lotParam = new SqlParameter("@LotId",lotId);
+            SqlParameter pictureParam = new SqlParameter("@PictureId", pictureId);
+            _dbContext.Database.ExecuteSqlCommand("exec stp_Picture_SetTittle @LotId, @PictureId", lotParam, pictureParam);
         }
 
     }

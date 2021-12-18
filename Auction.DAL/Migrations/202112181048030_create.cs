@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class test : DbMigration
+    public partial class create : DbMigration
     {
         public override void Up()
         {
@@ -52,8 +52,8 @@
                         Description = c.String(nullable: false),
                         IsSoldOut = c.Boolean(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
-                        SoldAt = c.DateTime(nullable: false),
-                        LotCode = c.Guid(nullable: false),
+                        LotCode = c.Long(nullable: false),
+                        SoldAt = c.DateTime(),
                         fk_SellerId = c.Int(nullable: false),
                         fk_CategoryId = c.Int(),
                         ShopptingCart_ShoppingCartId = c.Int(),
@@ -67,6 +67,20 @@
                 .Index(t => t.ShopptingCart_ShoppingCartId);
             
             CreateTable(
+                "dbo.Pictures",
+                c => new
+                    {
+                        PictureId = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                        Path = c.String(nullable: false),
+                        IsTittle = c.Boolean(nullable: false),
+                        LotId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.PictureId)
+                .ForeignKey("dbo.Lots", t => t.LotId, cascadeDelete: true)
+                .Index(t => t.LotId);
+            
+            CreateTable(
                 "dbo.Users",
                 c => new
                     {
@@ -76,6 +90,7 @@
                         PhoneNumber = c.String(),
                         Balance = c.Double(nullable: false),
                         RegistredAt = c.DateTime(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
                         fk_LoginId = c.Int(nullable: false),
                         fk_ShoppingCartId = c.Int(),
                     })
@@ -102,10 +117,12 @@
             DropForeignKey("dbo.ShopptingCarts", "ShoppingCartId", "dbo.Users");
             DropForeignKey("dbo.Lots", "ShopptingCart_ShoppingCartId", "dbo.ShopptingCarts");
             DropForeignKey("dbo.Users", "fk_LoginId", "dbo.Logins");
+            DropForeignKey("dbo.Pictures", "LotId", "dbo.Lots");
             DropForeignKey("dbo.Lots", "fk_CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Logins", "fk_AccountTypeId", "dbo.AccountTypes");
             DropIndex("dbo.ShopptingCarts", new[] { "ShoppingCartId" });
             DropIndex("dbo.Users", new[] { "fk_LoginId" });
+            DropIndex("dbo.Pictures", new[] { "LotId" });
             DropIndex("dbo.Lots", new[] { "ShopptingCart_ShoppingCartId" });
             DropIndex("dbo.Lots", new[] { "fk_CategoryId" });
             DropIndex("dbo.Lots", new[] { "fk_SellerId" });
@@ -114,6 +131,7 @@
             DropIndex("dbo.Categories", "UniqueCategoryName");
             DropTable("dbo.ShopptingCarts");
             DropTable("dbo.Users");
+            DropTable("dbo.Pictures");
             DropTable("dbo.Lots");
             DropTable("dbo.Logins");
             DropTable("dbo.Categories");

@@ -14,6 +14,13 @@ namespace Auction.API
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "SetTittlePicture",
+                url: "{controller}/{action}/{lotId}/{pictureId}",
+                defaults: new { controller = "Lot", action = "PictureSetAsTittle" }
+                );
+
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

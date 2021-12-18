@@ -1,5 +1,6 @@
 using Auction.BLL.LoginModels;
 using Auction.BLL.Services;
+using Auction.DAL;
 using Ninject;
 using Ninject.Web.Mvc;
 using System;
@@ -16,6 +17,8 @@ namespace Auction.API
     {
         protected void Application_Start()
         {
+            
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

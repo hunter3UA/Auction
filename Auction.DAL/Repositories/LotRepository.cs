@@ -26,7 +26,7 @@ namespace Auction.DAL.Repositories
         }
         public IEnumerable<Lot> GetAll()
         {
-            return _dbContext.Lots.Include("Category").ToList();
+            return _dbContext.Lots.Include("Category").Include("Pictures").ToList();
         }
         public IEnumerable<Lot> GetAllBySellerId(int sellerId)
         {

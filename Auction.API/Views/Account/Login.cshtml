@@ -7,7 +7,7 @@
 <h2>Login</h2>
 
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form", style="margin-right:auto;margin-left:auto" }))
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form", style = "margin-right:auto;margin-left:auto" }))
 {
     @Html.AntiForgeryToken()
     <div class="row form-group">
@@ -30,6 +30,22 @@
             </small>
         </div>
     </div>
+    <div class="text-danger">
+        @ViewBag.UserNotFound
+
+    </div>
+
     <input type="submit" value="Enter" class="btn btn-info" />
 
+}
+
+
+@if (Model != null && Model.Password != null)
+{
+    <script>
+
+        const pass = document.querySelector("#Password");
+        pass.value = "@Model.Password";
+
+    </script>
 }

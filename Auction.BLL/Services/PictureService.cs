@@ -17,16 +17,20 @@ namespace Auction.BLL.Services
     {
 
         private readonly IUnitOfWork _unitOfWork;
+
         public PictureService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-
-
+        /// <summary>
+        /// Метод для збереження оригніалу картинки
+        /// </summary>
+        /// <param name="postedFile">Об'єкт для створення картинки</param>
+        /// <param name="lotId">Id лота, який створює папку для всіх картинок данного лота</param>
+        /// <returns></returns>
         public Picture Save(HttpPostedFileBase postedFile,int lotId)
-        {
-          
+        {     
             Picture picture = new Picture();
             try
             {
@@ -60,8 +64,9 @@ namespace Auction.BLL.Services
                     + DateTime.Now.Ticks.ToString()
                     + Path.GetExtension(postedFile.FileName);
                 picture.Name = FileSaveName;
-
+                
                 postedFile.SaveAs(Path.Combine(lotFileFolder, FileSaveName));
+              
                
 
             }
@@ -72,6 +77,13 @@ namespace Auction.BLL.Services
             return picture;
         }
 
+        /// <summary>
+        /// Метод для створення картинок потрібного розміру
+        /// </summary>
+        /// <param name="pictureInfo">Оригінал картинки</param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="resizedFor">Тип картинки</param>
         public void CreateThumb(Picture pictureInfo,int width,int height,string resizedFor)
         {
             Image imageToResize = Image.FromFile(Path.Combine(pictureInfo.Path, pictureInfo.Name));
@@ -89,6 +101,7 @@ namespace Auction.BLL.Services
         {
             thumbFileToSave.Save(Path.Combine(savePath, saveFileName));
         }
+
         public Image Resize(Image imageToResize, Size size)
         {
             int sourceWidth = imageToResize.Width;
@@ -113,16 +126,18 @@ namespace Auction.BLL.Services
             g.Dispose();
             return (Image)b;
 
+        }    
+
+        public void SetTittle(int lotId,int pictureId)
+        {
+            _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
         }
-     
 
         public List<Picture> GetByLotId (int lotId)
         {
             return _unitOfWork.PictureRepository.GetPicturesByLotId(lotId);
 
         }
-
-
 
     }
 }

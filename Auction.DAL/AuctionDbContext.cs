@@ -16,6 +16,7 @@ namespace Auction.DAL
         }
         public AuctionDbContext() : base("AuctionDb")
         { 
+         
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,6 +1,7 @@
 ﻿using Auction.API.Filters;
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
+using Auction.DAL.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -40,7 +41,12 @@ namespace Auction.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _accountService.CreateUser(registerModel);
+                User newUser= await _accountService.CreateUser(registerModel);
+                if (newUser.UserId == 0)
+                {
+                    ViewBag.IncorrectEmail = "Користувач з таким логіном вже існує";
+                    return View(registerModel);
+                }
                 return RedirectToAction("Index", "Home");
             }         
             return View(registerModel);
@@ -56,7 +62,12 @@ namespace Auction.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                _accountService.Login(loginModel);
+                User userToLogin= _accountService.Login(loginModel);
+                if (userToLogin.UserId == 0)
+                {
+                    ViewBag.UserNotFound = "Користувача не знайдено";
+                    return View(loginModel);
+                }
                 return RedirectToAction("Profile", "Account");
 
             }

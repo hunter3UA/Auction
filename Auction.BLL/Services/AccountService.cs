@@ -14,9 +14,6 @@ using System.Web.Security;
 using static Auction.BLL.Services.PasswordService;
 
 
-
-
-//TODO: обработка исключения при регистрации пользователя с повторным emailom 
 namespace Auction.BLL.Services
 {
     public class AccountService:IAccountService
@@ -29,7 +26,6 @@ namespace Auction.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = AutoMapperConfig.Configure().CreateMapper();
         }
-
 
         public async Task<User> CreateUser(RegisterModel registerModel)
         {
@@ -58,23 +54,37 @@ namespace Auction.BLL.Services
             
 
         }
+
         public User Login(LoginModel loginModel)
         {
-             User userToLogin = _unitOfWork.UserRepository.Get(u=>u.Login.Email== loginModel.Email);
-             if(userToLogin.Login != null)
-             {
-                Salted_Hash saltedHash=new Salted_Hash();
-                saltedHash.Hash = userToLogin.Login.PasswordHash;
-                saltedHash.Salt = userToLogin.Login.PasswordSalt;
-                if (Security.HashHMACSHA1.CheckSaltedHash(loginModel.Password, saltedHash))
+            try
+            {
+                User userToLogin = _unitOfWork.UserRepository.Get(u => u.Login.Email == loginModel.Email);
+                if (userToLogin.Login != null)
                 {
-                    Login login = _unitOfWork.LoginRepository.Get(l => l.LoginId == userToLogin.LoginId);
-                    SetLoginCookie(login);
-                    return userToLogin;
+                    Salted_Hash saltedHash = new Salted_Hash();
+                    saltedHash.Hash = userToLogin.Login.PasswordHash;
+                    saltedHash.Salt = userToLogin.Login.PasswordSalt;
+                    if (Security.HashHMACSHA1.CheckSaltedHash(loginModel.Password, saltedHash))
+                    {
+                        Login login = _unitOfWork.LoginRepository.Get(l => l.LoginId == userToLogin.LoginId);
+                        SetLoginCookie(login);
+                        return userToLogin;
+                    }
                 }
-             }
-            return null;
+
+            }catch (Exception)
+            {
+                 return new User();
+            }
+
+            return new User();
         }
+
+        /// <summary>
+        /// Метод встановлює Cookie при логіні та реєстрації
+        /// </summary>
+        /// <param name="login"></param>
         public void SetLoginCookie(Login login)
         {
             UserSerializationModel serializationModel = new UserSerializationModel();
@@ -96,6 +106,11 @@ namespace Auction.BLL.Services
                 );
             WriteTicketToResponse(cookieDeathTime, authenticationTicket);
         }
+
+        /// <summary>
+        /// Метод для продвження життя Cookie. При кожному оновленні сторінки оновлюється термін дії Cookie
+        /// </summary>
+        /// <param name="ticket"></param>
         public static void ExtendCookieLifer(FormsAuthenticationTicket ticket)
         {
             int LoginCookieInterval = Convert.ToInt32(ConfigurationManager.AppSettings["LoginCookieInterval"]);
@@ -111,6 +126,7 @@ namespace Auction.BLL.Services
                );
             WriteTicketToResponse(cookieDeathTime, authenticationTicket);
         }
+
         public static void WriteTicketToResponse(DateTime cookieDeathTime, FormsAuthenticationTicket authenticationTicket)
         {
             

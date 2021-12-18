@@ -77,6 +77,15 @@ namespace Auction.API.Controllers
             return PartialView(picturesByLotid);
 
         }
+
+       
+        public JsonResult PictureSetAsTittle(int lotId,int pictureId)
+        {
+            _pictureService.SetTittle(lotId, pictureId);
+            return Json(true,JsonRequestBehavior.AllowGet);
+        }
+
+
         [HttpPost]
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {

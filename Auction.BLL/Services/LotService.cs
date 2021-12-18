@@ -28,7 +28,6 @@ namespace Auction.BLL.Services
             _pictureService=pictureService;
         }
 
-
         public async Task<Lot> CreateLot(CreateLotModel lotModel,int loginId, HttpRequestBase request)
         {
             Lot newLot=_mapper.Map<Lot>(lotModel);
@@ -40,11 +39,9 @@ namespace Auction.BLL.Services
             newLot.Category=_unitOfWork.CategoryRepository.Get(c=>c.CategoryId==lotModel.CategoryId);
             _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.SaveAsync();
-            List<Picture> picturesToAdd = await  AddPictures(request, newLot.LotId);
-          
+            await AddPictures(request, newLot.LotId);     
             return newLot;
         }
-
 
         public async Task<List<Picture>> AddPictures(HttpRequestBase request,int lotId)
         {
@@ -56,13 +53,24 @@ namespace Auction.BLL.Services
                 Picture picture = _pictureService.Save(postedFileBase, lotOfPictures.LotId);
                 picture.IsTittle = false;
                 picture.LotId = lotOfPictures.LotId;
-                pictures.Add(picture);
-                // search and gallery
+                pictures.Add(picture);            
                 _pictureService.CreateThumb(
                     picture,                  
                     Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
                     Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
-                    "gallery" 
+                    ConfigurationManager.AppSettings["PictureGallerySize"]
+                    );
+                _pictureService.CreateThumb(
+                     picture,
+                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
+                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
+                    ConfigurationManager.AppSettings["PictureMainSize"]
+                    );
+                _pictureService.CreateThumb(
+                    picture,
+                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
+                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
+                    ConfigurationManager.AppSettings["PictureSearchingSize"]
                     );
             }
             _unitOfWork.PictureRepository.AddRange(pictures);
@@ -70,7 +78,6 @@ namespace Auction.BLL.Services
             return pictures;
           
         }
-
 
         public LotModel GetLot(int lotId)
         {
@@ -84,7 +91,7 @@ namespace Auction.BLL.Services
             User user = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
             if (user != null)
             {
-                List<Lot> lots = _unitOfWork.LotRepository.GetAllBySellerId(user.UserId);
+                List<Lot> lots = _unitOfWork.LotRepository.GetAllBySellerId(user.UserId).ToList();
                 List<LotModel> lotModelsBySeller = _mapper.Map<List<LotModel>>(lots); 
                 return lotModelsBySeller;
             }
@@ -113,8 +120,6 @@ namespace Auction.BLL.Services
             return lotModels;
         }
 
-
-        
         public IndexViewModel GetPageOfLots(int page, string Filters, FiltersModel filtersModel)
         {
 

@@ -17,6 +17,7 @@ namespace Auction.BLL.Services
         {
             _unitOfWork = unitOfWork;
         }
+
         public CategoriesModel GetCategories()
         {
             CategoriesModel model = new CategoriesModel();
