@@ -42,7 +42,7 @@ namespace Auction.API
                 loggedInUser.AccountType = loginCookieModel.AccountType;
                 HttpContext.Current.User = loggedInUser;
                 AccountService.ExtendCookieLifer(authenticationTicket);
-              //  _SL.Users.ExtendCookieLife(authenticationTicket);
+         
             }
 
         }

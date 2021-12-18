@@ -51,10 +51,9 @@
             @Html.DisplayFor(modelItem => item.LotCode)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Page", "Page")
+            @Html.ActionLink("Огляд", "Edit","Lot", new { id = item.LotId },null) 
+      
+         
         </td>
     </tr>
 }

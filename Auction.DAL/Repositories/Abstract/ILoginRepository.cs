@@ -11,6 +11,7 @@ namespace Auction.DAL.Repositories.Abstract
     {
         Login Add(Login loginToAdd);
         Login Get(Func<Login, bool> predicate);
+        bool Delete(Func<Login, bool> predicate);
 
     }
 }

@@ -7,5 +7,7 @@ namespace Auction.BLL.LoginModels
 
         public int LoginId { get; set; }
         public AccountType AccountType { get; set; }
+
+        public string ClientIP { get; set; }
     }
 }

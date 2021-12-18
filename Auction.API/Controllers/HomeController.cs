@@ -47,27 +47,3 @@ namespace Auction.API.Controllers
         }
     }
 }
-
-/*  [HttpGet]
-        public ActionResult Index(int page=1, string Filters=null, FiltersModel filtersModel=null)
-        {
-
-            FiltersModel FiltersModel=filtersModel;
-           
-                
-            if(!string.IsNullOrEmpty(Filters))
-                FiltersModel= JsonConvert.DeserializeObject<FiltersModel>(Filters);
-            int pageSize = 3;
-            List<LotModel> models = _lotService.GetByFilters(FiltersModel);
-            IEnumerable<LotModel> lotsPerpages = models.Skip((page - 1) * pageSize).Take(pageSize);
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = models.Count };
-            IndexViewModel ivm = new IndexViewModel { PageInfo = pageInfo, Lots = lotsPerpages.ToList() };
-            ivm.FiltersModel = FiltersModel;
-
-
-
-            ViewData["Categories"] = _categoryService.GetCategories();
-
-            return View(ivm);
-
-        }*/

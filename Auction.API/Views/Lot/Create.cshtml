@@ -23,7 +23,7 @@
 
 @using (Html.BeginForm("Create", "Lot", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
 {
-
+    @Html.AntiForgeryToken()
     <div class="row form-group">
 
         @Html.LabelFor(m => m.LotName, "Назва: ", new { @class = "col-sm-1" })

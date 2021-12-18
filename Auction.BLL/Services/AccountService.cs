@@ -13,6 +13,10 @@ using System.Web.Script.Serialization;
 using System.Web.Security;
 using static Auction.BLL.Services.PasswordService;
 
+
+
+
+//TODO: обработка исключения при регистрации пользователя с повторным emailom 
 namespace Auction.BLL.Services
 {
     public class AccountService:IAccountService
@@ -29,22 +33,29 @@ namespace Auction.BLL.Services
 
         public async Task<User> CreateUser(RegisterModel registerModel)
         {
-            Login newLogin = _mapper.Map<Login>(registerModel);
-            newLogin.AccountType = _unitOfWork.AccountTypeRepository.Get(a => a.AccountTypeName == "User");
-            newLogin.IsEnabled = true;
-            Salted_Hash salt = PasswordService.Security.HashHMACSHA1.CreateSaltedHash(registerModel.Password, 64);
-            newLogin.PasswordHash = salt.Hash;
-            newLogin.PasswordSalt = salt.Salt;
-            newLogin = _unitOfWork.LoginRepository.Add(newLogin);
-            await _unitOfWork.SaveAsync();
-            User newUser= _mapper.Map<User>(registerModel);
-            newUser.Balance = 0;
-            newUser.Login = newLogin;
-            newUser.RegistredAt = DateTime.Now;
-            _unitOfWork.UserRepository.Add(newUser);
-            await _unitOfWork.SaveAsync();
-            SetLoginCookie(newLogin);
-            return newUser;
+            try
+            {
+                Login newLogin = _mapper.Map<Login>(registerModel);
+                newLogin.AccountType = _unitOfWork.AccountTypeRepository.Get(a => a.AccountTypeName == "User");
+                newLogin.IsEnabled = true;
+                Salted_Hash salt = PasswordService.Security.HashHMACSHA1.CreateSaltedHash(registerModel.Password, 64);
+                newLogin.PasswordHash = salt.Hash;
+                newLogin.PasswordSalt = salt.Salt;
+                newLogin = _unitOfWork.LoginRepository.Add(newLogin);
+                await _unitOfWork.SaveAsync();
+                User newUser = _mapper.Map<User>(registerModel);
+                newUser.Balance = 0;
+                newUser.Login = newLogin;
+                newUser.RegistredAt = DateTime.Now;
+                _unitOfWork.UserRepository.Add(newUser);
+                await _unitOfWork.SaveAsync();
+                SetLoginCookie(newLogin);
+                return newUser;
+            }catch (Exception)
+            {
+                return new User();
+            }
+            
 
         }
         public User Login(LoginModel loginModel)
@@ -69,6 +80,7 @@ namespace Auction.BLL.Services
             UserSerializationModel serializationModel = new UserSerializationModel();
             serializationModel.LoginId = login.LoginId;
             serializationModel.AccountType = login.AccountType;
+            serializationModel.ClientIP = HttpContext.Current.Request.UserHostAddress;
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string userJSON = serializer.Serialize(serializationModel);
             int LoginCookieInterval = Convert.ToInt32(ConfigurationManager.AppSettings["LoginCookieInterval"]);

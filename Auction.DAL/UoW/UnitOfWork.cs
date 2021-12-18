@@ -21,7 +21,21 @@ namespace Auction.DAL.UoW
         private ILoginRepository _loginRepository;
         private IAccountTypeRepository _accountTypeRepository;
         private ICategoryRepository _categoryRepository;
-        
+        private IPictureRepository _pictureRepository;
+
+
+
+
+
+        public IPictureRepository PictureRepository
+        {
+            get
+            {
+                if (_pictureRepository == null)
+                    _pictureRepository = new PictureRepository(_dbContext);
+                return _pictureRepository;
+            }
+        }
 
 
         public ICategoryRepository CategoryRepository

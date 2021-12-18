@@ -11,6 +11,7 @@ namespace Auction.DAL.UoW
         ILoginRepository LoginRepository { get; }
         IAccountTypeRepository AccountTypeRepository { get; }
         ICategoryRepository CategoryRepository { get; }
+        IPictureRepository PictureRepository { get; }
         Task SaveAsync();
     }
 }

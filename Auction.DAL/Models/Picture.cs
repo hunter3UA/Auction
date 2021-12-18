@@ -19,6 +19,9 @@ namespace Auction.DAL.Models
         [Required]
         public bool IsTittle { get; set; }
 
+
+        public int LotId { get; set; }
+
         
 
     }

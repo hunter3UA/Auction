@@ -15,7 +15,7 @@
 
         @Html.LabelFor(m => m.Email, "Email: ", htmlAttributes: new { @class = "col-sm-4" })
         <div class="col">
-            @Html.TextBoxFor(m => m.Email,htmlAttributes: new { @class = "form-control", id="txtEmail" })
+            @Html.TextBoxFor(m => m.Email,htmlAttributes: new { @class = "form-control", disabled=true})
             <small>
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </small>
@@ -43,10 +43,3 @@
 
 }
 
-<script>
-
-
-    let email = document.querySelector("#txtEmail");
-    email.disabled = true;
-
-</script>

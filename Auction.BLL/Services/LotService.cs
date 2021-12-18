@@ -7,23 +7,29 @@ using AutoMapper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
+//TODO: доделать фильтрацию, поиск
 namespace Auction.BLL.Services
 {
     public class LotService:ILotService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public LotService(IUnitOfWork unitOfWork)
+        private readonly IPictureService _pictureService;   
+
+        public LotService(IUnitOfWork unitOfWork,IPictureService pictureService)
         {
             _unitOfWork = unitOfWork;
             _mapper=AutoMapperConfig.Configure().CreateMapper();
+            _pictureService=pictureService;
         }
 
 
-        public async Task<Lot> CreateLot(CreateLotModel lotModel,int loginId)
+        public async Task<Lot> CreateLot(CreateLotModel lotModel,int loginId, HttpRequestBase request)
         {
             Lot newLot=_mapper.Map<Lot>(lotModel);
             newLot.CreatedAt = DateTime.Now;
@@ -34,8 +40,37 @@ namespace Auction.BLL.Services
             newLot.Category=_unitOfWork.CategoryRepository.Get(c=>c.CategoryId==lotModel.CategoryId);
             _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.SaveAsync();
+            List<Picture> picturesToAdd = await  AddPictures(request, newLot.LotId);
+          
             return newLot;
         }
+
+
+        public async Task<List<Picture>> AddPictures(HttpRequestBase request,int lotId)
+        {
+            Lot lotOfPictures = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
+            List<Picture> pictures = new List<Picture>();
+            for (int i = 0; i < request.Files.Count; i++)
+            {
+                HttpPostedFileBase postedFileBase = request.Files[i];
+                Picture picture = _pictureService.Save(postedFileBase, lotOfPictures.LotId);
+                picture.IsTittle = false;
+                picture.LotId = lotOfPictures.LotId;
+                pictures.Add(picture);
+                // search and gallery
+                _pictureService.CreateThumb(
+                    picture,                  
+                    Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
+                    Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
+                    "gallery" 
+                    );
+            }
+            _unitOfWork.PictureRepository.AddRange(pictures);
+            await _unitOfWork.SaveAsync();
+            return pictures;
+          
+        }
+
 
         public LotModel GetLot(int lotId)
         {

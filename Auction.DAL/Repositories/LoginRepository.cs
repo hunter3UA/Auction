@@ -16,15 +16,24 @@ namespace Auction.DAL.Repositories
 
         public Login Add(Login loginToAdd)
         {
-            return _dbContext.Logins.Add(loginToAdd);
+            
+            return _dbContext.Logins.Add(loginToAdd); 
         }    
         public Login Get(Func<Login, bool> predicate)
         {
             return _dbContext.Logins.Include("AccountType").FirstOrDefault(predicate);
         }
 
-  
+        public bool Delete(Func<Login,bool> predicate)
+        {
+            Login loginToDelete = _dbContext.Logins.FirstOrDefault(predicate);
+            if (loginToDelete != null)
+            {
+                loginToDelete.IsEnabled = false;
+                return true;
+            }
+            return false;
+        }
 
-       
     }
 }

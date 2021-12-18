@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form", style="margin-right:auto;margin-left:auto" }))
 {
+    @Html.AntiForgeryToken()
     <div class="row form-group">
 
         @Html.LabelFor(m => m.Email, "Email: ", new { @class = "col-sm-1" })

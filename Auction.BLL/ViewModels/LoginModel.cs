@@ -6,7 +6,7 @@ namespace Auction.BLL.ViewModels
     {
         [Required,EmailAddress]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Невірний пароль")]
         public string Password { get; set; }
     }
 }

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Auction.DAL.Models.Picture>
+
+
+@{ 
+    string pictureName= string.Empty;
+}
+
+<ul id="lightSlider">
+
+    @{ 
+        foreach (var picture in Model)
+        {
+            {
+                    pictureName = Path.GetFileNameWithoutExtension(picture.Name)
+                    + "_"
+                    + "gallery"
+                    + Path.GetExtension(picture.Name);
+
+
+            }
+
+            <li data-thumb="~/Pictures/@picture.LotId/@pictureName">
+
+                <img src="~/Pictures/@picture.LotId/@picture.Name"  />
+            </li>
+        }
+
+
+
+
+    }
+</ul>
+
+
+

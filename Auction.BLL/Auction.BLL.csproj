@@ -50,6 +50,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -70,8 +71,10 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\Abstract\ICategoryService.cs" />
     <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\Abstract\IPictureService.cs" />
     <Compile Include="Services\LotService.cs" />
     <Compile Include="Services\PasswordService.cs" />
+    <Compile Include="Services\PictureService.cs" />
     <Compile Include="ViewModels\CategoriesModel.cs" />
     <Compile Include="ViewModels\CreateLotModel.cs" />
     <Compile Include="ViewModels\FiltersModel.cs" />

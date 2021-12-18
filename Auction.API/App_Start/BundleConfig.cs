@@ -10,12 +10,18 @@ namespace Auction.API
             bundles.Add(new ScriptBundle("~/bundles/js")
                 .Include("~/Scripts/jquery-{version}.js")
                 .Include("~/Scripts/jquery.validate*") 
-                .Include("~/Scripts/modernizr-*")
                 .Include("~/Scripts/bootstrap.js")
                 .Include("~/Scripts/custom.js")
+                .Include("~/Scripts/jquery-ui-{version}.js")
+                .Include("~/Scripts/modernizr-*")
                 );                        
 
-            bundles.Add(new StyleBundle("~/Content/css").Include( "~/Content/bootstrap.css","~/Content/Site.css","~/Content/custom/custom.css"));
+            bundles.Add(new StyleBundle("~/Content/css")
+                .Include( "~/Content/bootstrap.css")               
+                .Include("~/Content/Site.css")
+                .Include("~/Content/custom/custom.css")
+                .Include("~/Content/themes/base/all.css")
+               );
                 
             BundleTable.EnableOptimizations = true;
                       

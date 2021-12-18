@@ -35,7 +35,7 @@ namespace Auction.API.Controllers
         {  
             return View();
         }    
-        [HttpPost]
+        [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel registerModel)
         {
             if (ModelState.IsValid)
@@ -51,7 +51,7 @@ namespace Auction.API.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost,ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel loginModel)
         {
             if (ModelState.IsValid)

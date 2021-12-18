@@ -76,6 +76,18 @@
     <Compile Include="Migrations\202112161444563_test7.designer.cs">
       <DependentUpon>202112161444563_test7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112161602088_test8.cs" />
+    <Compile Include="Migrations\202112161602088_test8.designer.cs">
+      <DependentUpon>202112161602088_test8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112161605511_test9.cs" />
+    <Compile Include="Migrations\202112161605511_test9.designer.cs">
+      <DependentUpon>202112161605511_test9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112180933083_testUpdateUser.cs" />
+    <Compile Include="Migrations\202112180933083_testUpdateUser.designer.cs">
+      <DependentUpon>202112180933083_testUpdateUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -91,11 +103,13 @@
     <Compile Include="Repositories\Abstract\IGenricRepository.cs" />
     <Compile Include="Repositories\Abstract\ILoginRepository.cs" />
     <Compile Include="Repositories\Abstract\ILotRepository.cs" />
+    <Compile Include="Repositories\Abstract\IPictureRepository.cs" />
     <Compile Include="Repositories\Abstract\IUserRepository.cs" />
     <Compile Include="Repositories\AccountTypeRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\LotRepository.cs" />
+    <Compile Include="Repositories\PictureRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
     <Compile Include="UoW\UnitOfWork.cs" />
@@ -122,6 +136,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112161444563_test7.resx">
       <DependentUpon>202112161444563_test7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112161602088_test8.resx">
+      <DependentUpon>202112161602088_test8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112161605511_test9.resx">
+      <DependentUpon>202112161605511_test9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112180933083_testUpdateUser.resx">
+      <DependentUpon>202112180933083_testUpdateUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

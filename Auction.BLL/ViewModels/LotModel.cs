@@ -10,6 +10,9 @@ namespace Auction.BLL.ViewModels
 {
     public class LotModel
     {
+
+
+        public int LotId { get; set; }
         public string LotName { get; set; }
        
         public double Price { get; set; }

@@ -13,9 +13,9 @@ namespace Auction.DAL.Repositories
         {
             _dbContext = dbContext;
         }
-        public User Add(User item)
+        public User Add(User userToAdd)
         {
-            return _dbContext.Users.Add(item);
+            return _dbContext.Users.Add(userToAdd);
         }    
         public User Get(Func<User, bool> predicate)
         {
@@ -39,12 +39,12 @@ namespace Auction.DAL.Repositories
         /// <returns></returns>
         public bool Delete(Func<User, bool> predicate)
         {
-            //User user = _dbContext.Users.FirstOrDefault(predicate);
-            //if(user!= null)
-            //{
-            //    user.IsEnabled = false;
-            //    return true;
-            //}
+            User user = _dbContext.Users.FirstOrDefault(predicate);
+            if (user != null)
+            {
+                user.IsEnabled = false;
+                return true;
+            }
             return false;
         }
     }
