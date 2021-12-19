@@ -25,7 +25,6 @@
 {
     @Html.AntiForgeryToken()
     <div class="row form-group">
-
         @Html.LabelFor(m => m.LotName, "Назва: ", new { @class = "col-sm-1" })
         <div class="col">
             @Html.TextBoxFor(m => m.LotName, new { @class = "form-control" })
@@ -35,7 +34,6 @@
         </div>
     </div>
     <div class="row form-group">
-
         @Html.LabelFor(m => m.Description, "Опис: ", new { @class = "col-sm-1" })
         <div class="col">
             @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
@@ -44,15 +42,10 @@
             </small>
         </div>
     </div>
-
     <div class="row form-group">
-
         @Html.LabelFor(m => m.Price, "Ціна: ", new { @class = "col-sm-1" })
         <div class="col">
-            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", min = 0, value = 0.00, step=500 })
-            <small>
-                @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
-            </small>
+            <input class="form-control" type="number" min="0" name="Price" step="100" id="Price" value="0.00" />   
         </div>
     </div>
     <div class="row form-group">
@@ -61,42 +54,12 @@
             @Html.DropDownList("CategoryId", selectCategories, new { id = "CategoryDDL" })
         </div>
     </div>
-
-   
-
     <div class="row form-group">
         Фото:
         <div class="col">
             <input type="file" name="uploadFile"  multiple/>
         </div>
     </div>
-
-
     <input type="submit" value="Enter" class="btn btn-info" />
 
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-﻿@model Auction.BLL.ViewModels.IndexViewModel
+﻿
 @using Auction.BLL.ViewModels;
 @using Auction.API.Helpers
 @using Newtonsoft.Json;
@@ -6,16 +6,32 @@
 
     CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
 
+    List<SelectListItem> orderItems = new List<SelectListItem>()
+{
+        new SelectListItem(){ Value="Asc", Text = "за зростанням" },
+        new SelectListItem(){ Value="Desc", Text="за спаданням"},
+
+    };
+
+
+    List<SelectListItem> criterions = new List<SelectListItem>()
+{
+        new SelectListItem(){ Value="", Text="--"},
+        new SelectListItem(){ Value="PriceCriterion", Text="за ціною"},
+        new SelectListItem(){ Value="DateCriterion", Text="за датою"}
+
+
+    };
+}
+
 }
 
 <div class="flex-container">
     <div class="flex-item-row filters-item">
-
-
-
         <label> Фільтри:</label>
         <div class="flex-container flex-item-col">
-            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+
+            @using (Ajax.BeginForm("Pages", null, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
             {
                 <div class="flex-item-row">
                     Категорія:
@@ -23,37 +39,37 @@
                     @foreach (var item in categories.Categories)
                     {
                         <p>
-                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName"
-
-                            
+                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName" />
 
                         </p>
                     }
                 </div>
                 <div class="flex-item-row">
-
-                    <input type="submit" value="Enter" class="btn btn-info" />
+                    Назва:@Html.TextBox("LotName", "", new { id = "txtLotName" });
 
                 </div>
+                <div class="flex-item-row">
+                    Порядок: @Html.DropDownList("Order", orderItems)
+                </div>
+                <div class="flex-item-row">
+                    Критерій: @Html.DropDownList("Criterion", criterions)
 
+
+                </div>
+                <div class="flex-item-row">
+
+                    <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
+
+                </div>
             }
-
-
-
-
-            @Html.ActionLink("Скинути фільтри", "Index", "Home", new { page = 1, Filters="" }, null)
+            @using(Ajax.BeginForm("Pages", new { page = 1, Filters = "" }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
+            {
+                <input type="submit" value="Зкинути фільтри"  id="btnClearFilters"/>
+            }
 
         </div>
 
     </div>
-
-
-
-
-
-
-
-
     <div class="flex-item-row">
         <div class="flex-container flex-item-col">
             @*Заменить слайдер на свой*@
@@ -98,44 +114,37 @@
                 </div> <!-- Carousel -->
             </div>
             <div class="flex-item-row">
-                @*Убрать гавнокод*@
-                @foreach (var item in Model.Lots)
-                {
-                    string path = string.Empty;
-                    var obj = item.Pictures.Where(p => p.IsTittle).FirstOrDefault();
-                    path = Path.GetFileNameWithoutExtension("") + "_" + "search" + Path.GetExtension("");
-                    if (obj != null)
-                    {
+                <div id="updatedPage">
+                    @{ 
+                        Html.RenderPartial("Pages");
 
-                        path = obj.LotId + "/" + Path.GetFileNameWithoutExtension(obj.Name) + "_" + "search" + Path.GetExtension(obj.Name);
                     }
-                    @item.LotName<div id="lotItem" class="flex-container">
-                        <div class="flex-item-row">
-                            <img src="~/Pictures/@path" />
-                        </div>
-                        <div class="flex-item-row">
-                           
 
+                </div>
 
-
-                         
-
-                        </div>
-                    </div>
-                }
             </div>
         </div>
-
-
-
     </div>
 </div>
-<br />
 
-<div class="btn-group">
-    @for(int i = 1; i <= Model.PageInfo.TotalPages;i++)
-    {
-        var str = JsonConvert.SerializeObject(Model.FiltersModel);
-        @Html.ActionLink($"{i}", "Index", "Home", new { page = i, Filters=str },null);
-    }
-</div>
+
+
+
+@section scripts{
+    
+<script>
+        let btnClearFilters = document.querySelector("#btnClearFilters");
+        btnClearFilters.addEventListener('click', function () {
+            let allChbx = document.getElementsByName('Categories');
+            let btnClearFilters = document.querySelector("#btnClearFilters");
+            for (let i = 0; i < allChbx.length; i++) {
+                allChbx[i].checked = false;
+            }
+        });
+
+</script>
+    
+    
+    
+    
+}  

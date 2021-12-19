@@ -32,13 +32,20 @@ namespace Auction.API.Controllers
             ViewData["Categories"] = _categoryService.GetCategories();
             return View();
         }
+
+
+
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateLotModel lotModel)
         {
+            if (ModelState.IsValid)
+            {
+                Lot addedLot =  await _lotService.CreateLot(lotModel,User.LoginId, Request);
+                return RedirectToAction("Edit","Lot",new { id=addedLot.LotId});
+            }
             
-          
-            await _lotService.CreateLot(lotModel,User.LoginId, Request);
-            return RedirectToAction("Profile","Account");
+            return RedirectToAction("Create");
+
         }
 
 
@@ -90,12 +97,7 @@ namespace Auction.API.Controllers
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {
             await _lotService.AddPictures(Request, lotId);
-
-
             return RedirectToAction("Edit",new { id=lotId });
-
-
-
 
         }
     }

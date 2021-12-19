@@ -237,6 +237,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.13.0.js" />
     <Content Include="Scripts\jquery-ui-1.13.0.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -349,6 +351,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Lot\Edit.cshtml" />
     <Content Include="Views\Lot\LotPictures.cshtml" />
+    <Content Include="Views\Home\Pages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

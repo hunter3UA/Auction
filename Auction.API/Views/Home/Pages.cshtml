@@ -1,0 +1,29 @@
+﻿@model Auction.BLL.ViewModels.IndexViewModel
+@using Newtonsoft.Json;
+@foreach (var item in Model.Lots)
+{
+    <div id="lotItem" class="flex-container">
+        <div class="flex-item-row">
+           
+        </div>
+        <div class="flex-item-row lot-details">
+            Назва: @item.LotName
+            <br />
+            Ціна: @item.Price
+        </div>
+    </div>
+}
+
+<div class="btn-group">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+        var str = JsonConvert.SerializeObject(Model.FiltersModel);
+        using (Ajax.BeginForm("Pages", new { page = i, Filters = str }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
+        {
+            <input type="submit" value="@i" />
+
+
+        }
+    }
+
+</div>

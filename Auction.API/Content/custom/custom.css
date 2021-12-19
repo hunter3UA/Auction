@@ -50,6 +50,12 @@
 
 
 }
+.lot-details{
+    margin-left:0px;
+
+
+
+}
 
 
 .flex-container {
@@ -75,16 +81,16 @@
     height: 100vh;
 }
 
-    .fade-carousel .carousel-inner .item {
-        height: 100vh;
-    }
+.fade-carousel .carousel-inner .item {
+     height: 100vh;
+}
 
-    .fade-carousel .carousel-indicators > li {
-        margin: 0 2px;
-        background-color: #f39c12;
-        border-color: #f39c12;
-        opacity: .7;
-    }
+.fade-carousel .carousel-indicators > li {
+    margin: 0 2px;
+    background-color: #f39c12;
+    border-color: #f39c12;
+    opacity: .7;
+}
 
         .fade-carousel .carousel-indicators > li.active {
             width: 10px;

@@ -11,6 +11,13 @@ namespace Auction.BLL.ViewModels
 
         public List<string> Categories { get;set; }
 
+        public string LotName { get; set; }
+
+        public string Date { get; set; }
+
+        public string Order { get; set; }
+        public string Criterion { get; set; }
+
 
     }
 }

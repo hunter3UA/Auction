@@ -15,6 +15,7 @@ namespace Auction.API
                 .Include("~/Scripts/bootstrap.js")
                 .Include("~/Scripts/custom.js")              
                 .Include("~/Scripts/modernizr-*")
+                .Include("~/Scripts/jquery.unobtrusive-ajax.js")
                 );                        
 
             bundles.Add(new StyleBundle("~/Content/css")

@@ -20,13 +20,9 @@
 <div class="flex-container">
 
     <div class="flex-item-row">
-
-
-        <div style="width:600px;height:600px">
+        <div style="width:650px;height:500px">
             @{Html.RenderAction("LotPictures", new { lotId = Model.LotId }); }
-
         </div>
-
         <div>
             @using (Html.BeginForm("UploadLotPictures", "Lot", new { lotId = Model.LotId }, FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
             {
@@ -36,16 +32,8 @@
                         <input type="file" name="uploadFile" multiple />
                     </div>
                 </div>
-
                 <input type="submit" class="btn btn-success" />
-
             }
-
-
-
-
-
-
         </div>
     </div>
 
@@ -55,7 +43,6 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-
             <div class="form-horizontal">
                 <h4>@Model.LotName</h4>
                 <hr />

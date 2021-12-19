@@ -12,7 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-//TODO: доделать фильтрацию, поиск
+//TODO: Переделать метод фильтрации 
+
+
 namespace Auction.BLL.Services
 {
     public class LotService:ILotService
@@ -39,7 +41,9 @@ namespace Auction.BLL.Services
             newLot.Category=_unitOfWork.CategoryRepository.Get(c=>c.CategoryId==lotModel.CategoryId);
             _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.SaveAsync();
-            await AddPictures(request, newLot.LotId);     
+            
+            if(request.Files!=null)
+                await AddPictures(request, newLot.LotId);     
             return newLot;
         }
 
@@ -47,34 +51,38 @@ namespace Auction.BLL.Services
         {
             Lot lotOfPictures = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
             List<Picture> pictures = new List<Picture>();
-            for (int i = 0; i < request.Files.Count; i++)
+            HttpPostedFileBase checkFile = request.Files[0];
+            if (checkFile.FileName != "")
             {
-                HttpPostedFileBase postedFileBase = request.Files[i];
-                Picture picture = _pictureService.Save(postedFileBase, lotOfPictures.LotId);
-                picture.IsTittle = false;
-                picture.LotId = lotOfPictures.LotId;
-                pictures.Add(picture);            
-                _pictureService.CreateThumb(
-                    picture,                  
-                    Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
-                    Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
-                    ConfigurationManager.AppSettings["PictureGallerySize"]
-                    );
-                _pictureService.CreateThumb(
-                     picture,
-                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
-                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
-                    ConfigurationManager.AppSettings["PictureMainSize"]
-                    );
-                _pictureService.CreateThumb(
-                    picture,
-                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
-                    Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
-                    ConfigurationManager.AppSettings["PictureSearchingSize"]
-                    );
+                for (int i = 0; i < request.Files.Count; i++)
+                {
+                    HttpPostedFileBase postedFileBase = request.Files[i];
+                    Picture picture = _pictureService.Save(postedFileBase, lotOfPictures.LotId);
+                    picture.IsTittle = false;
+                    picture.LotId = lotOfPictures.LotId;
+                    pictures.Add(picture);
+                    _pictureService.CreateThumb(
+                        picture,
+                        Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
+                        Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
+                        ConfigurationManager.AppSettings["PictureGallerySize"]
+                        );
+                    _pictureService.CreateThumb(
+                        picture,
+                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
+                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
+                        ConfigurationManager.AppSettings["PictureMainSize"]
+                        );
+                    _pictureService.CreateThumb(
+                        picture,
+                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
+                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
+                        ConfigurationManager.AppSettings["PictureSearchingSize"]
+                        );
+                }
+                _unitOfWork.PictureRepository.AddRange(pictures);
+                await _unitOfWork.SaveAsync();
             }
-            _unitOfWork.PictureRepository.AddRange(pictures);
-            await _unitOfWork.SaveAsync();
             return pictures;
           
         }
@@ -108,7 +116,11 @@ namespace Auction.BLL.Services
             return lotModels;
 
         }
-        
+        /// <summary>
+        /// Метод для фільтрації лотів
+        /// </summary>
+        /// <param name="filtersModel">Модель з критеріями фільтрації</param>
+        /// <returns></returns>
         public List<LotModel> GetByFilters(FiltersModel filtersModel)
         {
             List<Lot> allLots = _unitOfWork.LotRepository.GetAll().ToList();
@@ -116,6 +128,24 @@ namespace Auction.BLL.Services
             {
                 allLots = allLots.Where(l => filtersModel.Categories.Contains(l.Category.CategoryName)).ToList();
             }
+            if (!string.IsNullOrEmpty(filtersModel.LotName))
+            {
+                allLots=allLots.Where(l=>l.LotName.ToLower().Contains(filtersModel.LotName.ToLower())).ToList();
+            }
+            if (!string.IsNullOrEmpty(filtersModel.Criterion))
+            {
+                switch (filtersModel.Criterion)
+                {
+                    case "PriceCriterion":                      
+                        allLots = filtersModel.Order == "Desc" ? allLots.OrderByDescending(l => l.Price).ToList():allLots.OrderBy(l=>l.Price).ToList();
+                        break;                                         
+                    case "DateCriterion":
+                        allLots = filtersModel.Order=="Desc" ? allLots.OrderByDescending(l=>l.CreatedAt).ToList():allLots.OrderBy(l=>l.CreatedAt).ToList();
+                        break;
+                }
+            }
+
+
             List<LotModel> lotModels = _mapper.Map<List<LotModel>>(allLots);
             return lotModels;
         }
