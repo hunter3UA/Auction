@@ -12,7 +12,6 @@ namespace Auction.DAL.Models
     {
         [Key]
         public int ShoppingCartId { get; set; }   
-
         [Column("fk_UserId")]
         public int? UserId { get; set; }
         [Required,ForeignKey(nameof(UserId))]        

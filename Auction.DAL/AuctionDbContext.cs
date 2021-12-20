@@ -5,7 +5,7 @@ namespace Auction.DAL
 {
     public class AuctionDbContext:DbContext
     {
-
+      //  public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Picture> Pictures { get; set; }    
         public DbSet<Login> Logins { get; set; }    
         public DbSet<User> Users { get; set; }

@@ -1,42 +1,65 @@
 ﻿@model Auction.BLL.ViewModels.LotModel
 
+@{
+    string picturePrevName = string.Empty;
+    string pictureMainName = string.Empty;
 
+}
 
-<div style="display:flex;margin-top:100px;">
-    <div style="width:200px;height:200px;border:1px solid black;">
-        fsd
-    </div>
-    <div>
-        @*<div class="row form-group">
+<div class="flex-container">
+    <div class="flex-item-col" style="width:30%">
+        <div id="lightSlider">
+            @{ if (Model.Pictures.Count() > 0)
+                {
+                    foreach (var picture in Model.Pictures)
+                    {
+                        {
+                            picturePrevName = Path.GetFileNameWithoutExtension(picture.Name)
+                            + "_"
+                            + "gallery"
+                            + Path.GetExtension(picture.Name);
+                            pictureMainName = Path.GetFileNameWithoutExtension(picture.Name)
+                            + "_"
+                            + "main"
+                            + Path.GetExtension(picture.Name);
 
-            @Html.LabelFor(m => m.LotName, "Назва: ", htmlAttributes: new { @class = "col-sm-2" })
-            <div class="col">
-                @Html.LabelFor(m => m.LotName, htmlAttributes: new { @class = "form-control" })
-                <small>
-                    @Html.ValidationMessageFor(m => m.LotName, "", new { @class = "text-danger" })
-                </small>
-            </div>
-        </div>*@
-        <div>
-            <label class="col-sm2">Назва: Картина </label>
-        </div> 
-        <div>
-            <label class="col-sm2">Назва: Картина </label>
+                        }
+
+                        <li data-thumb="/Pictures/@picture.LotId/@picturePrevName">
+                            <img src="~/Pictures/@picture.LotId/@pictureMainName" />
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li data-thumb="/Content/img/noImage_gallery.png">
+                        <img src="~/Content/img/noImage_main.png" />
+                    </li>
+
+                }
+            }
         </div>
-
-
-
-
     </div>
-    <div style="padding-left:100px;">
-        Код:1231231231
-
-
+    <div class="flex-item-col">
+        Text
     </div>
-
-
-
-
-
 </div>
 
+@section scripts{
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("#lightSlider").lightSlider({
+
+                gallery: true,
+                item: 1,
+                loop: true,
+                sliderMargin: 0,
+                thumbItem: 9,
+                verticalHeight: 501
+
+
+            });
+        })
+</script>
+}

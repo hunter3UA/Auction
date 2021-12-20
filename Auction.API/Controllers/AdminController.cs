@@ -13,5 +13,14 @@ namespace Auction.API.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult AddCategories()
+        {
+
+
+            return null;
+
+        }
     }
 }

@@ -2,38 +2,48 @@
 
 
 @{ 
-    string picturePrevName= string.Empty;
+    string picturePrevName = string.Empty;
     string pictureMainName = string.Empty;
 
 }
 
-<ul id="lightSlider" >
+<ul id="lightSlider">
 
-    @{ 
-        foreach (var picture in Model)
-        {
-            {
-                picturePrevName = Path.GetFileNameWithoutExtension(picture.Name)
-                + "_"
-                + "gallery"
-                + Path.GetExtension(picture.Name);
-                pictureMainName = Path.GetFileNameWithoutExtension(picture.Name)
-                + "_"
-                + "main"
-                + Path.GetExtension(picture.Name);
+    @{ if (Model.Count() > 0)
+       {
 
-            }
 
-            <li data-thumb="/Pictures/@picture.LotId/@picturePrevName">
-                <img src="~/Pictures/@picture.LotId/@pictureMainName"  />
-                <input type="button" value="Позначити в якості головної"  id="btnSetTittle"/>
-            </li>
+              foreach (var picture in Model)
+              {
+                   {
+                                picturePrevName = Path.GetFileNameWithoutExtension(picture.Name)
+                                + "_"
+                                + "gallery"
+                                + Path.GetExtension(picture.Name);
+                                pictureMainName = Path.GetFileNameWithoutExtension(picture.Name)
+                                + "_"
+                                + "main"
+                                + Path.GetExtension(picture.Name);
+
+                   }
+
+                            <li data-thumb="/Pictures/@picture.LotId/@picturePrevName">
+                                <img src="~/Pictures/@picture.LotId/@pictureMainName" />
+                            </li>
+              }
+       }
+       else
+       {
+              <li data-thumb="/Content/img/noImage_gallery.png">
+                  <img src="~/Content/img/noImage_main.png" />
+              </li>
+
         }
 
-
-
-
     }
+
+
+    
 </ul>
 
     

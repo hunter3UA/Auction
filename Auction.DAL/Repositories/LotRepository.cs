@@ -22,7 +22,7 @@ namespace Auction.DAL.Repositories
         }     
         public Lot Get(Func<Lot, bool> predicate)
         {
-            return _dbContext.Lots.Include("Category").Include("Seller").FirstOrDefault(predicate);
+            return _dbContext.Lots.Include("Category").Include("Seller").Include("Pictures").FirstOrDefault(predicate);
         }
         public IEnumerable<Lot> GetAll()
         {

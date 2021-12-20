@@ -57,9 +57,12 @@ namespace Auction.API.Controllers
 
 
         [HttpGet]
-        public ActionResult LotPage(int lotId)
+        public ActionResult LotPage(int lotId=0)
         {
+  
             LotModel lotModel =  _lotService.GetLot(lotId);
+            if (lotModel==null)
+                return RedirectToAction("Index","Home");
             return View(lotModel);
         }
 
@@ -68,31 +71,33 @@ namespace Auction.API.Controllers
         public ActionResult Edit(int id=0)
         {
             LotModel lotModel= _lotService.GetLot(id);
-            ViewData["Categories"] = _categoryService.GetCategories();
-            if (lotModel == null)
-                return RedirectToAction("BySeller");
-            return View(lotModel);
+            if(lotModel != null)
+            {
+                if (lotModel.LoginId == User.LoginId)
+                {
+                    ViewData["Categories"] = _categoryService.GetCategories();
+                    return View(lotModel);
+                }
+            }
+            return RedirectToAction("BySeller");
         }
 
 
         [HttpGet]
-        public PartialViewResult LotPictures(int lotId=0)
+        public ActionResult LotPictures(int lotId=0)
         {
+
+            if(lotId== 0)
+                return RedirectToAction("BySeller");
             List<Picture> picturesByLotid=_pictureService.GetByLotId(lotId);
-
-
             return PartialView(picturesByLotid);
 
-        }
-
-       
+        }     
         public JsonResult PictureSetAsTittle(int lotId,int pictureId)
         {
             _pictureService.SetTittle(lotId, pictureId);
             return Json(true,JsonRequestBehavior.AllowGet);
         }
-
-
         [HttpPost]
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {

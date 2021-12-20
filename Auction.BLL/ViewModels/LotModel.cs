@@ -10,8 +10,6 @@ namespace Auction.BLL.ViewModels
 {
     public class LotModel
     {
-
-
         public int LotId { get; set; }
         [Required]
         public string LotName { get; set; }
@@ -24,6 +22,8 @@ namespace Auction.BLL.ViewModels
         public bool IsSoldOut { get; set; }
 
         public User Seller { get; set; }
+
+        public int LoginId { get; set; }
 
         public Category Category { get; set; }
 

@@ -16,6 +16,7 @@ namespace Auction.API
                 .Include("~/Scripts/custom.js")              
                 .Include("~/Scripts/modernizr-*")
                 .Include("~/Scripts/jquery.unobtrusive-ajax.js")
+                .Include("~/Scripts/dropzone/dropzone.min.js")
                 );                        
 
             bundles.Add(new StyleBundle("~/Content/css")
@@ -24,6 +25,8 @@ namespace Auction.API
                 .Include("~/Content/custom/custom.css")
                 .Include("~/Content/themes/base/jquery-ui.min.css")
                 .Include("~/Content/Slider/lightslider.min.css")
+                .Include("~/Scripts/dropzone/basic.min.css")
+                .Include("~/Scripts/dropzone/dropzone.css")
                );
                 
             BundleTable.EnableOptimizations = true;

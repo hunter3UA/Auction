@@ -38,11 +38,19 @@ namespace Auction.API.Controllers
        
         public PartialViewResult Pages(int page = 1, string Filters = null, FiltersModel filtersModel = null)
         {
+            
             IndexViewModel ivm = _lotService.GetPageOfLots(page, Filters, filtersModel);
             return PartialView("Pages",ivm);
         }
 
+        [HttpGet]
+        public ActionResult SubscriptionsPage(int page=1)
+        {
 
+
+            return null;
+
+        }
 
         public ActionResult About()
         {

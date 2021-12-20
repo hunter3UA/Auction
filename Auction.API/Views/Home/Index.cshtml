@@ -6,15 +6,15 @@
 
     CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
 
-    List<SelectListItem> orderItems = new List<SelectListItem>()
+List<SelectListItem> orderItems = new List<SelectListItem>()
 {
         new SelectListItem(){ Value="Asc", Text = "за зростанням" },
         new SelectListItem(){ Value="Desc", Text="за спаданням"},
 
-    };
+};
 
 
-    List<SelectListItem> criterions = new List<SelectListItem>()
+List<SelectListItem> criterions = new List<SelectListItem>()
 {
         new SelectListItem(){ Value="", Text="--"},
         new SelectListItem(){ Value="PriceCriterion", Text="за ціною"},
@@ -24,10 +24,10 @@
     };
 }
 
-}
+
 
 <div class="flex-container">
-    <div class="flex-item-row filters-item">
+    <div class="flex-item-row filters-item" id="filtersSection">
         <label> Фільтри:</label>
         <div class="flex-container flex-item-col">
 
@@ -35,7 +35,6 @@
             {
                 <div class="flex-item-row">
                     Категорія:
-
                     @foreach (var item in categories.Categories)
                     {
                         <p>
@@ -45,21 +44,16 @@
                     }
                 </div>
                 <div class="flex-item-row">
-                    Назва:@Html.TextBox("LotName", "", new { id = "txtLotName" });
-
+                    Назва:@Html.TextBox("LotName", "", new { id = "txtLotName" })
                 </div>
                 <div class="flex-item-row">
                     Порядок: @Html.DropDownList("Order", orderItems)
                 </div>
                 <div class="flex-item-row">
                     Критерій: @Html.DropDownList("Criterion", criterions)
-
-
                 </div>
                 <div class="flex-item-row">
-
                     <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
-
                 </div>
             }
             @using(Ajax.BeginForm("Pages", new { page = 1, Filters = "" }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
@@ -68,7 +62,6 @@
             }
 
         </div>
-
     </div>
     <div class="flex-item-row">
         <div class="flex-container flex-item-col">
@@ -81,7 +74,6 @@
                         <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                         <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                     </ol>
-
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active" style="height:300px;">
@@ -136,6 +128,8 @@
         let btnClearFilters = document.querySelector("#btnClearFilters");
         btnClearFilters.addEventListener('click', function () {
             let allChbx = document.getElementsByName('Categories');
+            let txtLotName = document.querySelector('#txtLotName');
+            txtLotName.value = "";
             let btnClearFilters = document.querySelector("#btnClearFilters");
             for (let i = 0; i < allChbx.length; i++) {
                 allChbx[i].checked = false;

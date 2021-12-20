@@ -89,9 +89,9 @@ namespace Auction.BLL.Services
 
         public LotModel GetLot(int lotId)
         {
-            Lot lotById= _unitOfWork.LotRepository.Get(l=>l.LotId==lotId);
-            LotModel lotModel= _mapper.Map<LotModel>(lotById);
-            return lotModel;
+           Lot lotById= _unitOfWork.LotRepository.Get(l=>l.LotId==lotId);        
+           LotModel lotModel= _mapper.Map<LotModel>(lotById);
+           return lotModel;
         }
 
         public List<LotModel> GetLotsBySellerId(int loginId)
@@ -144,8 +144,6 @@ namespace Auction.BLL.Services
                         break;
                 }
             }
-
-
             List<LotModel> lotModels = _mapper.Map<List<LotModel>>(allLots);
             return lotModels;
         }
