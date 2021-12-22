@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class create : DbMigration
+    public partial class CreateDb : DbMigration
     {
         public override void Up()
         {
@@ -49,6 +49,7 @@
                         LotId = c.Int(nullable: false, identity: true),
                         LotName = c.String(nullable: false, maxLength: 500),
                         Price = c.Double(nullable: false),
+                        Step = c.Double(nullable: false),
                         Description = c.String(nullable: false),
                         IsSoldOut = c.Boolean(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
@@ -109,10 +110,25 @@
                 .ForeignKey("dbo.Users", t => t.ShoppingCartId)
                 .Index(t => t.ShoppingCartId);
             
+            CreateTable(
+                "dbo.Stakes",
+                c => new
+                    {
+                        StakeId = c.Long(nullable: false, identity: true),
+                        fk_LotId = c.Int(nullable: false),
+                        fk_UserId = c.Int(nullable: false),
+                        Sum = c.Double(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.StakeId)
+                .ForeignKey("dbo.Lots", t => t.fk_LotId, cascadeDelete: true)
+                .Index(t => t.fk_LotId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Stakes", "fk_LotId", "dbo.Lots");
             DropForeignKey("dbo.Lots", "fk_SellerId", "dbo.Users");
             DropForeignKey("dbo.ShopptingCarts", "ShoppingCartId", "dbo.Users");
             DropForeignKey("dbo.Lots", "ShopptingCart_ShoppingCartId", "dbo.ShopptingCarts");
@@ -120,6 +136,7 @@
             DropForeignKey("dbo.Pictures", "LotId", "dbo.Lots");
             DropForeignKey("dbo.Lots", "fk_CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Logins", "fk_AccountTypeId", "dbo.AccountTypes");
+            DropIndex("dbo.Stakes", new[] { "fk_LotId" });
             DropIndex("dbo.ShopptingCarts", new[] { "ShoppingCartId" });
             DropIndex("dbo.Users", new[] { "fk_LoginId" });
             DropIndex("dbo.Pictures", new[] { "LotId" });
@@ -129,6 +146,7 @@
             DropIndex("dbo.Logins", new[] { "fk_AccountTypeId" });
             DropIndex("dbo.Logins", "UniqueEmail");
             DropIndex("dbo.Categories", "UniqueCategoryName");
+            DropTable("dbo.Stakes");
             DropTable("dbo.ShopptingCarts");
             DropTable("dbo.Users");
             DropTable("dbo.Pictures");

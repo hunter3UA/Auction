@@ -15,8 +15,16 @@ namespace Auction.BLL.ViewModels
         public string LotName { get; set; }
         [Required]
         public double Price { get; set; }
+
+        [Required]
+        public double Step { get; set; }
+
+
         [Required]
         public string Description { get; set; }
+
+
+        public DateTime EndAt { get; set; }
 
         public int CategoryId { get; set; }
         public bool IsSoldOut { get; set; }
@@ -30,5 +38,7 @@ namespace Auction.BLL.ViewModels
         public long LotCode { get; set; }
 
         public List<Picture> Pictures { get; set; }
+
+        public List<Stake> Stakes { get; set; }
     }
 }

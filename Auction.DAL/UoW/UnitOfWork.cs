@@ -22,6 +22,19 @@ namespace Auction.DAL.UoW
         private IAccountTypeRepository _accountTypeRepository;
         private ICategoryRepository _categoryRepository;
         private IPictureRepository _pictureRepository;
+        private IStakeRepository _stakeRepository;
+
+
+
+        public IStakeRepository StakeRepository
+        {
+            get
+            {
+                if( _stakeRepository == null )
+                    _stakeRepository=new StakeRepository(_dbContext);
+                return _stakeRepository;
+            }
+        }
 
         public IPictureRepository PictureRepository
         {

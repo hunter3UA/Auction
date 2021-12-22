@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+//TODO:добавить уведомление о установки картинки в качестве главной,
+добавить удаление картинки
+
+*/
 namespace Auction.API.Controllers
 {
-    [Authentication(true)]
+   
     public class LotController : BaseController
     {
         private readonly ICategoryService _categoryService;
@@ -25,7 +30,7 @@ namespace Auction.API.Controllers
             _lotService = lotService;
             _pictureService = pictureService;
         }
-        [HttpGet]
+        [HttpGet,Authentication(true)]
         public ActionResult Create()
         {
             
@@ -35,21 +40,19 @@ namespace Auction.API.Controllers
 
 
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost,ValidateAntiForgeryToken,Authentication(true)]
         public async Task<ActionResult> Create(CreateLotModel lotModel)
         {
             if (ModelState.IsValid)
             {
                 Lot addedLot =  await _lotService.CreateLot(lotModel,User.LoginId, Request);
                 return RedirectToAction("Edit","Lot",new { id=addedLot.LotId});
-            }
-            
+            }          
             return RedirectToAction("Create");
-
         }
 
 
-        [HttpGet]
+        [HttpGet,Authentication(true)]
         public ActionResult BySeller()
         {
             return View(_lotService.GetLotsBySellerId(User.LoginId));
@@ -59,15 +62,13 @@ namespace Auction.API.Controllers
         [HttpGet]
         public ActionResult LotPage(int lotId=0)
         {
-  
-            LotModel lotModel =  _lotService.GetLot(lotId);
+            LotModel lotModel = _lotService.GetLot(lotId);
             if (lotModel==null)
                 return RedirectToAction("Index","Home");
             return View(lotModel);
         }
 
-
-        [HttpGet]
+        [HttpGet,Authentication(true)]
         public ActionResult Edit(int id=0)
         {
             LotModel lotModel= _lotService.GetLot(id);
@@ -82,6 +83,13 @@ namespace Auction.API.Controllers
             return RedirectToAction("BySeller");
         }
 
+        [HttpPost,Authentication(true),ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int lotId, LotModel modelToUpdate)
+        {
+            await _lotService.UpdateLot(lotId, modelToUpdate);
+            return RedirectToAction("Edit", new { id=modelToUpdate.LotId});
+        }
+
 
         [HttpGet]
         public ActionResult LotPictures(int lotId=0)
@@ -93,12 +101,15 @@ namespace Auction.API.Controllers
             return PartialView(picturesByLotid);
 
         }     
+
+        
+        [Authentication(true)]
         public JsonResult PictureSetAsTittle(int lotId,int pictureId)
         {
             _pictureService.SetTittle(lotId, pictureId);
             return Json(true,JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        [HttpPost,Authentication(true)]
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {
             await _lotService.AddPictures(Request, lotId);

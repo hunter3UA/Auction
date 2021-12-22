@@ -30,8 +30,7 @@ List<SelectListItem> criterions = new List<SelectListItem>()
     <div class="flex-item-row filters-item" id="filtersSection">
         <label> Фільтри:</label>
         <div class="flex-container flex-item-col">
-
-            @using (Ajax.BeginForm("Pages", null, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
+            @using (Ajax.BeginForm("Pages", new { page=1}, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
             {
                 <div class="flex-item-row">
                     Категорія:

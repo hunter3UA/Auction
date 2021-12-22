@@ -36,5 +36,7 @@ namespace Auction.DAL.Models
 
         public virtual List<Lot> Lots { get; set; }
 
+       
+
     }
 }

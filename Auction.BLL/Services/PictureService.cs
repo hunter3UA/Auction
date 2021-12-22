@@ -67,8 +67,6 @@ namespace Auction.BLL.Services
                 
                 postedFile.SaveAs(Path.Combine(lotFileFolder, FileSaveName));
               
-               
-
             }
             catch (Exception ex)
             {
@@ -86,14 +84,22 @@ namespace Auction.BLL.Services
         /// <param name="resizedFor">Тип картинки</param>
         public void CreateThumb(Picture pictureInfo,int width,int height,string resizedFor)
         {
-            Image imageToResize = Image.FromFile(Path.Combine(pictureInfo.Path, pictureInfo.Name));
-            Size size = new Size(width, height);
-            Image resizedImage =Resize(imageToResize, size);
-            string FileSaveName = Path.GetFileNameWithoutExtension(pictureInfo.Name)
+            try
+            {
+                Image imageToResize = Image.FromFile(Path.Combine(pictureInfo.Path, pictureInfo.Name)); 
+                Size size = new Size(width, height);
+                Image resizedImage =Resize(imageToResize, size);
+                string FileSaveName = Path.GetFileNameWithoutExtension(pictureInfo.Name)
                     + "_"
                     + resizedFor
                     + Path.GetExtension(pictureInfo.Name);
-            SaveThumb(resizedImage, pictureInfo.Path, FileSaveName);
+                SaveThumb(resizedImage, pictureInfo.Path, FileSaveName);
+            }catch (Exception ex)
+            {
+
+            }
+            
+           
 
         }
 

@@ -36,9 +36,10 @@ namespace Auction.API.Controllers
 
 
        
-        public PartialViewResult Pages(int page = 1, string Filters = null, FiltersModel filtersModel = null)
+        public ActionResult Pages(int page = 0, string Filters = null, FiltersModel filtersModel = null)
         {
-            
+            if (page == 0)
+                return RedirectToAction("Index");
             IndexViewModel ivm = _lotService.GetPageOfLots(page, Filters, filtersModel);
             return PartialView("Pages",ivm);
         }
@@ -46,10 +47,7 @@ namespace Auction.API.Controllers
         [HttpGet]
         public ActionResult SubscriptionsPage(int page=1)
         {
-
-
             return null;
-
         }
 
         public ActionResult About()

@@ -164,5 +164,21 @@ namespace Auction.BLL.Services
         }
 
 
+        public async Task<LotModel> UpdateLot(int lotId,LotModel modelForUpdate)
+        {
+            Lot lotToUpdate = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
+            lotToUpdate.LotName=modelForUpdate.LotName;
+            lotToUpdate.Description=modelForUpdate.Description; 
+            lotToUpdate.Category=_unitOfWork.CategoryRepository.Get(c=>c.CategoryId==modelForUpdate.CategoryId);
+            lotToUpdate.Price=modelForUpdate.Price;
+            _unitOfWork.LotRepository.Update(lotToUpdate);
+            await _unitOfWork.SaveAsync();
+            return modelForUpdate;
+
+
+        }
+
+
+
     }
 }

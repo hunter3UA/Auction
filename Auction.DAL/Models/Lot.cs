@@ -14,11 +14,18 @@ namespace Auction.DAL.Models
         [Required]
         public double Price { get; set; } 
         [Required]
+        public double Step { get; set; }
+
+        [Required]
         public string Description { get; set; }
         [Required]
         public bool IsSoldOut { get; set; }        
         [Required]
         public DateTime CreatedAt { get; set; } 
+
+        [Required]
+        public DateTime EndAt { get; set; }
+
         [Required]
         public long LotCode { get; set; }      
         public DateTime? SoldAt { get; set; }
@@ -31,9 +38,9 @@ namespace Auction.DAL.Models
         [Column("fk_CategoryId")]
         public int? CategoryId { get; set; }
         [ForeignKey(nameof(CategoryId))]
-        public Category Category { get; set; }
-        
+        public Category Category { get; set; }  
         public List<Picture> Pictures { get; set; }
         
+        public virtual List<Stake> Stakes { get; set; }
     }
 }

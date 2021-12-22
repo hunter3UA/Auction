@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div >
+        <div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -41,7 +41,7 @@
                                 <li>@Html.ActionLink("Увійти", "Login", "Account", null, new { @class = "btn btn-success" }) </li>
                                 <li>@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "btn btn-info" })</li>
                             }
-
+   
                         </div>
                     </div>    
                 </ul>
@@ -51,9 +51,7 @@
      <div class="body-content">
           @RenderBody()
           <hr />
-
       </div>
-
       @Scripts.Render("~/bundles/js")
       @RenderSection("scripts", required: false)
 </body>
@@ -62,34 +60,3 @@
 
 
 
-@*<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Информация", "About", "Home")</li>
-                <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
-                @if (User.Identity.IsAuthenticated)
-                {
-
-
-                    <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @clas = "btn btn-info" })</li>
-                    <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
-                }
-                else
-                {
-                    <li>@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "btn btn-info" })</li>
-                    <li>@Html.ActionLink("Увійти", "Login", "Account", null, new { @class = "btn btn-success" }) </li>
-                }
-            </ul>
-        </div>
-    </div>
-</div>*@

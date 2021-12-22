@@ -1,5 +1,5 @@
 ﻿@model Auction.BLL.ViewModels.LotModel
-
+@using Auction.BLL.LoginModels;
 @{
     string picturePrevName = string.Empty;
     string pictureMainName = string.Empty;
@@ -41,13 +41,77 @@
         </div>
     </div>
     <div class="flex-item-col">
-        Text
+         <div id="Success" class="text-success"></div>
+        <h2>@Model.LotName</h2>
+        <label>Ціна на даний момент: @Model.Price</label><br />
+        <label>Опис:</label>
+        <div>
+            @Model.Description
+        </div>
+        <br />
+        <label>Кінець аукціона: @Model.EndAt</label><br />
+        <label>Кількість ставок: @Model.Stakes.Count()</label><br />
+
+
+
+
+        @{
+    
+
+            if ((User as CustomPrincipal) != null && Model.LoginId != (User as CustomPrincipal).LoginId)
+            {
+
+                <label>Підтвердити ставку<input type="checkbox" id="chbConfirm" /></label><br />
+                using (Html.BeginForm("AddStake", "Stake", new { lotid = Model.LotId }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken();
+                    var newPrice = Model.Price + Model.Step;
+                    <input type="number" name="stake" value="@newPrice" step="50" />
+                    <input type="submit" value="Зробити ставку" class="btn btn-info"  id="btnStake"/>
+                }
+
+
+            }
+            <div id="validate">
+
+            </div>
+           
+
+
+        }
     </div>
 </div>
 
 @section scripts{
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        
+
+
+
+
+        let chbConfirm = document.querySelector("#chbConfirm");
+        
+        let btnStake = document.querySelector("#btnStake");
+        btnStake.addEventListener('click', function (e) {
+            if (chbConfirm.checked != true) {
+                e.preventDefault();
+                let validate = document.querySelector("#validate");
+                validate.innerHTML = "Підтвердіть ставку";
+                validate.className = "text-danger";
+
+            }
+                
+
+        });
+
+
+
+
+
+
+
+
         $(document).ready(function () {
             $("#lightSlider").lightSlider({
 
@@ -61,5 +125,5 @@
 
             });
         })
-</script>
+    </script>
 }

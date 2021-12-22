@@ -145,6 +145,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LotController.cs" />
+    <Compile Include="Controllers\StakeController.cs" />
     <Compile Include="DependencyResolverModule.cs" />
     <Compile Include="Filters\AuthenticationAttribute.cs" />
     <Compile Include="Filters\MyAuthAttribute.cs" />
@@ -367,6 +368,7 @@
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Dictionary\" />
+    <Folder Include="Views\Stake\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

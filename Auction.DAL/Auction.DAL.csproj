@@ -52,9 +52,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionDbContext.cs" />
-    <Compile Include="Migrations\202112181048030_create.cs" />
-    <Compile Include="Migrations\202112181048030_create.designer.cs">
-      <DependentUpon>202112181048030_create.cs</DependentUpon>
+    <Compile Include="Migrations\202112211640395_CreateDb.cs" />
+    <Compile Include="Migrations\202112211640395_CreateDb.designer.cs">
+      <DependentUpon>202112211640395_CreateDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112211643101_UpdateLot.cs" />
+    <Compile Include="Migrations\202112211643101_UpdateLot.designer.cs">
+      <DependentUpon>202112211643101_UpdateLot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112211805202_UpdateLots.cs" />
+    <Compile Include="Migrations\202112211805202_UpdateLots.designer.cs">
+      <DependentUpon>202112211805202_UpdateLots.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
@@ -64,6 +72,7 @@
     <Compile Include="Models\Lot.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\ShopptingCart.cs" />
+    <Compile Include="Models\Stake.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,12 +81,14 @@
     <Compile Include="Repositories\Abstract\ILoginRepository.cs" />
     <Compile Include="Repositories\Abstract\ILotRepository.cs" />
     <Compile Include="Repositories\Abstract\IPictureRepository.cs" />
+    <Compile Include="Repositories\Abstract\IStakeRepository.cs" />
     <Compile Include="Repositories\Abstract\IUserRepository.cs" />
     <Compile Include="Repositories\AccountTypeRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\LotRepository.cs" />
     <Compile Include="Repositories\PictureRepository.cs" />
+    <Compile Include="Repositories\StakeRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
     <Compile Include="UoW\UnitOfWork.cs" />
@@ -87,8 +98,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112181048030_create.resx">
-      <DependentUpon>202112181048030_create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112211640395_CreateDb.resx">
+      <DependentUpon>202112211640395_CreateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112211643101_UpdateLot.resx">
+      <DependentUpon>202112211643101_UpdateLot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112211805202_UpdateLots.resx">
+      <DependentUpon>202112211805202_UpdateLots.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -45,7 +45,13 @@
     <div class="row form-group">
         @Html.LabelFor(m => m.Price, "Ціна: ", new { @class = "col-sm-1" })
         <div class="col">
-            <input class="form-control" type="number" min="0" name="Price" step="100" id="Price" value="0.00" />   
+            <input class="form-control" type="number" min="0" name="Price" step="100" id="Price" value="0.00" />
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.Price, "Крок: ", new { @class = "col-sm-1" })
+        <div class="col">
+            <input class="form-control" type="number" min="20" name="Step"  value="20" />
         </div>
     </div>
     <div class="row form-group">
@@ -55,9 +61,16 @@
         </div>
     </div>
     <div class="row form-group">
+        @Html.LabelFor(m => m.EndAt, "Дата закінчення: ", new { @class = "col-sm-1" })
+        <div class="col">
+            <input type="date" name="EndAt" />
+        </div>
+    </div>
+    
+    <div class="row form-group">
         Фото:
         <div class="col">
-            <input type="file" name="uploadFile"  multiple/>
+            <input type="file" name="uploadFile" multiple />
         </div>
     </div>
     <input type="submit" value="Enter" class="btn btn-info" />

@@ -1,5 +1,6 @@
 ﻿@model Auction.BLL.ViewModels.IndexViewModel
 @using Newtonsoft.Json;
+@using Auction.BLL.LoginModels;
 @foreach (var item in Model.Lots)
 {
     <div id="lotItem" class="flex-container">
@@ -27,8 +28,22 @@
         </div>
 
         <div class="flex-item-row">
-            @Html.ActionLink("Дивитись сторінку","LotPage","Lot",new {lotId=item.LotId},new { @class="btn btn-info"})
-        </div>
+            <div class="flex-container flex-item-col">
+                <div class="flex-item-row">
+                    @Html.ActionLink("Дивитись сторінку", "LotPage", "Lot", new { lotId = item.LotId }, new { @class = "btn btn-info" })
+                </div>
+                <div class="flex-item-row">
+                    @{
+                        if ((User as CustomPrincipal) !=null && (User as CustomPrincipal).LoginId == item.LoginId)
+                        {
+                            @Html.ActionLink("Редагувати", "Edit","Lot", new { id = item.LotId }, new { @class="btn btn-success"});
+
+                        }
+
+                    }
+                </div>
+            </div>
+        </div>   
     </div>
 }
 
