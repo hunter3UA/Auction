@@ -1,4 +1,5 @@
-﻿using Auction.DAL.Models;
+﻿using Auction.BLL.ViewModels;
+using Auction.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Auction.BLL.Services.Abstract
     {
 
         Task<Stake> AddStake(int lotId, double stake, int loginId);
+        IndexViewModel<Stake> GetPageOfStakes(int page, int loginId);
     }
 }

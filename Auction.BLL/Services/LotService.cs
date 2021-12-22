@@ -148,17 +148,17 @@ namespace Auction.BLL.Services
             return lotModels;
         }
 
-        public IndexViewModel GetPageOfLots(int page, string Filters, FiltersModel filtersModel)
+        public IndexViewModel<LotModel> GetPageOfLots(int page, string Filters, FiltersModel filtersModel)
         {
 
             FiltersModel FiltersModel = filtersModel;
             if (!string.IsNullOrEmpty(Filters))
                 FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(Filters);
-            int pageSize = 3;
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLotsOnPage"]);
             List<LotModel> models = GetByFilters(FiltersModel);
             IEnumerable<LotModel> lotsPerpages = models.Skip((page - 1) * pageSize).Take(pageSize);
             PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = models.Count };
-            IndexViewModel ivm = new IndexViewModel { PageInfo = pageInfo, Lots = lotsPerpages.ToList() };
+            IndexViewModel<LotModel> ivm = new IndexViewModel<LotModel> { PageInfo = pageInfo, Collection = lotsPerpages.ToList() };
             ivm.FiltersModel = FiltersModel;
             return ivm;
         }

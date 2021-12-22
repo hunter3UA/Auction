@@ -14,7 +14,7 @@ namespace Auction.BLL.Services.Abstract
         LotModel GetLot(int lotId);
         List<LotModel> GetLotsBySellerId(int sellerId);
         List<LotModel> GetByFilters(FiltersModel filtersModel);
-        IndexViewModel GetPageOfLots(int page, string Filters, FiltersModel filtersModel);
+        IndexViewModel<LotModel> GetPageOfLots(int page, string Filters, FiltersModel filtersModel);
         Task<List<Picture>> AddPictures(HttpRequestBase request, int lotId);
         Task<LotModel> UpdateLot(int lotId, LotModel modelForUpdate);
 

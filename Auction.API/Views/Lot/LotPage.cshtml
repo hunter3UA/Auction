@@ -85,33 +85,6 @@
 @section scripts{
 
     <script type="text/javascript">
-        
-
-
-
-
-        let chbConfirm = document.querySelector("#chbConfirm");
-        
-        let btnStake = document.querySelector("#btnStake");
-        btnStake.addEventListener('click', function (e) {
-            if (chbConfirm.checked != true) {
-                e.preventDefault();
-                let validate = document.querySelector("#validate");
-                validate.innerHTML = "Підтвердіть ставку";
-                validate.className = "text-danger";
-
-            }
-                
-
-        });
-
-
-
-
-
-
-
-
         $(document).ready(function () {
             $("#lightSlider").lightSlider({
 
@@ -125,5 +98,25 @@
 
             });
         })
+
+      
+        
+        let btnStake = document.querySelector("#btnStake");
+        if (btnStake != null) {
+            btnStake.addEventListener('click', function (e) {
+                let chbConfirm = document.querySelector("#chbConfirm");
+                if (chbConfirm.checked != true) {
+                    e.preventDefault();
+                    let validate = document.querySelector("#validate");
+                    validate.innerHTML = "Підтвердіть ставку";
+                    validate.className = "text-danger";
+
+                }
+
+
+            });
+        }
+
+      
     </script>
 }

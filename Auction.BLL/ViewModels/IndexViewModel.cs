@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Auction.BLL.ViewModels
 {
-    public class IndexViewModel
+    public class IndexViewModel<T> where T : class
     {
-        public List<LotModel> Lots { get; set; }
+        public List<T> Collection { get; set; }
         public PageInfo PageInfo { get; set; }
 
         public FiltersModel FiltersModel { get; set; }

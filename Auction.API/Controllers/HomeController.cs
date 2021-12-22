@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
+/*TODO: вынести логику пагинации в отдельный сервис*/
 
 namespace Auction.API.Controllers
 {
@@ -20,15 +20,14 @@ namespace Auction.API.Controllers
         public HomeController(ILotService lotService,ICategoryService categoryService)
         {
             _lotService = lotService;
-            _categoryService = categoryService;
-         
+            _categoryService = categoryService;        
         }
 
 
         [HttpGet]
         public ActionResult Index(int page=1, string Filters=null, FiltersModel filtersModel=null)
         {
-            IndexViewModel ivm = _lotService.GetPageOfLots(page,Filters,filtersModel);
+            IndexViewModel<LotModel> ivm = _lotService.GetPageOfLots(page,Filters,filtersModel);
             ViewData["Categories"] = _categoryService.GetCategories();
             return View(ivm);
 
@@ -40,14 +39,14 @@ namespace Auction.API.Controllers
         {
             if (page == 0)
                 return RedirectToAction("Index");
-            IndexViewModel ivm = _lotService.GetPageOfLots(page, Filters, filtersModel);
+            IndexViewModel<LotModel> ivm = _lotService.GetPageOfLots(page, Filters, filtersModel);
             return PartialView("Pages",ivm);
         }
 
         [HttpGet]
         public ActionResult SubscriptionsPage(int page=1)
         {
-            return null;
+            return View();
         }
 
         public ActionResult About()

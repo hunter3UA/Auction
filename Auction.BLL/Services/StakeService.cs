@@ -1,8 +1,10 @@
 ﻿using Auction.BLL.Services.Abstract;
+using Auction.BLL.ViewModels;
 using Auction.DAL.Models;
 using Auction.DAL.UoW;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +34,20 @@ namespace Auction.BLL.Services
             lotOfStake.Price = stake;
             await _unitOfWork.SaveAsync();        
             return stakeToAdd;
+        }
+
+
+        public IndexViewModel<Stake> GetPageOfStakes(int page, int loginId)
+        {
+
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["CountOfStakesOnPage"]);
+            User userOfStakes = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
+            List<Stake> stakes = _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId);
+            stakes.Reverse();
+            PageInfo pageInfo=new PageInfo { PageNumber=page,PageSize=pageSize, TotalItems=stakes.Count};
+            stakes=stakes.Skip((page-1)*pageSize).Take(pageSize).ToList();   
+            IndexViewModel<Stake> ivm = new IndexViewModel<Stake> { PageInfo = pageInfo, Collection = stakes };
+            return ivm;
         }
 
 

@@ -1,5 +1,7 @@
 ﻿using Auction.API.Filters;
 using Auction.BLL.Services.Abstract;
+using Auction.BLL.ViewModels;
+using Auction.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,8 @@ namespace Auction.API.Controllers
     public class StakeController : BaseController
     {
 
+
+
         private readonly IStakeService _stakeService;
         public StakeController(IStakeService stakeService)
         {
@@ -33,13 +37,23 @@ namespace Auction.API.Controllers
         }
 
 
-
-        [HttpPost]
-        public ActionResult MyStakes()
+        
+        [HttpGet]
+        public ActionResult MyStakes(int page=1)
         {
+            IndexViewModel<Stake> ivm = _stakeService.GetPageOfStakes(page, User.LoginId);
+            return View(ivm);
 
-            return View();
+        }
 
+
+        public ActionResult StakePage(int page=0)
+        {
+            if (page <= 1)
+                return RedirectToAction("MyStakes");
+            IndexViewModel<Stake> ivm = _stakeService.GetPageOfStakes(page, User.LoginId);
+            return PartialView(ivm);
+      
         }
     }
 }

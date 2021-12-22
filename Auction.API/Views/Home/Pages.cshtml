@@ -1,7 +1,9 @@
-﻿@model Auction.BLL.ViewModels.IndexViewModel
+﻿@model Auction.BLL.ViewModels.IndexViewModel<LotModel>
 @using Newtonsoft.Json;
+@using Auction.BLL.ViewModels;
 @using Auction.BLL.LoginModels;
-@foreach (var item in Model.Lots)
+
+@foreach (var item in Model.Collection)
 {
     <div id="lotItem" class="flex-container">
         <div class="flex-item-row">
