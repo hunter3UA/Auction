@@ -23,55 +23,46 @@ namespace Auction.BLL.Services
             _unitOfWork = unitOfWork;
         }
 
+
         /// <summary>
         /// Метод для збереження оригніалу картинки
         /// </summary>
         /// <param name="postedFile">Об'єкт для створення картинки</param>
         /// <param name="lotId">Id лота, який створює папку для всіх картинок данного лота</param>
         /// <returns></returns>
-        public Picture Save(HttpPostedFileBase postedFile,int lotId)
-        {     
+        public Picture Save(HttpPostedFileBase postedFile, long id, string pictureTypeFolder)
+        {
             Picture picture = new Picture();
             try
             {
-                string fileSaveFolder = string.Empty;
                 string webSiteFolder = HttpContext.Current.Server.MapPath("~");
+                string fileSaveFolder = string.Empty;
                 try
                 {
                     fileSaveFolder = ConfigurationManager.AppSettings["PicturesFolder"];
                 }
                 catch (ConfigurationException)
                 {
-
                     fileSaveFolder = "PictureFiles";
                 }
 
-                
-                if (!Directory.Exists(fileSaveFolder))
-                {
+                if (!Directory.Exists(Path.Combine(webSiteFolder,fileSaveFolder)))
                     Directory.CreateDirectory(Path.Combine(webSiteFolder, fileSaveFolder));
-                }
-
-                string lotFileFolder = Path.Combine(webSiteFolder, fileSaveFolder, lotId.ToString());
-
-                if (!Directory.Exists(lotFileFolder))
-                {
-                    Directory.CreateDirectory(lotFileFolder);
-                }
-                picture.Path = lotFileFolder;
-                string FileSaveName = Path.GetFileNameWithoutExtension(postedFile.FileName)
-                    + "_"
-                    + DateTime.Now.Ticks.ToString()
-                    + Path.GetExtension(postedFile.FileName);
-                picture.Name = FileSaveName;
-                
-                postedFile.SaveAs(Path.Combine(lotFileFolder, FileSaveName));
               
+                if (!Directory.Exists(Path.Combine(webSiteFolder, fileSaveFolder, pictureTypeFolder)))
+                    Directory.CreateDirectory(Path.Combine(webSiteFolder, fileSaveFolder, pictureTypeFolder));
+
+                picture.Path = Path.Combine(webSiteFolder, fileSaveFolder, pictureTypeFolder, id.ToString());
+                if (!Directory.Exists(Path.Combine(webSiteFolder, fileSaveFolder, pictureTypeFolder, id.ToString())))
+                    Directory.CreateDirectory(Path.Combine(webSiteFolder, fileSaveFolder, pictureTypeFolder, id.ToString()));
+                picture.Name = Path.GetFileNameWithoutExtension(postedFile.FileName)
+                       + "_"
+                       + DateTime.Now.Ticks.ToString()
+                       + Path.GetExtension(postedFile.FileName);
+
+                postedFile.SaveAs(Path.Combine(picture.Path, picture.Name));
             }
-            catch (Exception ex)
-            {
-               
-            }
+            catch (Exception ex) { }
             return picture;
         }
 
@@ -98,9 +89,6 @@ namespace Auction.BLL.Services
             {
 
             }
-            
-           
-
         }
 
         public void SaveThumb(Image thumbFileToSave,string savePath,string saveFileName)
@@ -139,9 +127,9 @@ namespace Auction.BLL.Services
             _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
         }
 
-        public List<Picture> GetByLotId (int lotId)
+        public List<Picture> GetList(Func<Picture,bool> predicate)
         {
-            return _unitOfWork.PictureRepository.GetPicturesByLotId(lotId);
+            return _unitOfWork.PictureRepository.GetList(predicate);
 
         }
 

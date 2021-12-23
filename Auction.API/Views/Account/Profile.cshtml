@@ -1,5 +1,5 @@
 ﻿@model Auction.BLL.ViewModels.UserModel
-
+@using Auction.BLL.LoginModels;
 @{
     ViewBag.Title = "Profile";
 }
@@ -8,13 +8,20 @@
     @Html.ActionLink("Створити лот","Create","Lot",null,new { @class="btn btn-success"})
     @Html.ActionLink("Мої лоти","BySeller","Lot",null,new { @class= "btn btn-info" })
     @Html.ActionLink("Мої ставки","MyStakes","Stake",new { page=1},new {@class="btn btn-info"})
-</div>
+    @{ 
+        if((User as CustomPrincipal).AccountType.AccountTypeName == "Admin")
+        {
+            @Html.ActionLink("Додати новину","CreateNews","Admin",null,new {@class="btn btn-success"})
+        }
+    }
 
+</div>
+<div>
 @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form" }))
 {
     <div class="row form-group">
 
-        @Html.LabelFor(m => m.Email, "Email: ", htmlAttributes: new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.Email, "Email: ", htmlAttributes: new { @class = "col-sm-1" })
         <div class="col">
             @Html.TextBoxFor(m => m.Email,htmlAttributes: new { @class = "form-control", disabled=true})
             <small>
@@ -23,7 +30,7 @@
         </div>
     </div>
     <div class="row form-group">
-        @Html.LabelFor(m => m.FirstName, "Ім'я: ", htmlAttributes: new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.FirstName, "Ім'я: ", htmlAttributes: new { @class = "col-sm-1" })
         <div class="col">
             @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @class = "form-control"})
             <small>
@@ -32,7 +39,7 @@
         </div>
     </div>
     <div class="row form-group">
-        @Html.LabelFor(m => m.LastName, "Прізвище: ", htmlAttributes: new { @class = "col-sm-4" })
+        @Html.LabelFor(m => m.LastName, "Прізвище: ", htmlAttributes: new { @class = "col-sm-1" })
         <div class="col">
             @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @class = "form-control"})
             <small>
@@ -44,3 +51,4 @@
 
 }
 
+</div>

@@ -18,8 +18,7 @@ namespace Auction.DAL.Models
         [Required]
         public double Balance { get; set; }
         [Required]
-        public DateTime RegistredAt { get; set; }
-      
+        public DateTime RegistredAt { get; set; }     
         [Required]
         public bool IsEnabled { get; set; }
 
@@ -28,15 +27,15 @@ namespace Auction.DAL.Models
         [Required,ForeignKey(nameof(LoginId))]
         public Login Login { get; set; }
 
-
         [Column("fk_ShoppingCartId")]
         public int? ShoppingCartId { get; set; }
         [ForeignKey(nameof(ShoppingCartId))]
         public ShopptingCart ShopptingCart { get; set; }
+        public List<Lot> Lots { get; set; }
 
-        public virtual List<Lot> Lots { get; set; }
 
-       
+
+
 
     }
 }

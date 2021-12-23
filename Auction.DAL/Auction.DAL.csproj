@@ -60,13 +60,26 @@
     <Compile Include="Migrations\202112211643101_UpdateLot.designer.cs">
       <DependentUpon>202112211643101_UpdateLot.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112211805202_UpdateLots.cs" />
-    <Compile Include="Migrations\202112211805202_UpdateLots.designer.cs">
-      <DependentUpon>202112211805202_UpdateLots.cs</DependentUpon>
+    <Compile Include="Migrations\202112231041157_CreateNews.cs" />
+    <Compile Include="Migrations\202112231041157_CreateNews.designer.cs">
+      <DependentUpon>202112231041157_CreateNews.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112231600006_UpdatePictureLots.cs" />
+    <Compile Include="Migrations\202112231600006_UpdatePictureLots.designer.cs">
+      <DependentUpon>202112231600006_UpdatePictureLots.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112231637439_UpdateCarts.cs" />
+    <Compile Include="Migrations\202112231637439_UpdateCarts.designer.cs">
+      <DependentUpon>202112231637439_UpdateCarts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112231653081_RemoveNews.cs" />
+    <Compile Include="Migrations\202112231653081_RemoveNews.designer.cs">
+      <DependentUpon>202112231653081_RemoveNews.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\News.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Lot.cs" />
@@ -104,8 +117,17 @@
     <EmbeddedResource Include="Migrations\202112211643101_UpdateLot.resx">
       <DependentUpon>202112211643101_UpdateLot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112211805202_UpdateLots.resx">
-      <DependentUpon>202112211805202_UpdateLots.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112231041157_CreateNews.resx">
+      <DependentUpon>202112231041157_CreateNews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112231600006_UpdatePictureLots.resx">
+      <DependentUpon>202112231600006_UpdatePictureLots.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112231637439_UpdateCarts.resx">
+      <DependentUpon>202112231637439_UpdateCarts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112231653081_RemoveNews.resx">
+      <DependentUpon>202112231653081_RemoveNews.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

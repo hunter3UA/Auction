@@ -8,5 +8,6 @@ namespace Auction.DAL.Repositories.Abstract
     {
         List<Category> GetAll();
         Category Get(Func<Category, bool> predicate);
+        Category Add(Category newCategory);
     }
 }

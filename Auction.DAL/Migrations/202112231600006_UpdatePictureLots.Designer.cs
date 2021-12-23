@@ -7,13 +7,13 @@ namespace Auction.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class UpdateLots : IMigrationMetadata
+    public sealed partial class UpdatePictureLots : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateLots));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatePictureLots));
         
         string IMigrationMetadata.Id
         {
-            get { return "202112211805202_UpdateLots"; }
+            get { return "202112231600006_UpdatePictureLots"; }
         }
         
         string IMigrationMetadata.Source

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 
+
+
+/*
+ TODO: добавить отмену получения заблокированого пользователя
+ */
 namespace Auction.API.Controllers
 {
     public class AccountController : BaseController

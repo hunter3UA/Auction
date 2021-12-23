@@ -11,7 +11,7 @@ namespace Auction.DAL.Repositories.Abstract
     {
 
         List<Picture> AddRange(List<Picture> picturesToAdd);
-        List<Picture> GetPicturesByLotId(int lotId);
+        List<Picture> GetList(Func<Picture, bool> predicate);
         void SetPictureAsTittle(int lotId, int pictureId);
     }
 }

@@ -40,8 +40,7 @@ namespace Auction.BLL.Services
             newLot.LotCode = DateTime.Now.Ticks/2000;
             newLot.Category=_unitOfWork.CategoryRepository.Get(c=>c.CategoryId==lotModel.CategoryId);
             _unitOfWork.LotRepository.Add(newLot);
-            await _unitOfWork.SaveAsync();
-            
+            await _unitOfWork.SaveAsync();         
             if(request.Files!=null)
                 await AddPictures(request, newLot.LotId);     
             return newLot;
@@ -57,7 +56,7 @@ namespace Auction.BLL.Services
                 for (int i = 0; i < request.Files.Count; i++)
                 {
                     HttpPostedFileBase postedFileBase = request.Files[i];
-                    Picture picture = _pictureService.Save(postedFileBase, lotOfPictures.LotId);
+                    Picture picture = _pictureService.Save(postedFileBase, lotOfPictures.LotId,ConfigurationManager.AppSettings["LotsPictures"]);
                     picture.IsTittle = false;
                     picture.LotId = lotOfPictures.LotId;
                     pictures.Add(picture);
@@ -162,7 +161,6 @@ namespace Auction.BLL.Services
             ivm.FiltersModel = FiltersModel;
             return ivm;
         }
-
 
         public async Task<LotModel> UpdateLot(int lotId,LotModel modelForUpdate)
         {

@@ -10,9 +10,9 @@ using System.Web;
 using System.Web.Mvc;
 
 /*
-//TODO:добавить уведомление о установки картинки в качестве главной,
+TODO:добавить уведомление о установки картинки в качестве главной,
 добавить удаление картинки
-
+TODO: вынести метод добавления картинок  в сервис картинок
 */
 namespace Auction.API.Controllers
 {
@@ -72,13 +72,10 @@ namespace Auction.API.Controllers
         public ActionResult Edit(int id=0)
         {
             LotModel lotModel= _lotService.GetLot(id);
-            if(lotModel != null)
+            if(lotModel != null && lotModel.LoginId == User.LoginId)
             {
-                if (lotModel.LoginId == User.LoginId)
-                {
-                    ViewData["Categories"] = _categoryService.GetCategories();
-                    return View(lotModel);
-                }
+                ViewData["Categories"] = _categoryService.GetCategories();
+                return View(lotModel);           
             }
             return RedirectToAction("BySeller");
         }
@@ -94,12 +91,10 @@ namespace Auction.API.Controllers
         [HttpGet]
         public ActionResult LotPictures(int lotId=0)
         {
-
             if(lotId== 0)
                 return RedirectToAction("BySeller");
-            List<Picture> picturesByLotid=_pictureService.GetByLotId(lotId);
+            List<Picture> picturesByLotid=_pictureService.GetList(p=>p.LotId==lotId);
             return PartialView(picturesByLotid);
-
         }     
 
         

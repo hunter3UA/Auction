@@ -25,6 +25,9 @@ namespace Auction.DAL.Repositories
         {
             return _dbContext.Categories.FirstOrDefault(predicate);
         }
-
+        public Category Add(Category newCategory)
+        {
+            return _dbContext.Categories.Add(newCategory);
+        }
     }
 }

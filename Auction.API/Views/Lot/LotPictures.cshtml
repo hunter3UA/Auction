@@ -27,8 +27,8 @@
 
                    }
 
-                            <li data-thumb="/Pictures/@picture.LotId/@picturePrevName">
-                                <img src="~/Pictures/@picture.LotId/@pictureMainName" />
+                            <li data-thumb="/Pictures/Lots/@picture.LotId/@picturePrevName">
+                                <img src="~/Pictures/Lots/@picture.LotId/@pictureMainName" />
 
                                 @using(Ajax.BeginForm("PictureSetAsTittle",new { lotId=picture.LotId,  pictureId=picture.PictureId },null))
                                  {
@@ -54,32 +54,7 @@
 </ul>
 
     
-<script>
-
-    
-
-
-   
-    @*var btnSetTittle = document.querySelector("#btnSetTittle");
-    btnSetTittle.addEventListener('click', function () {
-        
-        let url = `/Lot/PictureSetAsTittle/@Model.First().LotId/@Model.First().PictureId`;
-        console.log(url);
-        let xhrRequest = new XMLHttpRequest();
-        xhrRequest.open("GET", url);
-
-
-        xhrRequest.send();
-
-
-
-
-
-    })*@
-
-
-
-</script>    
+ 
     
     
     

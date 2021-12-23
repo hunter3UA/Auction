@@ -21,13 +21,10 @@ namespace Auction.DAL.Repositories
         {
             return _dbContext.Pictures.AddRange(picturesToAdd).ToList();
         }
-
-
-        public List<Picture> GetPicturesByLotId(int lotId)
+        public List<Picture> GetList(Func<Picture,bool> predicate)
         {
-            return _dbContext.Pictures.Where(p=>p.LotId == lotId).ToList();
+            return _dbContext.Pictures.Where(predicate).ToList();
         }
-
         public void SetPictureAsTittle(int lotId, int pictureId)
         {
             SqlParameter lotParam = new SqlParameter("@LotId",lotId);

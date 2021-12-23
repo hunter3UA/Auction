@@ -1,5 +1,6 @@
 using Auction.BLL.LoginModels;
 using Auction.BLL.Services;
+using Auction.BLL.Services.BgServices;
 using Auction.DAL;
 using Ninject;
 using Ninject.Web.Mvc;
@@ -15,19 +16,25 @@ namespace Auction.API
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        protected void Application_Start()
+
+
+        protected  void Application_Start()
         {
-            
+             
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+         
 
             DependencyResolverModule registrations = new DependencyResolverModule();
             var kernel = new StandardKernel(registrations);
             kernel.Unbind<ModelValidatorProvider>();
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            GettingLotScheduler.Start();
+
+          
         }
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {

@@ -16,6 +16,7 @@ namespace Auction.DAL.Models
         public int? UserId { get; set; }
         [Required,ForeignKey(nameof(UserId))]        
         public User User { get; set; }
+        [ForeignKey("CartId")]
         public List<Lot> Lots { get; set; }
     }
 }
