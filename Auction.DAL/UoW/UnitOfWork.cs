@@ -23,18 +23,18 @@ namespace Auction.DAL.UoW
         private ICategoryRepository _categoryRepository;
         private IPictureRepository _pictureRepository;
         private IStakeRepository _stakeRepository;
-     //   private INewsRepository _newsRepository;
+        private INewsRepository _newsRepository;
 
 
-        //public INewsRepository NewsRepository
-        //{
-        //    get
-        //    {
-        //        if (_newsRepository == null)
-        //            _newsRepository = new NewsRepository(_dbContext);
-        //        return _newsRepository;
-        //    }
-        //}
+        public INewsRepository NewsRepository
+        {
+            get
+            {
+                if (_newsRepository == null)
+                    _newsRepository = new NewsRepository(_dbContext);
+                return _newsRepository;
+            }
+        }
 
         public IStakeRepository StakeRepository
         {

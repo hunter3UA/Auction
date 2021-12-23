@@ -16,7 +16,12 @@ namespace Auction.DAL.Models
         public string NewsTittle { get; set; }
         [Required]
         public string NewsText { get; set; }
-        public  List<Picture> Pictures { get; set; }=new List<Picture>();
+
+        public DateTime CreatedAt { get; set; }= DateTime.Now;
+
+
+        [ForeignKey("NewsId")]
+        public List<Picture> Pictures { get; set; }=new List<Picture>();
 
     }
 }

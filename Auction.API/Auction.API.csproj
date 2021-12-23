@@ -163,10 +163,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LotController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\StakeController.cs" />
     <Compile Include="DependencyResolverModule.cs" />
     <Compile Include="Filters\AuthenticationAttribute.cs" />
@@ -385,13 +387,16 @@
     <Content Include="Views\Home\Pages.cshtml" />
     <Content Include="Views\Stake\MyStakes.cshtml" />
     <Content Include="Views\Stake\StakePage.cshtml" />
-    <Content Include="Views\Admin\CreateNews.cshtml" />
+    <Content Include="Views\News\CreateNews.cshtml" />
+    <Content Include="Views\News\PageNews.cshtml" />
+    <Content Include="Views\News\GetNews.cshtml" />
+    <Content Include="Views\News\NewsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Dictionary\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

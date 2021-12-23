@@ -22,8 +22,8 @@ namespace Auction.DAL.Models
 
         public int? LotId { get; set; }
 
+        [Column("fk_NewsId")]
+        public long? NewsId { get; set; }
        
-       
-
     }
 }

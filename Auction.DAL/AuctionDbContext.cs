@@ -7,7 +7,7 @@ namespace Auction.DAL
     {
      
 
-     
+        public DbSet<News> News { get; set; }
         public DbSet<Stake> Stakes { get; set; }
         public DbSet<Picture> Pictures { get; set; }    
         public DbSet<Login> Logins { get; set; }    

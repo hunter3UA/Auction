@@ -236,3 +236,22 @@
     font-size: 14px; /* Размер шрифта */
 }
 
+.center{
+    text-align:center;
+    margin-right:20%;
+    margin-left:20%;
+}
+
+
+
+
+.news-container{
+    margin-right:auto;
+    margin-left:auto;
+}
+.news-block{
+    border:1px solid black;
+    margin-right:10%;
+    margin-left:10%;
+    height:100px;
+}

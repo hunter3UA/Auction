@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using Auction.BLL.ViewModels;
 
 namespace Auction.BLL.Services
 {
@@ -39,6 +40,16 @@ namespace Auction.BLL.Services
 
         }
 
+        public News GetNews(Func<News,bool> predicate)
+        {
+            News newsToView = _unitOfWork.NewsRepository.Get(predicate);
+            if(newsToView==null)
+                return new News();
+            return newsToView;
+
+        }
+
+
 
         public async Task<List<Picture>> AddNewsPictures(HttpRequestBase request,News addedNews)
         {
@@ -67,6 +78,21 @@ namespace Auction.BLL.Services
                 await _unitOfWork.SaveAsync();   
             }
             return pictures;
+        }
+
+
+
+        public IndexViewModel<News> GetPageOfNews(int page)
+        {
+
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["CountOfNewsOnPage"]);
+            List<News> newsToView = _unitOfWork.NewsRepository.GetList();
+            newsToView.Reverse();
+            PageInfo pageInfo=new PageInfo { PageNumber=page,PageSize=pageSize,TotalItems=newsToView.Count};
+            newsToView=newsToView.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            IndexViewModel<News> ivm=new IndexViewModel<News> { PageInfo = pageInfo,Collection=newsToView };
+
+            return ivm;
         }
     }
 }

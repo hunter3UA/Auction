@@ -12,5 +12,8 @@ namespace Auction.DAL.Repositories.Abstract
 
         News Add(News newsToAdd);
         List<News> GetList();
+
+
+        News Get(Func<News,bool> predicate);
     }
 }

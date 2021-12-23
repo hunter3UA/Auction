@@ -76,6 +76,14 @@
     <Compile Include="Migrations\202112231653081_RemoveNews.designer.cs">
       <DependentUpon>202112231653081_RemoveNews.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112231708207_AddNewsTable.cs" />
+    <Compile Include="Migrations\202112231708207_AddNewsTable.designer.cs">
+      <DependentUpon>202112231708207_AddNewsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112231740278_NewsUpdating.cs" />
+    <Compile Include="Migrations\202112231740278_NewsUpdating.designer.cs">
+      <DependentUpon>202112231740278_NewsUpdating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -93,6 +101,7 @@
     <Compile Include="Repositories\Abstract\ICategoryRepository.cs" />
     <Compile Include="Repositories\Abstract\ILoginRepository.cs" />
     <Compile Include="Repositories\Abstract\ILotRepository.cs" />
+    <Compile Include="Repositories\Abstract\INewsRepository.cs" />
     <Compile Include="Repositories\Abstract\IPictureRepository.cs" />
     <Compile Include="Repositories\Abstract\IStakeRepository.cs" />
     <Compile Include="Repositories\Abstract\IUserRepository.cs" />
@@ -100,6 +109,7 @@
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\LotRepository.cs" />
+    <Compile Include="Repositories\NewsRepository.cs" />
     <Compile Include="Repositories\PictureRepository.cs" />
     <Compile Include="Repositories\StakeRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
@@ -128,6 +138,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112231653081_RemoveNews.resx">
       <DependentUpon>202112231653081_RemoveNews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112231708207_AddNewsTable.resx">
+      <DependentUpon>202112231708207_AddNewsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112231740278_NewsUpdating.resx">
+      <DependentUpon>202112231740278_NewsUpdating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

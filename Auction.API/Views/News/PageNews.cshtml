@@ -1,0 +1,11 @@
+﻿@model Auction.DAL.Models.News
+
+@{
+    ViewBag.Title = "PageNews";
+}
+
+<h1 class="center">@Model.NewsTittle</h1>
+
+
+<label>Дата: @Model.CreatedAt</label>
+<div>@Model.NewsText</div>

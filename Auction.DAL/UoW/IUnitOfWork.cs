@@ -14,7 +14,7 @@ namespace Auction.DAL.UoW
         IPictureRepository PictureRepository { get; }
         IStakeRepository StakeRepository { get; }
 
-   //     INewsRepository NewsRepository { get; }
+        INewsRepository NewsRepository { get; }
         Task SaveAsync();
     }
 }

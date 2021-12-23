@@ -11,7 +11,7 @@
     @{ 
         if((User as CustomPrincipal).AccountType.AccountTypeName == "Admin")
         {
-            @Html.ActionLink("Додати новину","CreateNews","Admin",null,new {@class="btn btn-success"})
+            @Html.ActionLink("Додати новину","CreateNews","News",null,new {@class="btn btn-success"})
         }
     }
 

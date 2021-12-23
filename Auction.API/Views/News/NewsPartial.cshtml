@@ -1,0 +1,40 @@
+﻿@model Auction.BLL.ViewModels.IndexViewModel<News>
+@using Newtonsoft.Json;
+@using Auction.BLL.ViewModels;
+@using Auction.DAL.Models;
+
+
+
+
+<div class="news-container">
+@{ 
+        foreach(var item in Model.Collection)
+        {
+    <div class="news-block">
+        <p>@item.NewsTittle</p>
+        <p>@item.CreatedAt</p>
+        @if (item.NewsText.Length > 400)
+        {
+            <p>@item.NewsText.Substring(0,400) ...</p>
+        }
+        else
+        {
+            <p>@item.NewsText </p>
+        }
+
+
+
+    </div>
+
+
+
+        }
+
+
+
+
+
+
+
+}
+</div>

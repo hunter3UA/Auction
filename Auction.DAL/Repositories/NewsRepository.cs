@@ -23,7 +23,10 @@ namespace Auction.DAL.Repositories
             return _dbContext.News.Add(newsToAdd);
         }
 
-
+        public News Get(Func<News, bool> predicate)
+        {
+            return _dbContext.News.Include("Pictures").FirstOrDefault(predicate);
+        }
 
         public List<News> GetList()
         {
