@@ -9,7 +9,7 @@ namespace Auction.BLL.Services.Abstract
 {
     public interface ILotService
     {
-
+        IndexViewModel<LotModel> GetList(int page, Func<Lot, bool> predicate);
         Task<Lot> CreateLot(CreateLotModel lotModel, int loginId, HttpRequestBase request);
         LotModel GetLot(int lotId);
         IndexViewModel<LotModel> GetLotsBySeller(int page, Func<User, bool> predicate);

@@ -36,5 +36,14 @@ namespace Auction.API.Controllers
             return null;
         }
 
+        public ActionResult GetLotsToConfirmed(int page=1)
+        {
+
+
+
+
+        }
+        
+
     }
 }

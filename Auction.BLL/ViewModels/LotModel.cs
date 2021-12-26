@@ -29,6 +29,7 @@ namespace Auction.BLL.ViewModels
         public User Seller { get; set; }
         public int LoginId { get; set; }
         public Category Category { get; set; }
+        public LotStatus LotStatus { get; set; }
         public long LotCode { get; set; }
         public List<Picture> Pictures { get; set; }
 

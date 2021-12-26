@@ -89,9 +89,22 @@
     <Compile Include="Migrations\202112251053340_AddedNotifications.designer.cs">
       <DependentUpon>202112251053340_AddedNotifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112262150091_UpdateLotStatus.cs" />
+    <Compile Include="Migrations\202112262150091_UpdateLotStatus.designer.cs">
+      <DependentUpon>202112262150091_UpdateLotStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112262153434_UpdateLotStatusNotNull.cs" />
+    <Compile Include="Migrations\202112262153434_UpdateLotStatusNotNull.designer.cs">
+      <DependentUpon>202112262153434_UpdateLotStatusNotNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112262224479_UpdateLotStatuses.cs" />
+    <Compile Include="Migrations\202112262224479_UpdateLotStatuses.designer.cs">
+      <DependentUpon>202112262224479_UpdateLotStatuses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\LotStatus.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\Login.cs" />
@@ -154,6 +167,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112251053340_AddedNotifications.resx">
       <DependentUpon>202112251053340_AddedNotifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112262150091_UpdateLotStatus.resx">
+      <DependentUpon>202112262150091_UpdateLotStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112262153434_UpdateLotStatusNotNull.resx">
+      <DependentUpon>202112262153434_UpdateLotStatusNotNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112262224479_UpdateLotStatuses.resx">
+      <DependentUpon>202112262224479_UpdateLotStatuses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

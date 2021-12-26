@@ -22,11 +22,11 @@ namespace Auction.DAL.Repositories
         }     
         public Lot Get(Func<Lot, bool> predicate)
         {
-            return _dbContext.Lots.Include("Category").Include("Seller").Include("Pictures").Include("Stakes").FirstOrDefault(predicate);
+            return _dbContext.Lots.Include("Category").Include("Seller").Include("Pictures").Include("Stakes").Include("Status").FirstOrDefault(predicate);
         }
         public IEnumerable<Lot> GetAll()
         {
-            return _dbContext.Lots.Include("Category").Include("Pictures").Include("Seller").ToList();
+            return _dbContext.Lots.Include("Category").Include("Pictures").Include("Seller").Include("Status").ToList();
         }
         public IEnumerable<Lot> GetAllList(int sellerId)
         {

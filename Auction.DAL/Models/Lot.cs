@@ -18,6 +18,10 @@ namespace Auction.DAL.Models
 
         [Required]
         public string Description { get; set; }
+
+        
+
+
         [Required]
         public bool IsSoldOut { get; set; }        
         [Required]
@@ -39,6 +43,12 @@ namespace Auction.DAL.Models
         public int? CategoryId { get; set; }
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; }  
+
+
+        [Column("fk_LotStatusId")]
+        public int StatusId { get; set; }
+        [ForeignKey(nameof(StatusId))]
+        public LotStatus Status { get; set; }
 
 
         public List<Picture> Pictures { get; set; }     

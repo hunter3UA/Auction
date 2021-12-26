@@ -55,7 +55,8 @@ namespace Auction.BLL.Services
         }      
         public LotModel GetLot(int lotId)
         {
-           Lot lotById= _unitOfWork.LotRepository.Get(l=>l.LotId==lotId);        
+           Lot lotById= _unitOfWork.LotRepository.Get(l=>l.LotId==lotId);       
+        
            return _mapper.Map<LotModel>(lotById);;
         }
         public IndexViewModel<LotModel> GetLotsBySeller(int page,Func<User,bool> predicate)
@@ -142,16 +143,13 @@ namespace Auction.BLL.Services
 
         }
 
+        public IndexViewModel<LotModel> GetList(int page,Func<Lot,bool> predicate)
+        {
+            List<Lot> lots=_unitOfWork.LotRepository.GetList(predicate).ToList();
+            return null;
+
+        }
+        
       
     }
 }
-/*   public List<LotModel> GetLotsBySellerId(int loginId)
-        {
-            User user = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
-            if (user != null)
-            {
-                List<Lot> lots = _unitOfWork.LotRepository.GetAllBySellerId(user.UserId).ToList();                 
-                return _mapper.Map<List<LotModel>>(lots);
-            }       
-            return new List<LotModel>();
-        }*/
