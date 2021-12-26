@@ -16,6 +16,7 @@ namespace Auction.API
             Bind<IPictureService>().To<PictureService>();
             Bind<IStakeService>().To<StakeService>();
             Bind<INewsService>().To<NewsService>();
+         
         }
     }
 }

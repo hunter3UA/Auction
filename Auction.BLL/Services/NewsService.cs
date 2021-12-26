@@ -83,15 +83,13 @@ namespace Auction.BLL.Services
 
 
         public IndexViewModel<News> GetPageOfNews(int page)
-        {
-
-            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["CountOfNewsOnPage"]);
-            List<News> newsToView = _unitOfWork.NewsRepository.GetList();
-            newsToView.Reverse();
-            PageInfo pageInfo=new PageInfo { PageNumber=page,PageSize=pageSize,TotalItems=newsToView.Count};
-            newsToView=newsToView.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            IndexViewModel<News> ivm=new IndexViewModel<News> { PageInfo = pageInfo,Collection=newsToView };
-
+        {      
+            IndexViewModel<News> ivm=PageService<News>.GetPage(
+                page,     
+                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfNewsOnPage"]),               
+                _unitOfWork.NewsRepository.GetList()
+                );
+            ivm.Collection.Reverse();
             return ivm;
         }
     }

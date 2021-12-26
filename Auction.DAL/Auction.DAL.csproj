@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MinValueAttribute.cs" />
     <Compile Include="AuctionDbContext.cs" />
     <Compile Include="Migrations\202112211640395_CreateDb.cs" />
     <Compile Include="Migrations\202112211640395_CreateDb.designer.cs">

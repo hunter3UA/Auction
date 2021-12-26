@@ -155,5 +155,24 @@ namespace Auction.BLL.Services
             _unitOfWork.UserRepository.Update(userToSearch);
             await _unitOfWork.SaveAsync();
         }
+
+
+        public async Task<bool> DisableUserAsync(int loginId)
+        {
+            Login loginToDisable=_unitOfWork.LoginRepository.Get(l=>l.LoginId== loginId);
+            if (loginToDisable.IsEnabled)
+            {
+                loginToDisable.IsEnabled = false;
+                _unitOfWork.LoginRepository.Update(loginToDisable);
+                await _unitOfWork.SaveAsync();
+                return true;
+            }
+            return false;
+          
+
+           
+
+
+        }
     }
 }

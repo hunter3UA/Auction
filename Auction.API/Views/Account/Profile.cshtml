@@ -8,7 +8,7 @@
     @Html.ActionLink("Створити лот","Create","Lot",null,new { @class="btn btn-success"})
     @Html.ActionLink("Мої лоти","BySeller","Lot",null,new { @class= "btn btn-info" })
     @Html.ActionLink("Мої ставки","MyStakes","Stake",new { page=1},new {@class="btn btn-info"})
-    @Html.ActionLink("Придбані лоти", "AcquiredLots",null, new {@class="btn btn-warning"})
+    @Html.ActionLink("Придбані лоти", "AcquiredLots","Lot",null, new {@class="btn btn-warning"})
     @{ 
         if((User as CustomPrincipal).AccountType.AccountTypeName == "Admin")
         {

@@ -48,8 +48,6 @@ namespace Auction.DAL.Models
         [Column("fk_CartId")]
         public int? CartId { get; set; }
 
-        [Required,ForeignKey((nameof(CartId)))]
-        public ShopptingCart ShoppingCart { get; set; }
 
     }
 }

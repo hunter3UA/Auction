@@ -20,8 +20,6 @@ namespace Auction.BLL.Services
         {
             _unitOfWork = unitOfWork;
         }
-
-
         public async Task<Stake> AddStake(int lotId, double stake,int loginId)
         {
             Stake stakeToAdd = new Stake();
@@ -35,21 +33,16 @@ namespace Auction.BLL.Services
             await _unitOfWork.SaveAsync();        
             return stakeToAdd;
         }
-
-
         public IndexViewModel<Stake> GetPageOfStakes(int page, int loginId)
         {
-
-            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["CountOfStakesOnPage"]);
-            User userOfStakes = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
-            List<Stake> stakes = _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId);
-            stakes.Reverse();
-            PageInfo pageInfo=new PageInfo { PageNumber=page,PageSize=pageSize, TotalItems=stakes.Count};
-            stakes=stakes.Skip((page-1)*pageSize).Take(pageSize).ToList();   
-            IndexViewModel<Stake> ivm = new IndexViewModel<Stake> { PageInfo = pageInfo, Collection = stakes };
+            User userOfStakes = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId); 
+            IndexViewModel<Stake> ivm =PageService<Stake>.GetPage(
+                page,
+                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfStakesOnPage"]),
+                _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId)
+                );
+            ivm.Collection.Reverse();
             return ivm;
         }
-
-
     }
 }

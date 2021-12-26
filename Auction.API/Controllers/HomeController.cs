@@ -7,14 +7,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-/*TODO: вынести логику пагинации в отдельный сервис
- 
- 
- TODO: Cart Update
- 
+/*
 
-
+TODO: Cart Update
 TODO: проверить все токены
+
+TODO: добавить приставку async асинхронным методам
+TODO: убрать возможность редактирования некоторых полей товара
  */
 
 namespace Auction.API.Controllers
@@ -36,7 +35,6 @@ namespace Auction.API.Controllers
         public ActionResult Index(int page=1, string Filters=null, FiltersModel filtersModel=null)
         {
             IndexViewModel<LotModel> ivm = _lotService.GetPageOfLots(page,Filters,filtersModel);
-            ivm.Collection= ivm.Collection.Where
             ViewData["Categories"] = _categoryService.GetCategories();
             return View(ivm);
 
@@ -55,7 +53,7 @@ namespace Auction.API.Controllers
        
 
 
-
+        [HttpGet]
         public ActionResult Contact()
         {
             return View();

@@ -29,89 +29,52 @@ namespace Auction.BLL.Services
             _mapper=AutoMapperConfig.Configure().CreateMapper();
             _pictureService=pictureService;
         }
-
         public async Task<Lot> CreateLot(CreateLotModel lotModel,int loginId, HttpRequestBase request)
         {
-            Lot newLot=_mapper.Map<Lot>(lotModel);
-            newLot.CreatedAt = DateTime.Now;
-            newLot.SoldAt = null;
-            newLot.Seller= _unitOfWork.UserRepository.Get(u=>u.Login.LoginId==loginId);
-            newLot.IsSoldOut = false;
-            newLot.LotCode = DateTime.Now.Ticks/2000;
-            newLot.Category=_unitOfWork.CategoryRepository.Get(c=>c.CategoryId==lotModel.CategoryId);
-            _unitOfWork.LotRepository.Add(newLot);
-            await _unitOfWork.SaveAsync();         
-            if(request.Files!=null)
-                await AddPictures(request, newLot.LotId);     
-            return newLot;
-        }
-
-        public async Task<List<Picture>> AddPictures(HttpRequestBase request,int lotId)
-        {
-            Lot lotOfPictures = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
-            List<Picture> pictures = new List<Picture>();
-            HttpPostedFileBase checkFile = request.Files[0];
-            if (checkFile.FileName != "")
+            try
             {
-                for (int i = 0; i < request.Files.Count; i++)
-                {
-                    HttpPostedFileBase postedFileBase = request.Files[i];
-                    Picture picture = _pictureService.Save(postedFileBase, lotOfPictures.LotId,ConfigurationManager.AppSettings["LotsPictures"]);
-                    picture.IsTittle = false;
-                    picture.LotId = lotOfPictures.LotId;
-                    pictures.Add(picture);
-                    _pictureService.CreateThumb(
-                        picture,
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
-                        ConfigurationManager.AppSettings["PictureGallerySize"]
-                        );
-                    _pictureService.CreateThumb(
-                        picture,
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
-                        ConfigurationManager.AppSettings["PictureMainSize"]
-                        );
-                    _pictureService.CreateThumb(
-                        picture,
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
-                        ConfigurationManager.AppSettings["PictureSearchingSize"]
-                        );
-                }
-                _unitOfWork.PictureRepository.AddRange(pictures);
-                await _unitOfWork.SaveAsync();
-            }
-            return pictures;
-          
-        }
 
+
+                Lot newLot = _mapper.Map<Lot>(lotModel);
+                newLot.EndAt = DateTime.Now.AddDays(lotModel.EndAt);
+                newLot.CreatedAt = DateTime.Now;
+                newLot.SoldAt = null;
+                newLot.Seller = _unitOfWork.UserRepository.Get(u => u.Login.LoginId == loginId);
+                newLot.IsSoldOut = false;
+                newLot.LotCode = DateTime.Now.Ticks / 2000;
+                newLot.Category = _unitOfWork.CategoryRepository.Get(c => c.CategoryId == lotModel.CategoryId);
+                _unitOfWork.LotRepository.Add(newLot);
+                await _unitOfWork.SaveAsync();
+                if (request.Files != null)
+                    await _pictureService.AddPictures(request, newLot.LotId);
+                return newLot;
+            }catch (Exception ex)
+            {
+                return new Lot();
+            }
+        }      
         public LotModel GetLot(int lotId)
         {
            Lot lotById= _unitOfWork.LotRepository.Get(l=>l.LotId==lotId);        
-           LotModel lotModel= _mapper.Map<LotModel>(lotById);
-           return lotModel;
+           return _mapper.Map<LotModel>(lotById);;
         }
-
-        public List<LotModel> GetLotsBySellerId(int loginId)
+        public IndexViewModel<LotModel> GetLotsBySeller(int page,Func<User,bool> predicate)
         {
-            User user = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
+            User user = _unitOfWork.UserRepository.Get(predicate);
             if (user != null)
             {
-                List<Lot> lots = _unitOfWork.LotRepository.GetAllBySellerId(user.UserId).ToList();
-                List<LotModel> lotModelsBySeller = _mapper.Map<List<LotModel>>(lots); 
-                return lotModelsBySeller;
+                List<Lot> lots = _unitOfWork.LotRepository.GetList(u=>u.SellerId==user.UserId).ToList();                 
+                List<LotModel> lotModels=   _mapper.Map<List<LotModel>>(lots);
+                IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
+                    page,
+                    Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLotBySeller"]),
+                    lotModels
+                    );
+                return ivm;
             }       
-            return new List<LotModel>();
+            return new IndexViewModel<LotModel>();
         }
-
-        public List<LotModel> GetAll()
-        {
-            List<Lot> allLots= _unitOfWork.LotRepository.GetAll().ToList();
-            List<LotModel> lotModels= _mapper.Map<List<LotModel>>(allLots);
-            return lotModels;
-
-        }
+      
         /// <summary>
         /// Метод для фільтрації лотів
         /// </summary>
@@ -139,42 +102,56 @@ namespace Auction.BLL.Services
                         allLots = filtersModel.Order=="Desc" ? allLots.OrderByDescending(l=>l.CreatedAt).ToList():allLots.OrderBy(l=>l.CreatedAt).ToList();
                         break;
                 }
-            }
-            List<LotModel> lotModels = _mapper.Map<List<LotModel>>(allLots);
-            return lotModels;
+            }         
+            return _mapper.Map<List<LotModel>>(allLots);
         }
-
         public IndexViewModel<LotModel> GetPageOfLots(int page, string Filters, FiltersModel filtersModel)
         {
-
             FiltersModel FiltersModel = filtersModel;
             if (!string.IsNullOrEmpty(Filters))
-                FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(Filters);
-            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLotsOnPage"]);
-            List<LotModel> models = GetByFilters(FiltersModel);
-            IEnumerable<LotModel> lotsPerpages = models.Skip((page - 1) * pageSize).Take(pageSize);
-            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = models.Count };
-            IndexViewModel<LotModel> ivm = new IndexViewModel<LotModel> { PageInfo = pageInfo, Collection = lotsPerpages.ToList() };
+                FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(Filters);  
+            IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
+                page, 
+                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLotsOnPage"]),
+                GetByFilters(FiltersModel));
             ivm.FiltersModel = FiltersModel;
             return ivm;
         }
-
+        public IndexViewModel<LotModel> GetAcquiredLots(int loginId,int page)
+        {
+            User userByLogin= _unitOfWork.UserRepository.Get(u=>u.LoginId==loginId);
+            ShopptingCart cart = _unitOfWork.CartRepository.Get(c => c.UserId == userByLogin.UserId);
+            List<LotModel> lotModels=_mapper.Map<List<LotModel>>(cart.Lots);
+            IndexViewModel<LotModel> ivm= PageService<LotModel>.GetPage(page,20,lotModels);
+            return ivm;
+        }
         public async Task<LotModel> UpdateLot(int lotId,LotModel modelForUpdate)
         {
             Lot lotToUpdate = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
-            lotToUpdate.LotName=modelForUpdate.LotName;
-            lotToUpdate.Description=modelForUpdate.Description; 
-            lotToUpdate.Category=_unitOfWork.CategoryRepository.Get(c=>c.CategoryId==modelForUpdate.CategoryId);
-            lotToUpdate.Price=modelForUpdate.Price;
-            _unitOfWork.LotRepository.Update(lotToUpdate);
-            await _unitOfWork.SaveAsync();
-            return modelForUpdate;
-
+            if (lotToUpdate.IsSoldOut)
+            {
+                lotToUpdate.LotName = modelForUpdate.LotName;
+                lotToUpdate.Description = modelForUpdate.Description;
+                lotToUpdate.Category = _unitOfWork.CategoryRepository.Get(c => c.CategoryId == modelForUpdate.CategoryId);
+                lotToUpdate.Price = modelForUpdate.Price;
+                _unitOfWork.LotRepository.Update(lotToUpdate);
+                await _unitOfWork.SaveAsync();
+                return modelForUpdate;
+            }
+            return new LotModel();
 
         }
 
-
-       
-
+      
     }
 }
+/*   public List<LotModel> GetLotsBySellerId(int loginId)
+        {
+            User user = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
+            if (user != null)
+            {
+                List<Lot> lots = _unitOfWork.LotRepository.GetAllBySellerId(user.UserId).ToList();                 
+                return _mapper.Map<List<LotModel>>(lots);
+            }       
+            return new List<LotModel>();
+        }*/

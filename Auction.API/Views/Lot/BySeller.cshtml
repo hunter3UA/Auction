@@ -1,5 +1,5 @@
-﻿@model IEnumerable<Auction.BLL.ViewModels.LotModel>
-
+﻿@model IndexViewModel<Auction.BLL.ViewModels.LotModel>
+@using Auction.BLL.ViewModels;
 @{
     ViewBag.Title = "BySeller";
 }
@@ -30,7 +30,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Collection) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.LotName)
@@ -59,3 +59,11 @@
 }
 
 </table>
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+
+        @Html.ActionLink($"{i}", "BySeller", "Lot", new { page = i }, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
+
+    }
+</div>

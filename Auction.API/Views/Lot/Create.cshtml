@@ -1,9 +1,16 @@
-﻿@model Auction.BLL.ViewModels.LotModel
+﻿@model Auction.BLL.ViewModels.CreateLotModel
 @using Auction.BLL.ViewModels;
 
 
 
 @{
+    List<SelectListItem> selectDateItems = new List<SelectListItem>()
+    {
+        new SelectListItem{ Value="1", Text="24 години" },
+        new SelectListItem{ Value="7", Text="1 тиждень" },
+        new SelectListItem{ Value="30", Text="місяць"}
+    };
+
     List<SelectListItem> selectCategories = new List<SelectListItem>();
     CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
     foreach (var category in categories.Categories)
@@ -45,13 +52,19 @@
     <div class="row form-group">
         @Html.LabelFor(m => m.Price, "Ціна: ", new { @class = "col-sm-1" })
         <div class="col">
-            <input class="form-control" type="number" min="0" name="Price" step="100" id="Price" value="0.00" />
+            @Html.TextBoxFor(m => m.Price, new { type="number",@class="createLotPrice" })       
+            <small>
+                @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+            </small>
         </div>
     </div>
     <div class="row form-group">
-        @Html.LabelFor(m => m.Price, "Крок: ", new { @class = "col-sm-1" })
+        @Html.LabelFor(m => m.Step, "Крок: ", new { @class = "col-sm-1" })
         <div class="col">
-            <input class="form-control" type="number" min="20" name="Step"  value="20" />
+            @Html.TextBoxFor(m => m.Step, new { type = "number", @class = "createLotStep" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Step, "", new { @class = "text-danger" })
+            </small>
         </div>
     </div>
     <div class="row form-group">
@@ -63,7 +76,7 @@
     <div class="row form-group">
         @Html.LabelFor(m => m.EndAt, "Дата закінчення: ", new { @class = "col-sm-1" })
         <div class="col">
-            <input type="date" name="EndAt" />
+            @Html.DropDownList("EndAt", selectDateItems);
         </div>
     </div>
     
@@ -76,3 +89,7 @@
     <input type="submit" value="Enter" class="btn btn-info" />
 
 }
+
+<script>
+    
+</script>

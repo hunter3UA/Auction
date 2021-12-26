@@ -4,7 +4,6 @@
 
 <table class="table" style="width:30%">
     <tr>
-
         <th>
             Сума:
         </th>
@@ -17,7 +16,12 @@
     @foreach (var item in Model.Collection)
     {
         <tr>
-            @Html.ActionLink("Сторнка лоту","")              
+            <td>
+                @Html.ActionLink($"{item.LotName}", "LotPage", new { lotId = item.LotId }, null)
+            </td>
+            <td>
+                @item.SoldAt
+            </td>
         </tr>
     }
 
@@ -31,7 +35,7 @@
 <div class="btn-group flex-container" id="btnPages">
     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
     {
-        using (Html.BeginForm("AcquiredLots","Lot",new { page=1 },FormMethod.Get, new { @class = "flex-item-row", style = "padding:0px;width:30px" }))
+        using (Html.BeginForm("AcquiredLots","Lot",new { page=i },FormMethod.Get, new { @class = "flex-item-row", style = "padding:0px;width:30px" }))
         {
             <input type="submit" value="@i" />
         }

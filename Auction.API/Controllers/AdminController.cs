@@ -23,7 +23,18 @@ namespace Auction.API.Controllers
 
 
         }
-  
+        [HttpGet]
+        public ActionResult ManageUser()
+        {
+            return View();
+        }
+        
+
+        [HttpGet]
+        public ActionResult DisableUser(int loginId)
+        {
+            return null;
+        }
 
     }
 }

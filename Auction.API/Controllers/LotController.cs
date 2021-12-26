@@ -12,8 +12,6 @@ using System.Web.Mvc;
 /*
 TODO:добавить уведомление о установки картинки в качестве главной,
 добавить удаление картинки
-TODO: вынести метод добавления картинок  в сервис картинок
-TODO: запретить редактирование проданого лота
 */
 namespace Auction.API.Controllers
 {
@@ -26,7 +24,6 @@ namespace Auction.API.Controllers
 
         public LotController(ICategoryService catetoryService,ILotService lotService,IPictureService pictureService)
         {
-
             _categoryService = catetoryService;
             _lotService = lotService;
             _pictureService = pictureService;
@@ -48,15 +45,17 @@ namespace Auction.API.Controllers
             {
                 Lot addedLot =  await _lotService.CreateLot(lotModel,User.LoginId, Request);
                 return RedirectToAction("Edit","Lot",new { id=addedLot.LotId});
-            }          
-            return RedirectToAction("Create");
+            }
+            
+            return View("Create",lotModel);
         }
 
 
         [HttpGet,Authentication(true)]
-        public ActionResult BySeller()
+        public ActionResult BySeller(int page=1)
         {
-            return View(_lotService.GetLotsBySellerId(User.LoginId));
+            IndexViewModel<LotModel> ivm = _lotService.GetLotsBySeller(page, u => u.LoginId == User.LoginId);
+            return View(ivm);
         }
 
 
@@ -86,6 +85,7 @@ namespace Auction.API.Controllers
         public async Task<ActionResult> Edit(int lotId, LotModel modelToUpdate)
         {
             await _lotService.UpdateLot(lotId, modelToUpdate);
+           
             return RedirectToAction("Edit", new { id=modelToUpdate.LotId});
         }
 
@@ -98,27 +98,32 @@ namespace Auction.API.Controllers
             List<Picture> picturesByLotid=_pictureService.GetList(p=>p.LotId==lotId);
             return PartialView(picturesByLotid);
         }     
-
-        
         [Authentication(true)]
-        public JsonResult PictureSetAsTittle(int lotId,int pictureId)
+        public ActionResult PictureSetAsTittle(int lotId,int pictureId)
         {
             _pictureService.SetTittle(lotId, pictureId);
-            return Json(true,JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Edit", new { id = lotId });
         }
         [HttpPost,Authentication(true)]
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {
-            await _lotService.AddPictures(Request, lotId);
+            await _pictureService.AddPictures(Request, lotId);
             return RedirectToAction("Edit",new { id=lotId });
 
         }
+
+
+        [HttpDelete]
+        public ActionResult RemoveLotPicture(int lotId,int pictureId)
+        {
+            return RedirectToAction("Edit", new { id = lotId });
+        }
+
+
         [HttpGet,Authentication(true)]
         public ActionResult AcquiredLots(int page=1)
         {
-            IndexViewModel<LotModel> ivm=_lotService.GetPageOfLots(10,null,null);
-
-
+            IndexViewModel<LotModel> ivm=_lotService.GetAcquiredLots(User.LoginId,page);       
             return View(ivm);
         }
     }

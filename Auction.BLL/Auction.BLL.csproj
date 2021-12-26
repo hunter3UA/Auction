@@ -116,6 +116,7 @@
     <Compile Include="Services\Abstract\IAccountService.cs" />
     <Compile Include="Services\Abstract\ILotService.cs" />
     <Compile Include="Services\Abstract\INewsService.cs" />
+    <Compile Include="Services\Abstract\IPageService.cs" />
     <Compile Include="Services\Abstract\IStakeService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\Abstract\ICategoryService.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Services\Abstract\IPictureService.cs" />
     <Compile Include="Services\LotService.cs" />
     <Compile Include="Services\NewsService.cs" />
+    <Compile Include="Services\PageService.cs" />
     <Compile Include="Services\PasswordService.cs" />
     <Compile Include="Services\PictureService.cs" />
     <Compile Include="Services\StakeService.cs" />

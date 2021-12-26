@@ -24,18 +24,14 @@
                                 + "_"
                                 + "main"
                                 + Path.GetExtension(picture.Name);
-
                    }
 
                             <li data-thumb="/Pictures/Lots/@picture.LotId/@picturePrevName">
                                 <img src="~/Pictures/Lots/@picture.LotId/@pictureMainName" />
 
-                                @using(Ajax.BeginForm("PictureSetAsTittle",new { lotId=picture.LotId,  pictureId=picture.PictureId },null))
-                                 {
-                                    <input type="submit" value="Всатновити як головну" />
-
-
-                                 }
+                                
+                                @Html.ActionLink("Встановити як головну", "PictureSetAsTittle", new { lotId = picture.LotId, pictureId = picture.PictureId })
+                      
                             </li>
               }
        }

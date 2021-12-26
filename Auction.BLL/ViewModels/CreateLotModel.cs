@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Auction.DAL.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Auction.BLL.ViewModels
@@ -7,14 +8,14 @@ namespace Auction.BLL.ViewModels
     {
         [Required]
         public string LotName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Поле не може бути порожнім")]
         public double Price { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Поле не може бути порожнім")]
         public double Step { get; set; }
 
         [Required]
-        public DateTime EndAt { get; set; }
+        public int EndAt { get; set; }
 
 
         [Required]

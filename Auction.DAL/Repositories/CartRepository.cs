@@ -19,7 +19,7 @@ namespace Auction.DAL.Repositories
 
         public ShopptingCart Get(Func<ShopptingCart,bool> predicate)
         {
-            return _dbContext.ShoppingCarts.FirstOrDefault(predicate);
+            return _dbContext.ShoppingCarts.Include("Lots").FirstOrDefault(predicate);
         }
         public ShopptingCart Add(ShopptingCart cartToAdd)
         {

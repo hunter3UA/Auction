@@ -35,5 +35,11 @@ namespace Auction.DAL.Repositories
             return false;
         }
 
+        public bool Update(Login loginToUpdate)
+        {
+            _dbContext.Entry(loginToUpdate).State=System.Data.Entity.EntityState.Modified;
+            return true;
+        }
+
     }
 }
