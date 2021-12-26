@@ -23,16 +23,14 @@
             </div>
             <div class="navbar-collapse ">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Информация", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
                     <li>@Html.ActionLink("Контакти", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    <div class="dropdown" >
+                    <div class="dropdown">
                         <button onclick="myFunction()" class="dropbtn">Профіль</button>
                         <div id="myDropdown" class="dropdown-content">
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @class = "btn btn-success" })</li>
-                                <li>@Html.ActionLink("Підписки", "Subscribes", "Account", null, new { @class = "btn btn-success" })</li>
-                         
+                                <li>@Html.ActionLink("Підписки", "Subscribes", "Account", null, new { @class = "btn btn-success" })</li>                      
                                 <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
 
                             }

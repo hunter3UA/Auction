@@ -68,8 +68,12 @@ namespace Auction.BLL.Services
                     if (Security.HashHMACSHA1.CheckSaltedHash(loginModel.Password, saltedHash))
                     {
                         Login login = _unitOfWork.LoginRepository.Get(l => l.LoginId == userToLogin.LoginId);
-                        SetLoginCookie(login);
-                        return userToLogin;
+                        if (login.IsEnabled)
+                        {
+                            SetLoginCookie(login);
+                            return userToLogin;
+                        }
+                           
                     }
                 }
 
@@ -77,7 +81,6 @@ namespace Auction.BLL.Services
             {
                  return new User();
             }
-
             return new User();
         }
 

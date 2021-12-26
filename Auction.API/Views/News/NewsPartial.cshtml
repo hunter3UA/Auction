@@ -8,8 +8,8 @@
 
 <div class="news-container">
 @{ 
-        foreach(var item in Model.Collection)
-        {
+  foreach(var item in Model.Collection)
+   {
     <div class="news-block">
         <p>@item.NewsTittle</p>
         <p>@item.CreatedAt</p>
@@ -21,20 +21,23 @@
         {
             <p>@item.NewsText </p>
         }
-
-
-
+        <p>@Html.ActionLink("Детальніше","PageNews",new { newsId = item.NewsId }, new { @class="btn btn-success"})</p>
     </div>
 
+    
 
-
-        }
-
-
-
-
-
-
+   }
 
 }
+</div>
+
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+
+        using (Ajax.BeginForm("NewsPartial", new { page = i }, new AjaxOptions { UpdateTargetId = "newsContainer" }, new { @class = "flex-item-row", style = "padding:0px;width:30px" }))
+        {
+            <input type="submit" value="@i" />
+        }
+    }
 </div>

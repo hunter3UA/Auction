@@ -13,8 +13,8 @@ namespace Auction.DAL.UoW
         ICategoryRepository CategoryRepository { get; }
         IPictureRepository PictureRepository { get; }
         IStakeRepository StakeRepository { get; }
-
         INewsRepository NewsRepository { get; }
+        ICartRepository CartRepository { get; }
         Task SaveAsync();
     }
 }

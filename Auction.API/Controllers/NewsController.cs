@@ -23,6 +23,12 @@ namespace Auction.API.Controllers
 
 
         }
+        [HttpGet,MyAuth("Admin")]
+        public ActionResult CreateNews()
+        {
+            return View();
+        }
+
         [HttpPost,MyAuth("Admin")]
         public async Task<ActionResult> CreateNews(News news)
         {
@@ -38,11 +44,11 @@ namespace Auction.API.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult NewsPartial(int page = 1)
+ 
+        public PartialViewResult NewsPartial(int page = 1)
         {
             IndexViewModel<News> ivm = _newsService.GetPageOfNews(page);
-            return View(ivm);
+            return PartialView(ivm);
 
         }
 

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 TODO:добавить уведомление о установки картинки в качестве главной,
 добавить удаление картинки
 TODO: вынести метод добавления картинок  в сервис картинок
+TODO: запретить редактирование проданого лота
 */
 namespace Auction.API.Controllers
 {
@@ -72,6 +73,7 @@ namespace Auction.API.Controllers
         public ActionResult Edit(int id=0)
         {
             LotModel lotModel= _lotService.GetLot(id);
+           
             if(lotModel != null && lotModel.LoginId == User.LoginId)
             {
                 ViewData["Categories"] = _categoryService.GetCategories();
@@ -110,6 +112,14 @@ namespace Auction.API.Controllers
             await _lotService.AddPictures(Request, lotId);
             return RedirectToAction("Edit",new { id=lotId });
 
+        }
+        [HttpGet,Authentication(true)]
+        public ActionResult AcquiredLots(int page=1)
+        {
+            IndexViewModel<LotModel> ivm=_lotService.GetPageOfLots(10,null,null);
+
+
+            return View(ivm);
         }
     }
 }

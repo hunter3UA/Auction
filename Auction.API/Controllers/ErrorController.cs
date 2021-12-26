@@ -19,5 +19,9 @@ namespace Auction.API.Controllers
             Response.StatusCode = 403;
             return View();
         }
+
+
+
+        
     }
 }

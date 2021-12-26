@@ -6,6 +6,15 @@
 
 }
 
+
+@{ 
+    if (Model.IsSoldOut)
+    {
+        <h1>Лот продано</h1>
+    }
+}
+
+
 <div class="flex-container">
     <div class="flex-item-col" style="width:30%">
         <div id="lightSlider">
@@ -41,7 +50,7 @@
         </div>
     </div>
     <div class="flex-item-col">
-         <div id="Success" class="text-success"></div>
+        <div id="Success" class="text-success"></div>
         <h2>@Model.LotName</h2>
         <label>Ціна на даний момент: @Model.Price</label><br />
         <label>Опис:</label>
@@ -51,14 +60,9 @@
         <br />
         <label>Кінець аукціона: @Model.EndAt</label><br />
         <label>Кількість ставок: @Model.Stakes.Count()</label><br />
-
-
-
-
         @{
-    
 
-            if ((User as CustomPrincipal) != null && Model.LoginId != (User as CustomPrincipal).LoginId)
+            if ((User as CustomPrincipal) != null && Model.LoginId != (User as CustomPrincipal).LoginId && !Model.IsSoldOut)
             {
 
                 <label>Підтвердити ставку<input type="checkbox" id="chbConfirm" /></label><br />
@@ -67,7 +71,7 @@
                     @Html.AntiForgeryToken();
                     var newPrice = Model.Price + Model.Step;
                     <input type="number" name="stake" value="@newPrice" step="50" />
-                    <input type="submit" value="Зробити ставку" class="btn btn-info"  id="btnStake"/>
+                    <input type="submit" value="Зробити ставку" class="btn btn-info" id="btnStake" />
                 }
 
 
@@ -75,7 +79,7 @@
             <div id="validate">
 
             </div>
-           
+
 
 
         }
@@ -99,8 +103,8 @@
             });
         })
 
-      
-        
+
+
         let btnStake = document.querySelector("#btnStake");
         if (btnStake != null) {
             btnStake.addEventListener('click', function (e) {
@@ -117,6 +121,6 @@
             });
         }
 
-      
+
     </script>
 }

@@ -8,13 +8,14 @@
     @Html.ActionLink("Створити лот","Create","Lot",null,new { @class="btn btn-success"})
     @Html.ActionLink("Мої лоти","BySeller","Lot",null,new { @class= "btn btn-info" })
     @Html.ActionLink("Мої ставки","MyStakes","Stake",new { page=1},new {@class="btn btn-info"})
+    @Html.ActionLink("Придбані лоти", "AcquiredLots",null, new {@class="btn btn-warning"})
     @{ 
         if((User as CustomPrincipal).AccountType.AccountTypeName == "Admin")
         {
             @Html.ActionLink("Додати новину","CreateNews","News",null,new {@class="btn btn-success"})
         }
     }
-
+    @Html.ActionLink("Повідомлення","GetNotify",null,new {@class="btn btn-warning"})
 </div>
 <div>
 @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form" }))
@@ -47,8 +48,7 @@
             </small>
         </div>
     </div>
-    <input type="submit" value="Enter" class="btn btn-info" />
+    <input type="submit" value="Оновити" class="btn btn-info" />
 
 }
-
 </div>

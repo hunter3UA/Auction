@@ -7,7 +7,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-/*TODO: вынести логику пагинации в отдельный сервис*/
+/*TODO: вынести логику пагинации в отдельный сервис
+ 
+ 
+ TODO: Cart Update
+ 
+
+
+TODO: проверить все токены
+ */
 
 namespace Auction.API.Controllers
 {
@@ -28,6 +36,7 @@ namespace Auction.API.Controllers
         public ActionResult Index(int page=1, string Filters=null, FiltersModel filtersModel=null)
         {
             IndexViewModel<LotModel> ivm = _lotService.GetPageOfLots(page,Filters,filtersModel);
+            ivm.Collection= ivm.Collection.Where
             ViewData["Categories"] = _categoryService.GetCategories();
             return View(ivm);
 
@@ -43,21 +52,12 @@ namespace Auction.API.Controllers
             return PartialView("Pages",ivm);
         }
 
-        [HttpGet]
-        public ActionResult SubscriptionsPage(int page=1)
-        {
-            return View();
-        }
+       
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-            return View();
-        }
+
 
         public ActionResult Contact()
         {
-
             return View();
         }
     }

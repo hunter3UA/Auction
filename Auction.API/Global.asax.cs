@@ -2,6 +2,7 @@ using Auction.BLL.LoginModels;
 using Auction.BLL.Services;
 using Auction.BLL.Services.BgServices;
 using Auction.DAL;
+using Microsoft.Extensions.Hosting;
 using Ninject;
 using Ninject.Web.Mvc;
 using System;
@@ -16,9 +17,7 @@ namespace Auction.API
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-
-
-        protected  void Application_Start()
+        protected async  void Application_Start()
         {
              
 
@@ -27,12 +26,11 @@ namespace Auction.API
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
          
-
             DependencyResolverModule registrations = new DependencyResolverModule();
             var kernel = new StandardKernel(registrations);
             kernel.Unbind<ModelValidatorProvider>();
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
-            GettingLotScheduler.Start();
+            await GettingLotScheduler.Start();
 
           
         }
@@ -44,9 +42,7 @@ namespace Auction.API
             {
                 FormsAuthenticationTicket authenticationTicket = FormsAuthentication.Decrypt(authCookie.Value);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-
                 UserSerializationModel loginCookieModel = serializer.Deserialize<UserSerializationModel>(authenticationTicket.UserData);
-
                 CustomPrincipal loggedInUser = new CustomPrincipal(authenticationTicket.Name);
                 loggedInUser.LoginId = loginCookieModel.LoginId;
                 loggedInUser.AccountType = loginCookieModel.AccountType;

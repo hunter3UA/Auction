@@ -21,7 +21,7 @@ namespace Auction.DAL.Repositories
         }    
         public Login Get(Func<Login, bool> predicate)
         {
-            return _dbContext.Logins.Include("AccountType").FirstOrDefault(predicate);
+            return  _dbContext.Logins.Include("AccountType").FirstOrDefault(predicate);
         }
 
         public bool Delete(Func<Login,bool> predicate)

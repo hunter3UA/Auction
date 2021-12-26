@@ -24,7 +24,18 @@ namespace Auction.DAL.UoW
         private IPictureRepository _pictureRepository;
         private IStakeRepository _stakeRepository;
         private INewsRepository _newsRepository;
+        private ICartRepository _cartRepository;
 
+
+        public ICartRepository CartRepository
+        {
+            get
+            {
+                if( _cartRepository == null )
+                    _cartRepository = new CartRepository(_dbContext);
+                return _cartRepository;
+            }
+        }
 
         public INewsRepository NewsRepository
         {

@@ -101,11 +101,8 @@ namespace Auction.BLL.Services
                 List<Lot> lots = _unitOfWork.LotRepository.GetAllBySellerId(user.UserId).ToList();
                 List<LotModel> lotModelsBySeller = _mapper.Map<List<LotModel>>(lots); 
                 return lotModelsBySeller;
-            }
-         
+            }       
             return new List<LotModel>();
-
-           
         }
 
         public List<LotModel> GetAll()
@@ -177,6 +174,7 @@ namespace Auction.BLL.Services
         }
 
 
+       
 
     }
 }

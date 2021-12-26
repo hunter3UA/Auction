@@ -1,0 +1,42 @@
+﻿@model Auction.BLL.ViewModels.IndexViewModel<LotModel>
+@using Auction.BLL.ViewModels;
+
+
+<table class="table" style="width:30%">
+    <tr>
+
+        <th>
+            Сума:
+        </th>
+        <th>
+            Дата:
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Collection)
+    {
+        <tr>
+            @Html.ActionLink("Сторнка лоту","")              
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+        using (Html.BeginForm("AcquiredLots","Lot",new { page=1 },FormMethod.Get, new { @class = "flex-item-row", style = "padding:0px;width:30px" }))
+        {
+            <input type="submit" value="@i" />
+        }
+    }
+</div>
+
+
+

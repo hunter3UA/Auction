@@ -6,7 +6,7 @@ namespace Auction.DAL
     public class AuctionDbContext:DbContext
     {
      
-
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Stake> Stakes { get; set; }
         public DbSet<Picture> Pictures { get; set; }    
