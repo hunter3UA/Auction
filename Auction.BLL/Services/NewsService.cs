@@ -24,9 +24,6 @@ namespace Auction.BLL.Services
             _unitOfWork = unitOfWork;
             _pictureService = pictureService;
         }
-
-
-
         public async Task<News> CreateNews(News newsToAdd,HttpRequestBase request)
         {
             try
@@ -39,7 +36,6 @@ namespace Auction.BLL.Services
             return newsToAdd;
 
         }
-
         public News GetNews(Func<News,bool> predicate)
         {
             News newsToView = _unitOfWork.NewsRepository.Get(predicate);
@@ -48,9 +44,6 @@ namespace Auction.BLL.Services
             return newsToView;
 
         }
-
-
-
         public async Task<List<Picture>> AddNewsPictures(HttpRequestBase request,News addedNews)
         {
             List<Picture> pictures = new List<Picture>();
@@ -79,18 +72,11 @@ namespace Auction.BLL.Services
             }
             return pictures;
         }
-
-
-
-        public IndexViewModel<News> GetPageOfNews(int page)
-        {      
-            IndexViewModel<News> ivm=PageService<News>.GetPage(
-                page,     
-                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfNewsOnPage"]),               
-                _unitOfWork.NewsRepository.GetList()
-                );
-            ivm.Collection.Reverse();
-            return ivm;
+        public List<News> GetListOfNews()
+        {
+            List<News> news = _unitOfWork.NewsRepository.GetList();
+            return news;
+            
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model Auction.BLL.ViewModels.IndexViewModel<LotModel>
 @using Auction.BLL.ViewModels;
 @using Auction.API.Helpers
 @using Newtonsoft.Json;
@@ -6,7 +6,7 @@
 
     CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
 
-List<SelectListItem> orderItems = new List<SelectListItem>()
+    List<SelectListItem> orderItems = new List<SelectListItem>()
 {
         new SelectListItem(){ Value="Asc", Text = "за зростанням" },
         new SelectListItem(){ Value="Desc", Text="за спаданням"},
@@ -14,7 +14,7 @@ List<SelectListItem> orderItems = new List<SelectListItem>()
 };
 
 
-List<SelectListItem> criterions = new List<SelectListItem>()
+    List<SelectListItem> criterions = new List<SelectListItem>()
 {
         new SelectListItem(){ Value="", Text="--"},
         new SelectListItem(){ Value="PriceCriterion", Text="за ціною"},
@@ -30,7 +30,7 @@ List<SelectListItem> criterions = new List<SelectListItem>()
     <div class="flex-item-row filters-item" id="filtersSection">
         <label> Фільтри:</label>
         <div class="flex-container flex-item-col">
-            @using (Ajax.BeginForm("Pages", new { page=1}, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
+            @using (Ajax.BeginForm("Pages", new { page = 1 }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
             {
                 <div class="flex-item-row">
                     Категорія:
@@ -55,58 +55,18 @@ List<SelectListItem> criterions = new List<SelectListItem>()
                     <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
                 </div>
             }
-            @using(Ajax.BeginForm("Pages", new { page = 1, Filters = "" }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
+            @using (Ajax.BeginForm("Pages", new { page = 1, Filters = "" }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
             {
-                <input type="submit" value="Зкинути фільтри"  id="btnClearFilters"/>
+                <input type="submit" value="Зкинути фільтри" id="btnClearFilters" />
             }
 
         </div>
     </div>
     <div class="flex-item-row">
         <div class="flex-container flex-item-col">
-            @*Заменить слайдер на свой*@
-            <div class="flex-item-row">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel style="height:300px">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    </ol>
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-                        <div class="item active" style="height:300px;">
-                            <img src="~/Content/img/Internet-Shopping.jpg" height="300px;">
-                            <div class="carousel-caption">
-                                <h3>Caption Text</h3>
-                            </div>
-                        </div>
-                        <div class="item" style="height:300px;">
-                            <img src="~/Content/img/Internet-Shopping.jpg" height="300px;">
-                            <div class="carousel-caption">
-                                <h3>Caption Text</h3>
-                            </div>
-                        </div>
-                        <div class="item" style="height:300px;">
-                            <img src="~/Content/img/Internet-Shopping.jpg" height="300px;">
-                            <div class="carousel-caption">
-                                <h3>Caption Text</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </div> <!-- Carousel -->
-            </div>
             <div class="flex-item-row">
                 <div id="updatedPage">
-                    @{ 
+                    @{
                         Html.RenderPartial("Pages");
 
                     }
@@ -122,8 +82,8 @@ List<SelectListItem> criterions = new List<SelectListItem>()
 
 
 @section scripts{
-    
-<script>
+
+    <script>
         let btnClearFilters = document.querySelector("#btnClearFilters");
         btnClearFilters.addEventListener('click', function () {
             let allChbx = document.getElementsByName('Categories');
@@ -135,9 +95,16 @@ List<SelectListItem> criterions = new List<SelectListItem>()
             }
         });
 
-</script>
-    
-    
-    
-    
+        let btnFiltersSubmit = document.querySelector("#btnFiltersSubmit");
+
+       
+
+
+
+
+    </script>
+
+
+
+
 }  

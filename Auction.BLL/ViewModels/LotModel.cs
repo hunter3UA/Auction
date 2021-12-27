@@ -35,6 +35,7 @@ namespace Auction.BLL.ViewModels
 
         public List<Stake> Stakes { get; set; }
 
+
         public int? CartId { get; set; }
     }
 }

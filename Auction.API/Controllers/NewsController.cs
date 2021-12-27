@@ -1,9 +1,11 @@
 ﻿using Auction.API.Filters;
+using Auction.BLL.Services;
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
 using Auction.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -39,7 +41,14 @@ namespace Auction.API.Controllers
         [HttpGet]
         public ActionResult GetNews(int page=1)
         {
-            IndexViewModel<News> ivm = _newsService.GetPageOfNews(page);
+
+            List<News> news = _newsService.GetListOfNews();
+            IndexViewModel<News> ivm = PageService<News>.GetPage(
+                page,
+                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfNewsOnPage"]),
+                news
+                );
+            ivm.Collection.Reverse();
             return View(ivm);
         }
 
@@ -47,7 +56,13 @@ namespace Auction.API.Controllers
  
         public PartialViewResult NewsPartial(int page = 1)
         {
-            IndexViewModel<News> ivm = _newsService.GetPageOfNews(page);
+            List<News> news = _newsService.GetListOfNews();
+            IndexViewModel<News> ivm = PageService<News>.GetPage(
+                page,
+                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfNewsOnPage"]),
+                news
+                );
+            ivm.Collection.Reverse();
             return PartialView(ivm);
 
         }
@@ -64,22 +79,3 @@ namespace Auction.API.Controllers
 }
 
 
-/* [HttpGet]
-        public ActionResult Index(int page=1, string Filters=null, FiltersModel filtersModel=null)
-        {
-            IndexViewModel<LotModel> ivm = _lotService.GetPageOfLots(page,Filters,filtersModel);
-            ViewData["Categories"] = _categoryService.GetCategories();
-            return View(ivm);
-
-        }
-
-
-       
-        public ActionResult Pages(int page = 0, string Filters = null, FiltersModel filtersModel = null)
-        {
-            if (page == 0)
-                return RedirectToAction("Index");
-            IndexViewModel<LotModel> ivm = _lotService.GetPageOfLots(page, Filters, filtersModel);
-            return PartialView("Pages",ivm);
-        }
-*/

@@ -14,6 +14,6 @@ namespace Auction.BLL.Services.Abstract
         News GetNews(Func<News, bool> predicate);
         Task<News> CreateNews(News newsToAdd, HttpRequestBase request);
         Task<List<Picture>> AddNewsPictures(HttpRequestBase request, News addedNews);
-        IndexViewModel<News> GetPageOfNews(int page);
+        List<News> GetListOfNews();
     }
 }

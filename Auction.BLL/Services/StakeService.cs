@@ -33,16 +33,12 @@ namespace Auction.BLL.Services
             await _unitOfWork.SaveAsync();        
             return stakeToAdd;
         }
-        public IndexViewModel<Stake> GetPageOfStakes(int page, int loginId)
+        public List<Stake> GetListOfStakes(int loginId)
         {
-            User userOfStakes = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId); 
-            IndexViewModel<Stake> ivm =PageService<Stake>.GetPage(
-                page,
-                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfStakesOnPage"]),
-                _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId)
-                );
-            ivm.Collection.Reverse();
-            return ivm;
+            User userOfStakes = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
+            List<Stake> stakesByUser = _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId);
+            stakesByUser.Reverse();
+            return stakesByUser;
         }
     }
 }

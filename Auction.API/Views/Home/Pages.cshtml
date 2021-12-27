@@ -57,6 +57,7 @@
         var str = JsonConvert.SerializeObject(Model.FiltersModel);
         using (Ajax.BeginForm("Pages", new { page = i, Filters = str }, new AjaxOptions { UpdateTargetId = "updatedPage" }, new { @class="flex-item-row", style="padding:0px;width:30px"}))
         {
+
             <input type="submit" value="@i" />
         }
     }
