@@ -1,0 +1,22 @@
+﻿
+
+
+<div>
+    @using(Ajax.BeginForm("GetUserInfo",null,new AjaxOptions { UpdateTargetId="searchedUser" },null)) {
+        @Html.AntiForgeryToken()
+       <label>Введіть ідентифікатора або email користувача</label>
+       <input type="text" name="userToSearch" />
+       <input type="submit"  value="Пошук"/>
+    }
+</div>
+
+
+
+
+
+<div id="searchedUser">
+ 
+</div>
+<div>
+    @ViewBag.ErrorMsg
+</div>

@@ -20,7 +20,7 @@ namespace Auction.BLL.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<Stake> AddStake(int lotId, double stake,int loginId)
+        public async Task<Stake> AddStakeAsync(int lotId, double stake,int loginId)
         {
             Stake stakeToAdd = new Stake();
             Lot lotOfStake=_unitOfWork.LotRepository.Get(l=>l.LotId==lotId);
@@ -39,6 +39,12 @@ namespace Auction.BLL.Services
             List<Stake> stakesByUser = _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId);
             stakesByUser.Reverse();
             return stakesByUser;
+        }
+
+        public async Task RemoveStake(int stakeId)
+        {
+            Stake stakeToRemove= _unitOfWork.StakeRepository.Get(s=>s.StakeId==stakeId);
+
         }
     }
 }

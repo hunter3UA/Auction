@@ -34,7 +34,7 @@ namespace Auction.API.Controllers
         [HttpPost,MyAuth("Admin")]
         public async Task<ActionResult> CreateNews(News news)
         {
-            await _newsService.CreateNews(news, Request);
+            await _newsService.CreateNewsAsync(news, Request);
             return RedirectToAction("PageNews", new { newsId = news.NewsId });
         }
 

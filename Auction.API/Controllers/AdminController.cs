@@ -1,48 +1,58 @@
 ﻿using Auction.API.Filters;
 using Auction.BLL.Services.Abstract;
-using Auction.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+using Auction.BLL.ViewModels;
 using System.Web.Mvc;
-//TODO: добавить отображение картинок на странице новостей
+
+
 namespace Auction.API.Controllers
 {
 
     [MyAuth("Admin")]
     public class AdminController : BaseController
     {
-        private readonly INewsService _newsService;
+ 
+        private readonly IAccountService _accountService;
+        private readonly IStatusService _statusService;
 
-
-        public AdminController(INewsService newsService)
+        public AdminController(IAccountService accountService, IStatusService statusService)
         {
-            _newsService = newsService;
-
-
+            _accountService = accountService;
+            _statusService = statusService;
         }
         [HttpGet]
-        public ActionResult ManageUser()
+        public ActionResult AdminPanel()
         {
             return View();
         }
         
-
-        [HttpGet]
-        public ActionResult DisableUser(int loginId)
+        public ActionResult SearchUser()
         {
+            return PartialView();
+        }
+
+        public ActionResult DisableUser()
+        {
+         
+            return PartialView();
+        }
+
+
+
+        [HttpPost]
+        public ActionResult DisableUser(int loginIdToDisable)
+        {
+            _accountService.DisableUserAsync(loginIdToDisable);
             return null;
         }
 
-        public ActionResult GetLotsToConfirmed(int page=1)
+        [ValidateAntiForgeryToken]
+        public ActionResult GetUserInfo(string userToSearch)
         {
-
-
-            return null;
-
+            UserModel searchedUser= _accountService.GetUser(u=>u.Login.Email==userToSearch);
+            return PartialView(searchedUser);
         }
+
+
         
 
     }

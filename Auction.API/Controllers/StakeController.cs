@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-/*TODO: сделать ограничение на добавление отрицательных чисел и чисел меншей ставки и уведомление об создании ставки*/
+/*TODO:   уведомление об создании ставки*/
 namespace Auction.API.Controllers
 {
     [Authentication(true)]
@@ -27,9 +27,15 @@ namespace Auction.API.Controllers
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> AddStake(int lotId=0, double stake=0)
         {
-            await _stakeService.AddStake(lotId, stake, User.LoginId);
+            await _stakeService.AddStakeAsync(lotId, stake, User.LoginId);
             ViewBag.Success = "Ставка зроблена";  
             return RedirectToAction("LotPage","Lot",new { lotId = lotId});
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> RemoverStake(int stakeId)
+        {
+            return null;
         }
 
 
@@ -63,17 +69,3 @@ namespace Auction.API.Controllers
         }
     }
 }
-
-/*
- *   IndexViewModel<Stake> ivm = _stakeService.GetPageOfStakes(page, User.LoginId);
-            return View(ivm);
- * 
- * 
- * 
- * List<Stake> stakes = _stakeService.GetListOfStakes( User.LoginId);
-            IndexViewModel<Stake> ivm = PageService<Stake>.GetPage()
-            return View(ivm);
-
-
- 
- */

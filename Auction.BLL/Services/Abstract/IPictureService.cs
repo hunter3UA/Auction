@@ -12,13 +12,15 @@ namespace Auction.BLL.Services.Abstract
 {
     public interface IPictureService
     {
-        Task<List<Picture>> AddPictures(HttpRequestBase request, int lotId);
+        Task<List<Picture>> AddPicturesAsync(HttpRequestBase request, int lotId);
         Picture Save(HttpPostedFileBase postedFile, long id, string pictureTypeFolder);
         List<Picture> GetList(Func<Picture, bool> predicate);
         void CreateThumb(Picture pictureInfo, int width, int height, string resizedFor);
         void SaveThumb(Image thumbFileToSave, string savePath, string saveFileName);
         Image Resize(Image imageToResize, Size size);
         void SetTittle(int lotId, int pictureId);
-      
+        Task<bool> RemovePicture(int id, string directory, string subDirectory, int pictureId);
+
+
     }
 }

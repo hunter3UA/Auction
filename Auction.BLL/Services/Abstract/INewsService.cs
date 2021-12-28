@@ -12,8 +12,8 @@ namespace Auction.BLL.Services.Abstract
     public interface INewsService
     {
         News GetNews(Func<News, bool> predicate);
-        Task<News> CreateNews(News newsToAdd, HttpRequestBase request);
-        Task<List<Picture>> AddNewsPictures(HttpRequestBase request, News addedNews);
+        Task<News> CreateNewsAsync(News newsToAdd, HttpRequestBase request);
+        Task<List<Picture>> AddNewsPicturesAsync(HttpRequestBase request, News addedNews);
         List<News> GetListOfNews();
     }
 }

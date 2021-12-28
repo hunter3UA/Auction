@@ -13,9 +13,11 @@
         if((User as CustomPrincipal).AccountType.AccountTypeName == "Admin")
         {
             @Html.ActionLink("Додати новину","CreateNews","News",null,new {@class="btn btn-success"})
+            @Html.ActionLink("Керування користувачами", "AdminPanel", "Admin",null,new {@class="btn btn-success"})
         }
     }
     @Html.ActionLink("Повідомлення","GetNotify",null,new {@class="btn btn-warning"})
+    
 </div>
 <div>
 @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form" }))

@@ -12,10 +12,23 @@ namespace Auction.DAL.Repositories
     public class PictureRepository:IPictureRepository
     {
         private readonly AuctionDbContext _dbContext;
-
         public PictureRepository(AuctionDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+        public bool Remove(Picture pictureToRemove)
+        {
+            if(pictureToRemove!=null && pictureToRemove.PictureId != 0)
+            {
+                _dbContext.Pictures.Remove(pictureToRemove);
+                return true;
+            }
+            return false;
+             
+        }
+        public Picture Get(Func<Picture,bool> predicate)
+        {
+            return _dbContext.Pictures.FirstOrDefault(predicate);
         }
         public List<Picture> AddRange(List<Picture> picturesToAdd)
         {

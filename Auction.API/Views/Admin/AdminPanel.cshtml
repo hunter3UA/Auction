@@ -1,0 +1,28 @@
+﻿
+
+
+
+<div class="flex-container">
+    <div class="flex-item-col flex-container" style="border:1px solid black">
+            <div class="flex-item-row">
+            @using (Ajax.BeginForm("SearchUser", null,new AjaxOptions { UpdateTargetId="manageDiv", HttpMethod="Get"},null))
+            {
+                <input type="submit" value="Знайти користувача" />
+            }
+            </div>
+            <div class="flex-item-row">
+                @using (Ajax.BeginForm("DisableUser", null, new AjaxOptions { UpdateTargetId = "manageDiv", HttpMethod = "Get" }, null))
+                {
+                    <input type="submit" value="Заблокувати користувача" />
+                }
+            </div> 
+            
+            
+    </div>
+    <div class="flex-item-col" style="border:1px solid black">
+        <div id="manageDiv">
+            
+        </div>
+    </div>
+</div>
+

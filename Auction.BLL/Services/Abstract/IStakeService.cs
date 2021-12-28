@@ -11,7 +11,7 @@ namespace Auction.BLL.Services.Abstract
     public interface IStakeService
     {
 
-        Task<Stake> AddStake(int lotId, double stake, int loginId);
+        Task<Stake> AddStakeAsync(int lotId, double stake, int loginId);
         List<Stake> GetListOfStakes(int loginId);
     }
 }

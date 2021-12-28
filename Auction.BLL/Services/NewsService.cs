@@ -24,7 +24,7 @@ namespace Auction.BLL.Services
             _unitOfWork = unitOfWork;
             _pictureService = pictureService;
         }
-        public async Task<News> CreateNews(News newsToAdd,HttpRequestBase request)
+        public async Task<News> CreateNewsAsync(News newsToAdd,HttpRequestBase request)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace Auction.BLL.Services
                 await _unitOfWork.SaveAsync();
             }
             catch (Exception ex) { }          
-            await AddNewsPictures(request,newsToAdd);
+            await AddNewsPicturesAsync(request,newsToAdd);
             return newsToAdd;
 
         }
@@ -44,7 +44,7 @@ namespace Auction.BLL.Services
             return newsToView;
 
         }
-        public async Task<List<Picture>> AddNewsPictures(HttpRequestBase request,News addedNews)
+        public async Task<List<Picture>> AddNewsPicturesAsync(HttpRequestBase request,News addedNews)
         {
             List<Picture> pictures = new List<Picture>();
             HttpPostedFileBase checkFile = request.Files[0];

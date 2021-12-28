@@ -42,19 +42,15 @@ namespace Auction.DAL.Models
         [Column("fk_CategoryId")]
         public int? CategoryId { get; set; }
         [ForeignKey(nameof(CategoryId))]
-        public Category Category { get; set; }  
+        public Category Category { get; set; }
 
 
         [Column("fk_LotStatusId")]
         public int StatusId { get; set; }
         [ForeignKey(nameof(StatusId))]
         public LotStatus Status { get; set; }
-
-
         public List<Picture> Pictures { get; set; }     
         public List<Stake> Stakes { get; set; }
-
-
         [Column("fk_CartId")]
         public int? CartId { get; set; }
 

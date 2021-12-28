@@ -9,6 +9,8 @@ namespace Auction.BLL.ViewModels
 {
     public class UserModel
     {
+
+        public int LoginId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

@@ -1,5 +1,6 @@
 ﻿using Auction.BLL.Services;
 using Auction.BLL.Services.Abstract;
+using Auction.DAL.Models;
 using Auction.DAL.UoW;
 using Ninject.Modules;
 
@@ -16,6 +17,7 @@ namespace Auction.API
             Bind<IPictureService>().To<PictureService>();
             Bind<IStakeService>().To<StakeService>();
             Bind<INewsService>().To<NewsService>();
+            Bind<IStatusService>().To<StatusService>();
          
         }
     }

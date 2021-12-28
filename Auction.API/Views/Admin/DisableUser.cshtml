@@ -1,1 +1,17 @@
 ﻿
+
+
+<div>
+    @using (Ajax.BeginForm("DisableUser", null,new AjaxOptions { }, null))
+    {
+        @Html.AntiForgeryToken()   
+        <div class="form-group">
+            <label class="control-label ">Введіть ідентифікатора або email користувача</label>
+            <div class="col">
+                <input type="text" class="form-control" name="userToDelete"/>
+            </div>
+        </div>
+        <p><input type="submit" value="Блокувати"  id="btnConfirm"/></p>  
+        <div id="validate"></div>
+    }
+</div>

@@ -22,14 +22,14 @@ namespace Auction.API.Controllers
         [HttpGet, Authentication(true)]
         public new ActionResult Profile()
         {
-            UserModel model = _accountService.GetUser(User.LoginId);
+            UserModel model = _accountService.GetUser(u=>u.LoginId==User.LoginId);
             return View(model);
         }
         [HttpPost]
         public new async Task<ActionResult> Profile(UserModel updateUserModel)
         {
             updateUserModel.Email=User.Identity.Name;
-            await _accountService.Update(updateUserModel,User.LoginId);
+            await _accountService.UpdateAsync(updateUserModel,User.LoginId);
             return View(updateUserModel);
         }
 
@@ -44,7 +44,7 @@ namespace Auction.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                User newUser= await _accountService.CreateUser(registerModel);
+                User newUser= await _accountService.CreateUserAsync(registerModel);
                 if (newUser.UserId == 0)
                 {
                     ViewBag.IncorrectEmail = "Користувач з таким логіном вже існує";
@@ -76,15 +76,6 @@ namespace Auction.API.Controllers
             }
             return View(loginModel);
         }
-
-      
-        [HttpGet,MyAuth("Admin")]
-        public ActionResult Admin()
-        {
-            return View();
-        }
-
-
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();

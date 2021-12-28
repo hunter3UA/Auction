@@ -22,7 +22,7 @@ namespace Auction.BLL.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<List<Picture>> AddPictures(HttpRequestBase request, int lotId)
+        public async Task<List<Picture>> AddPicturesAsync(HttpRequestBase request, int lotId)
         {
             Lot lotOfPictures = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
             List<Picture> pictures = new List<Picture>();
@@ -159,9 +159,38 @@ namespace Auction.BLL.Services
 
         }    
 
+
+
+        public async Task<bool> RemovePicture(int id,string directory,string subDirectory, int pictureId)
+        {    
+            Picture pictureToRemove = _unitOfWork.PictureRepository.Get(p => p.PictureId == pictureId);
+            if (pictureToRemove != null)
+            {
+                string path = Path.Combine(HttpContext.Current.Server.MapPath("~"),directory,subDirectory,id.ToString());
+                if (Directory.Exists(path))
+                {
+                    string[] fs = Directory.GetFiles(path);                                    
+                    List<string> filesToRemove = fs.Where(f => f.Contains(Path.GetFileNameWithoutExtension(pictureToRemove.Name))).ToList();
+                    try
+                    {
+                        foreach (var file in filesToRemove)
+                        {
+                            File.Delete(Path.Combine(path, file));
+                        }
+                    }catch (Exception ex) { }
+                    bool isDeleted = _unitOfWork.PictureRepository.Remove(pictureToRemove);
+                    await _unitOfWork.SaveAsync();
+                    return isDeleted;
+                }
+            }
+            return false;
+        }
+
         public void SetTittle(int lotId,int pictureId)
         {
-            _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
+            Lot lotToUpdate= _unitOfWork.LotRepository.Get(l=>l.LotId == lotId && !l.IsSoldOut);
+            if(lotToUpdate!=null)
+                _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
         }
 
         public List<Picture> GetList(Func<Picture,bool> predicate)

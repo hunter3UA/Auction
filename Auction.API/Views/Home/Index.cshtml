@@ -1,7 +1,6 @@
 ﻿@model Auction.BLL.ViewModels.IndexViewModel<LotModel>
 @using Auction.BLL.ViewModels;
-@using Auction.API.Helpers
-@using Newtonsoft.Json;
+@using Auction.BLL.LoginModels;
 @{
 
     CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
@@ -30,9 +29,9 @@
     <div class="flex-item-row filters-item" id="filtersSection">
         <label> Фільтри:</label>
         <div class="flex-container flex-item-col">
-            @using (Ajax.BeginForm("Pages", new { page = 1 }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
+            @using (Ajax.BeginForm("Pages", new { page = 1 }, new AjaxOptions { UpdateTargetId = "updatedPage" }, new { id="filtersForm"}))
             {
-                <div class="flex-item-row">
+                <div class="flex-item-row" id="chbFlags">
                     Категорія:
                     @foreach (var item in categories.Categories)
                     {
@@ -54,6 +53,12 @@
                 <div class="flex-item-row">
                     <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
                 </div>
+                if ((User as CustomPrincipal)!=null && (User as CustomPrincipal).IsInRole("Admin"))
+                {
+                    <div>
+                        за статусом
+                    </div>
+                }
             }
             @using (Ajax.BeginForm("Pages", new { page = 1, Filters = "" }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
             {
@@ -83,7 +88,9 @@
 
 @section scripts{
 
-    <script>
+<script>
+
+
         let btnClearFilters = document.querySelector("#btnClearFilters");
         btnClearFilters.addEventListener('click', function () {
             let allChbx = document.getElementsByName('Categories');
@@ -94,17 +101,8 @@
                 allChbx[i].checked = false;
             }
         });
+     
 
-        let btnFiltersSubmit = document.querySelector("#btnFiltersSubmit");
+</script>
 
-       
-
-
-
-
-    </script>
-
-
-
-
-}  
+}

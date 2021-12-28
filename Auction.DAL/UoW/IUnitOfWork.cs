@@ -15,6 +15,9 @@ namespace Auction.DAL.UoW
         IStakeRepository StakeRepository { get; }
         INewsRepository NewsRepository { get; }
         ICartRepository CartRepository { get; }
+
+        IStatusRepository StatusRepository { get; }
+
         Task SaveAsync();
     }
 }

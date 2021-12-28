@@ -1,12 +1,7 @@
 ﻿using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
-using Auction.DAL.Models;
 using Auction.DAL.UoW;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Auction.BLL.Services
 {

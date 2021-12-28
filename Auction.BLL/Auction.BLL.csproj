@@ -118,6 +118,7 @@
     <Compile Include="Services\Abstract\INewsService.cs" />
     <Compile Include="Services\Abstract\IPageService.cs" />
     <Compile Include="Services\Abstract\IStakeService.cs" />
+    <Compile Include="Services\Abstract\IStatusService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\Abstract\ICategoryService.cs" />
     <Compile Include="Services\BgServices\GettingLotScheduler.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Services\PasswordService.cs" />
     <Compile Include="Services\PictureService.cs" />
     <Compile Include="Services\StakeService.cs" />
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="ViewModels\CategoriesModel.cs" />
     <Compile Include="ViewModels\CreateLotModel.cs" />
     <Compile Include="ViewModels\FiltersModel.cs" />

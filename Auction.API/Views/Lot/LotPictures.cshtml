@@ -31,7 +31,12 @@
 
                                 
                                 @Html.ActionLink("Встановити як головну", "PictureSetAsTittle", new { lotId = picture.LotId, pictureId = picture.PictureId })
-                      
+                                @Html.ActionLink("Видалити", "RemovePicture", new { lotId = picture.LotId, pictureId = picture.PictureId })
+                                <br />
+                                @if (picture.IsTittle)
+                                {
+                                    <label>Головна картинка</label>
+                                }
                             </li>
               }
        }

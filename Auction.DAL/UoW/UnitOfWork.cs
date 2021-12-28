@@ -25,7 +25,17 @@ namespace Auction.DAL.UoW
         private IStakeRepository _stakeRepository;
         private INewsRepository _newsRepository;
         private ICartRepository _cartRepository;
+        private IStatusRepository _statusRepository;
 
+        public IStatusRepository StatusRepository
+        {
+            get
+            {
+                if( _statusRepository == null )
+                    _statusRepository=new StatusRepository(_dbContext);
+                return _statusRepository;
+            }
+        }
 
         public ICartRepository CartRepository
         {

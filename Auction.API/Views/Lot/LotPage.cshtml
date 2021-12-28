@@ -70,7 +70,7 @@
                 {
                     @Html.AntiForgeryToken();
                     var newPrice = Model.Price + Model.Step;
-                    <input type="number" name="stake" value="@newPrice" step="50" min="@newPrice" />
+                    <input type="number" id="stake" name="stake" value="@newPrice"  min="@newPrice" />
                     <input type="submit" value="Зробити ставку" class="btn btn-info" id="btnStake" />
                 }
 
@@ -103,16 +103,27 @@
             });
         })
 
+        let minStake = document.querySelector("#stake").value
+        
+        
 
 
         let btnStake = document.querySelector("#btnStake");
         if (btnStake != null) {
             btnStake.addEventListener('click', function (e) {
                 let chbConfirm = document.querySelector("#chbConfirm");
+                let validate = document.querySelector("#validate");
                 if (chbConfirm.checked != true) {
                     e.preventDefault();
-                    let validate = document.querySelector("#validate");
+                    
                     validate.innerHTML = "Підтвердіть ставку";
+                    validate.className = "text-danger";
+
+                }
+                if (document.querySelector("#stake").value < minStake) {
+                    e.preventDefault();
+
+                    validate.innerHTML = `Cтавка не може бути менша за ${minStake}`;
                     validate.className = "text-danger";
 
                 }

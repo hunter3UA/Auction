@@ -27,7 +27,7 @@ namespace Auction.BLL.Services
             _mapper = AutoMapperConfig.Configure().CreateMapper();
         }
 
-        public async Task<User> CreateUser(RegisterModel registerModel)
+        public async Task<User> CreateUserAsync(RegisterModel registerModel)
         {
             try
             {
@@ -139,15 +139,20 @@ namespace Auction.BLL.Services
             HttpContext.Current.Response.Cookies.Add(loginCookie);
         }
 
-        public UserModel GetUser(int loginId)
+        public UserModel GetUser(Func<User,bool> predicate)
         {
-            User userToSearch= _unitOfWork.UserRepository.Get(u=>u.LoginId== loginId);
-            UserModel model= _mapper.Map<UserModel>(userToSearch);
-            model.Email = userToSearch.Login.Email;
-            return model;
+          
+           User userToSearch= _unitOfWork.UserRepository.Get(predicate);
+            if (userToSearch.Login == null)
+                return new UserModel();
+           UserModel model= _mapper.Map<UserModel>(userToSearch);
+           model.Email = userToSearch.Login.Email;
+           return model;
+       
+           
         }
 
-        public async Task Update(UserModel userModel,int loginId)
+        public async Task UpdateAsync(UserModel userModel,int loginId)
         {
             User userToSearch= _unitOfWork.UserRepository.Get(u=>u.LoginId == loginId);
             userToSearch.FirstName = userModel.FirstName;
@@ -168,10 +173,6 @@ namespace Auction.BLL.Services
                 return true;
             }
             return false;
-          
-
-           
-
 
         }
     }

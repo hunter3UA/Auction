@@ -101,6 +101,34 @@
     <Compile Include="Migrations\202112262224479_UpdateLotStatuses.designer.cs">
       <DependentUpon>202112262224479_UpdateLotStatuses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112271700035_UpdateStatuses.cs" />
+    <Compile Include="Migrations\202112271700035_UpdateStatuses.designer.cs">
+      <DependentUpon>202112271700035_UpdateStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112271702039_RemoveNitfications.cs" />
+    <Compile Include="Migrations\202112271702039_RemoveNitfications.designer.cs">
+      <DependentUpon>202112271702039_RemoveNitfications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112271709309_UpdateDbContext.cs" />
+    <Compile Include="Migrations\202112271709309_UpdateDbContext.designer.cs">
+      <DependentUpon>202112271709309_UpdateDbContext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112271711263_RemoveTable.cs" />
+    <Compile Include="Migrations\202112271711263_RemoveTable.designer.cs">
+      <DependentUpon>202112271711263_RemoveTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112271714482_UpdateDbTables.cs" />
+    <Compile Include="Migrations\202112271714482_UpdateDbTables.designer.cs">
+      <DependentUpon>202112271714482_UpdateDbTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112271715278_UpdateLotStatus1.cs" />
+    <Compile Include="Migrations\202112271715278_UpdateLotStatus1.designer.cs">
+      <DependentUpon>202112271715278_UpdateLotStatus1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112271718502_UpdateDbStatuses.cs" />
+    <Compile Include="Migrations\202112271718502_UpdateDbStatuses.designer.cs">
+      <DependentUpon>202112271718502_UpdateDbStatuses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -123,6 +151,7 @@
     <Compile Include="Repositories\Abstract\INewsRepository.cs" />
     <Compile Include="Repositories\Abstract\IPictureRepository.cs" />
     <Compile Include="Repositories\Abstract\IStakeRepository.cs" />
+    <Compile Include="Repositories\Abstract\IStatusRepository.cs" />
     <Compile Include="Repositories\Abstract\IUserRepository.cs" />
     <Compile Include="Repositories\AccountTypeRepository.cs" />
     <Compile Include="Repositories\CartRepository.cs" />
@@ -132,6 +161,7 @@
     <Compile Include="Repositories\NewsRepository.cs" />
     <Compile Include="Repositories\PictureRepository.cs" />
     <Compile Include="Repositories\StakeRepository.cs" />
+    <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
     <Compile Include="UoW\UnitOfWork.cs" />
@@ -176,6 +206,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112262224479_UpdateLotStatuses.resx">
       <DependentUpon>202112262224479_UpdateLotStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112271700035_UpdateStatuses.resx">
+      <DependentUpon>202112271700035_UpdateStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112271702039_RemoveNitfications.resx">
+      <DependentUpon>202112271702039_RemoveNitfications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112271709309_UpdateDbContext.resx">
+      <DependentUpon>202112271709309_UpdateDbContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112271711263_RemoveTable.resx">
+      <DependentUpon>202112271711263_RemoveTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112271714482_UpdateDbTables.resx">
+      <DependentUpon>202112271714482_UpdateDbTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112271715278_UpdateLotStatus1.resx">
+      <DependentUpon>202112271715278_UpdateLotStatus1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112271718502_UpdateDbStatuses.resx">
+      <DependentUpon>202112271718502_UpdateDbStatuses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
