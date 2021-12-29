@@ -33,7 +33,16 @@ namespace Auction.DAL.Repositories
             return _dbContext.Stakes.FirstOrDefault(predicate);
         }
 
-   
+        
+        public bool RemoveStake(Stake stakeToRemove)
+        {
+            if (stakeToRemove != null)
+            {
+                _dbContext.Stakes.Remove(stakeToRemove);
+                return true;
+            }
+            return false;
+        }
 
     }
 }

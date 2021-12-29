@@ -13,5 +13,6 @@ namespace Auction.BLL.Services.Abstract
 
         Task<Stake> AddStakeAsync(int lotId, double stake, int loginId);
         List<Stake> GetListOfStakes(int loginId);
+        Task<bool> RemoveStakeAsync(int stakeId);
     }
 }

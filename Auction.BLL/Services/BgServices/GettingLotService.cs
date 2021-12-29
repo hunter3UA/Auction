@@ -14,6 +14,9 @@ namespace Auction.BLL.Services.BgServices
 {
     public class GettingLotService : IJob
     {
+      
+
+
         public async Task Execute(IJobExecutionContext context)
         {
             IUnitOfWork _unitOfWork = new UnitOfWork();

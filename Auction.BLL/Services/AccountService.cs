@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Security;
-using static Auction.BLL.Services.PasswordService;
+
 
 
 namespace Auction.BLL.Services
@@ -20,10 +20,12 @@ namespace Auction.BLL.Services
     {
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
-        public AccountService(IUnitOfWork unitOfWork)
+        public AccountService(IUnitOfWork unitOfWork,IPasswordService passwordService)
         {
             _unitOfWork = unitOfWork;
+            _passwordService = passwordService;
             _mapper = AutoMapperConfig.Configure().CreateMapper();
         }
 
@@ -34,7 +36,7 @@ namespace Auction.BLL.Services
                 Login newLogin = _mapper.Map<Login>(registerModel);
                 newLogin.AccountType = _unitOfWork.AccountTypeRepository.Get(a => a.AccountTypeName == "User");
                 newLogin.IsEnabled = true;
-                Salted_Hash salt = PasswordService.Security.HashHMACSHA1.CreateSaltedHash(registerModel.Password, 64);
+                Salted_Hash salt = _passwordService.CreateSaltedHash(registerModel.Password, 64);
                 newLogin.PasswordHash = salt.Hash;
                 newLogin.PasswordSalt = salt.Salt;
                 newLogin = _unitOfWork.LoginRepository.Add(newLogin);
@@ -54,34 +56,53 @@ namespace Auction.BLL.Services
             
 
         }
+        public async Task<bool> UpdatePasswordAsync(string oldPassword,string newPassword,int loginId)
+        {
+            Login loginToUpdate=_unitOfWork.LoginRepository.Get(l=>l.LoginId== loginId);
+            if (CheckPassword(loginToUpdate, oldPassword))
+            {
+                Salted_Hash salt=_passwordService.CreateSaltedHash(newPassword,64);
+                loginToUpdate.PasswordHash= salt.Hash;
+                loginToUpdate.PasswordSalt = salt.Salt;
+                await _unitOfWork.SaveAsync();
+                return true;
+            }
+            return false;
+            
 
-        public User Login(LoginModel loginModel)
+        }
+
+        private bool CheckPassword(Login loginToCheck,string password)
         {
             try
             {
-                User userToLogin = _unitOfWork.UserRepository.Get(u => u.Login.Email == loginModel.Email);
-                if (userToLogin.Login != null)
+                if (loginToCheck != null)
                 {
                     Salted_Hash saltedHash = new Salted_Hash();
-                    saltedHash.Hash = userToLogin.Login.PasswordHash;
-                    saltedHash.Salt = userToLogin.Login.PasswordSalt;
-                    if (Security.HashHMACSHA1.CheckSaltedHash(loginModel.Password, saltedHash))
-                    {
-                        Login login = _unitOfWork.LoginRepository.Get(l => l.LoginId == userToLogin.LoginId);
-                        if (login.IsEnabled)
-                        {
-                            SetLoginCookie(login);
-                            return userToLogin;
-                        }
-                           
-                    }
+                    saltedHash.Hash = loginToCheck.PasswordHash;
+                    saltedHash.Salt = loginToCheck.PasswordSalt;
+                    if (_passwordService.CheckSaltedHash(password, saltedHash) && loginToCheck.IsEnabled)
+                        return true;
                 }
 
-            }catch (Exception)
-            {
-                 return new User();
             }
-            return new User();
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        public bool Login(LoginModel loginModel)
+        {
+          
+            Login login = _unitOfWork.LoginRepository.Get(l => l.Email == loginModel.Email);
+            if(CheckPassword(login, loginModel.Password))
+            {
+                SetLoginCookie(login);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -160,7 +181,6 @@ namespace Auction.BLL.Services
             _unitOfWork.UserRepository.Update(userToSearch);
             await _unitOfWork.SaveAsync();
         }
-
 
         public async Task<bool> DisableUserAsync(int loginId)
         {

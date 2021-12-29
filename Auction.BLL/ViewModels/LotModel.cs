@@ -16,6 +16,10 @@ namespace Auction.BLL.ViewModels
         public string LotName { get; set; }
         [Required,MinValue(0,ErrorMessage ="Error")]
         public double Price { get; set; }
+
+
+        public double CurrentPrice { get; set; }
+
         [Required]
         public double Step { get; set; }
 

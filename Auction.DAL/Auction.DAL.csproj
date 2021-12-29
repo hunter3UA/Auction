@@ -129,6 +129,10 @@
     <Compile Include="Migrations\202112271718502_UpdateDbStatuses.designer.cs">
       <DependentUpon>202112271718502_UpdateDbStatuses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112291333297_UpdateLot1.cs" />
+    <Compile Include="Migrations\202112291333297_UpdateLot1.designer.cs">
+      <DependentUpon>202112291333297_UpdateLot1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -227,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112271718502_UpdateDbStatuses.resx">
       <DependentUpon>202112271718502_UpdateDbStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112291333297_UpdateLot1.resx">
+      <DependentUpon>202112291333297_UpdateLot1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

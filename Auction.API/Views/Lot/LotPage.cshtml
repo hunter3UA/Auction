@@ -52,7 +52,8 @@
     <div class="flex-item-col">
         <div id="Success" class="text-success"></div>
         <h2>@Model.LotName</h2>
-        <label>Ціна на даний момент: @Model.Price</label><br />
+        <label>Стартова ціна: @Model.Price</label>
+        <label>Ціна на даний момент: @Model.CurrentPrice  </label><br />
         <label>Опис:</label>
         <div>
             @Model.Description
@@ -64,16 +65,13 @@
 
             if ((User as CustomPrincipal) != null && Model.LoginId != (User as CustomPrincipal).LoginId && !Model.IsSoldOut)
             {
-
                 <label>Підтвердити ставку<input type="checkbox" id="chbConfirm" /></label><br />
                 using (Html.BeginForm("AddStake", "Stake", new { lotid = Model.LotId }, FormMethod.Post))
                 {
-                    @Html.AntiForgeryToken();
-                    var newPrice = Model.Price + Model.Step;
-                    <input type="number" id="stake" name="stake" value="@newPrice"  min="@newPrice" />
+                    @Html.AntiForgeryToken();                  
+                    <input type="number" id="stake" name="stake" value="@Model.CurrentPrice"  min="@Model.CurrentPrice" />
                     <input type="submit" value="Зробити ставку" class="btn btn-info" id="btnStake" />
                 }
-
 
             }
             <div id="validate">

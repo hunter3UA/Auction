@@ -1,10 +1,5 @@
 ﻿using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 /*
@@ -12,10 +7,10 @@ using System.Web.Mvc;
 TODO: Cart Update
 TODO: проверить все токены
 
-TODO: убрать возможность редактирования некоторых полей товара
 
-TODO:добавить уведомление о установки картинки в качестве главной,
-добавить удаление картинки
+TODO: переделать пагинацию и фильтрацию 
+
+
  */
 
 namespace Auction.API.Controllers

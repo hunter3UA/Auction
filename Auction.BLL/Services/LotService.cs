@@ -42,6 +42,7 @@ namespace Auction.BLL.Services
                 newLot.LotCode = DateTime.Now.Ticks / 2000;
                 newLot.Category = _unitOfWork.CategoryRepository.Get(c => c.CategoryId == lotModel.CategoryId);
                 newLot.StatusId = 1;
+                newLot.CurrentPrice = lotModel.Price+lotModel.Step;
                 _unitOfWork.LotRepository.Add(newLot);
                 await _unitOfWork.SaveAsync();
                 if (request.Files != null)
@@ -139,7 +140,7 @@ namespace Auction.BLL.Services
         public List<LotModel> GetList(Func<Lot,bool> predicate)
         {
             List<Lot> lots=_unitOfWork.LotRepository.GetList(predicate).ToList();
-            return null;
+            return _mapper.Map<List<LotModel>>(lots);
 
         }
         

@@ -1,6 +1,9 @@
 ﻿using Auction.API.Filters;
+using Auction.BLL.Services;
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 
@@ -13,11 +16,13 @@ namespace Auction.API.Controllers
  
         private readonly IAccountService _accountService;
         private readonly IStatusService _statusService;
+        private readonly ILotService _lotService;
 
-        public AdminController(IAccountService accountService, IStatusService statusService)
+        public AdminController(IAccountService accountService, IStatusService statusService,ILotService lotService)
         {
             _accountService = accountService;
             _statusService = statusService;
+            _lotService = lotService;
         }
         [HttpGet]
         public ActionResult AdminPanel()
@@ -29,20 +34,20 @@ namespace Auction.API.Controllers
         {
             return PartialView();
         }
-
+        [HttpGet]
         public ActionResult DisableUser()
         {
-         
             return PartialView();
         }
 
 
-
-        [HttpPost]
-        public ActionResult DisableUser(int loginIdToDisable)
+        
+        public async Task<ActionResult> RemoveUser(int id=0)
         {
-            _accountService.DisableUserAsync(loginIdToDisable);
-            return null;
+            bool isEnabled = await _accountService.DisableUserAsync(id);
+            if (isEnabled)
+                ViewBag.NotifyMsg = "Користувача заблоковано";
+            return View("AdminPanel");
         }
 
         [ValidateAntiForgeryToken]
@@ -52,8 +57,14 @@ namespace Auction.API.Controllers
             return PartialView(searchedUser);
         }
 
+        //public Task<ActionResult> ShowProcessedLots(int page=1)
+        //{
+        //    List<LotModel> processedLots = _lotService.GetList(l => l.Status.LotStatusName == "Processed");
+       
 
-        
+        //}
+
+
 
     }
 }

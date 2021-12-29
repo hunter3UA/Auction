@@ -28,8 +28,7 @@
             </td>
             <td>
                 @Html.ActionLink("Сторінка лоту", "LotPage","Lot",new { lotId=item.LotId },null) |
-                @Html.ActionLink("Details", "Details", new { id = item.StakeId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.StakeId })
+                @Html.ActionLink("Видалити ставку", "RemoveStake", "Stake", new { stakeId = item.StakeId },null )
             </td>
         </tr>
     }

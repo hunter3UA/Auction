@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-/*TODO:   уведомление об создании ставки*/
+
 namespace Auction.API.Controllers
 {
     [Authentication(true)]
@@ -28,22 +28,25 @@ namespace Auction.API.Controllers
         public async Task<ActionResult> AddStake(int lotId=0, double stake=0)
         {
             await _stakeService.AddStakeAsync(lotId, stake, User.LoginId);
-            ViewBag.Success = "Ставка зроблена";  
-            return RedirectToAction("LotPage","Lot",new { lotId = lotId});
+            return RedirectToAction("LotPage", "Lot", new { lotId = lotId });
+         
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemoverStake(int stakeId)
+   
+        public async Task<ActionResult> RemoveStake(int stakeId)
         {
-            return null;
+            await _stakeService.RemoveStakeAsync(stakeId);
+            return RedirectToAction("MyStakes", new { msg="Ставку видалено"});
         }
 
 
-        
+
         [HttpGet]
-        public ActionResult MyStakes(int page=1)
+        public ActionResult MyStakes(int page = 1, string msg=null)
         {
             List<Stake> stakes = _stakeService.GetListOfStakes(User.LoginId);
+            if(msg!=null)
+                ViewBag.StakeMsg = msg;
             IndexViewModel<Stake> ivm = PageService<Stake>.GetPage(
                 page,
                 Convert.ToInt32(ConfigurationManager.AppSettings["CountOfStakesOnPage"]),

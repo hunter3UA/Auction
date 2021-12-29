@@ -18,6 +18,7 @@ namespace Auction.API
             Bind<IStakeService>().To<StakeService>();
             Bind<INewsService>().To<NewsService>();
             Bind<IStatusService>().To<StatusService>();
+            Bind<IPasswordService>().To<PasswordService>();
          
         }
     }

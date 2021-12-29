@@ -15,10 +15,13 @@ namespace Auction.BLL.Services
     {
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILotService _lotService;
 
-        public StakeService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
+
+        public StakeService(IUnitOfWork unitOfWork,ILotService lotService)
+        {     
+            _unitOfWork = unitOfWork; 
+            _lotService = lotService;
         }
         public async Task<Stake> AddStakeAsync(int lotId, double stake,int loginId)
         {
@@ -29,7 +32,8 @@ namespace Auction.BLL.Services
             stakeToAdd.Sum = stake;
             stakeToAdd.LotId = lotId; 
             lotOfStake.Stakes.Add(stakeToAdd);
-            lotOfStake.Price = stake;
+            lotOfStake.CurrentPrice = stake+lotOfStake.Step;
+            _unitOfWork.LotRepository.Update(lotOfStake);
             await _unitOfWork.SaveAsync();        
             return stakeToAdd;
         }
@@ -41,9 +45,32 @@ namespace Auction.BLL.Services
             return stakesByUser;
         }
 
-        public async Task RemoveStake(int stakeId)
+        public async Task<bool> RemoveStakeAsync(int stakeId)
         {
             Stake stakeToRemove= _unitOfWork.StakeRepository.Get(s=>s.StakeId==stakeId);
+            if (stakeToRemove != null)
+            {
+                Lot lotOfStake=_unitOfWork.LotRepository.Get(l=>l.LotId==stakeToRemove.LotId);             
+                if (!lotOfStake.IsSoldOut)
+                {
+                    _unitOfWork.StakeRepository.RemoveStake(stakeToRemove);
+                    await _unitOfWork.SaveAsync();
+                    List<Stake> stakesOfLot=_unitOfWork.StakeRepository.GetList(s=>s.LotId==lotOfStake.LotId);
+                    if(stakesOfLot.Count() > 0)
+                    {
+                        double maxStake = stakesOfLot.Max(s => s.Sum);
+                        lotOfStake.CurrentPrice = maxStake+lotOfStake.Step;
+                    }
+                    else
+                    {
+                        lotOfStake.CurrentPrice = lotOfStake.Price + lotOfStake.Step;
+                    }
+                   
+                    await _unitOfWork.SaveAsync();  
+                    return true;
+                }
+            }
+            return false;
 
         }
     }

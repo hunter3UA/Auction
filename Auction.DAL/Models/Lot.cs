@@ -13,6 +13,8 @@ namespace Auction.DAL.Models
         public string LotName { get; set; }
         [Required]
         public double Price { get; set; } 
+
+        public double CurrentPrice { get; set; }
         [Required]
         public double Step { get; set; }
 
