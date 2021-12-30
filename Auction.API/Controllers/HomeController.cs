@@ -45,7 +45,7 @@ namespace Auction.API.Controllers
     
             //if (!string.IsNullOrEmpty(filters))
             //    ivm.FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(filters);
-            //else
+            //els
                 ivm.FiltersModel = filtersModel;
             
              return View(ivm);
