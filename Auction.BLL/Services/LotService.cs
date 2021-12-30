@@ -71,11 +71,7 @@ namespace Auction.BLL.Services
             return new List<LotModel>();
         }
 
-        /// <summary>
-        /// Метод для фільтрації лотів
-        /// </summary>
-        /// <param name="filtersModel">Модель з критеріями фільтрації</param>
-        /// <returns></returns>
+
         public List<LotModel> GetByFilters(FiltersModel filtersModel)
         {
             List<Lot> allLots = _unitOfWork.LotRepository.GetAll().ToList();
@@ -101,17 +97,15 @@ namespace Auction.BLL.Services
             }
             return _mapper.Map<List<LotModel>>(allLots);
         }
-        public IndexViewModel<LotModel> GetPageOfLots(int page, string Filters, FiltersModel filtersModel)
+        public List<LotModel> GetPageOfLots()
         {
-            FiltersModel FiltersModel = filtersModel;
-            if (!string.IsNullOrEmpty(Filters))
-                FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(Filters);
-            IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
-                page,
-                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLotsOnPage"]),
-                GetByFilters(FiltersModel));
-            ivm.FiltersModel = FiltersModel;
-            return ivm;
+            List<Lot> allLots = _unitOfWork.LotRepository.GetAll().ToList();
+          //  FiltersModel FiltersModel = filtersModel;
+            //if (!string.IsNullOrEmpty(Filters))
+            //    FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(Filters);
+           
+           
+            return _mapper.Map<List<LotModel>>(allLots);
         }
 
         public List<LotModel> GetAcquiredLots(int loginId)

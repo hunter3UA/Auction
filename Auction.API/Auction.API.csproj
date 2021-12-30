@@ -92,6 +92,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Quartz, Version=3.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.3.3.3\lib\net472\Quartz.dll</HintPath>
     </Reference>
@@ -206,7 +212,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +223,7 @@
     <Content Include="Content\img\3612422329-bezmyatezhnost-7XNj-1920x1080-MM-100.jpg" />
     <Content Include="Content\img\aukcion_2-690x450.jpg" />
     <Content Include="Content\img\Internet-Shopping.jpg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Slider\lightslider.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -412,7 +418,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Lot\Edit.cshtml" />
     <Content Include="Views\Lot\LotPictures.cshtml" />
-    <Content Include="Views\Home\Pages.cshtml" />
     <Content Include="Views\Stake\MyStakes.cshtml" />
     <Content Include="Views\Stake\StakePage.cshtml" />
     <Content Include="Views\News\CreateNews.cshtml" />
@@ -424,7 +429,6 @@
     <Content Include="Views\Admin\SearchUser.cshtml" />
     <Content Include="Views\Admin\GetUserInfo.cshtml" />
     <Content Include="Views\Admin\DisableUser.cshtml" />
-    <Content Include="Views\Account\UpdatePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,7 +9,7 @@ namespace Auction.BLL.ViewModels
     public class FiltersModel
     {
 
-        public List<string> Categories { get;set; }
+        public List<string> Categories { get;set; }=new List<string>();
 
         public string LotName { get; set; }
 

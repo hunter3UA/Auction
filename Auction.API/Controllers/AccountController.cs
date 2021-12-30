@@ -77,9 +77,9 @@ namespace Auction.API.Controllers
         }
 
             
-       [HttpPost]
-       public async Task<ActionResult> UpdatePassword(string oldPassword,string newPassword)
-       {
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdatePassword(string oldPassword,string newPassword)
+        {
             bool isUpdated=await _accountService.UpdatePasswordAsync(oldPassword,newPassword,User.LoginId);
             if (isUpdated)
             {
@@ -91,15 +91,13 @@ namespace Auction.API.Controllers
             }
             ViewBag.Msg = "Пароль невірний";
             return View("Profile");
-       }
+        }
 
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account");
         }
-
-
 
     }
 }

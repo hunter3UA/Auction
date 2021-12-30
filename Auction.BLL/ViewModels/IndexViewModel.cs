@@ -11,6 +11,6 @@ namespace Auction.BLL.ViewModels
         public List<T> Collection { get; set; }
         public PageInfo PageInfo { get; set; }
 
-        public FiltersModel FiltersModel { get; set; }
+        public FiltersModel FiltersModel { get; set; }=new FiltersModel();
     }
 }
