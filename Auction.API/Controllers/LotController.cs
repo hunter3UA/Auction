@@ -70,6 +70,7 @@ namespace Auction.API.Controllers
         public ActionResult LotPage(int lotId=0)
         {
             LotModel lotModel = _lotService.GetLot(lotId);
+          
             if (lotModel==null || lotModel.LotId==0)
                 return RedirectToAction("Index","Home");
             return View(lotModel);

@@ -14,7 +14,7 @@ namespace Auction.BLL.Services.Abstract
         LotModel GetLot(int lotId);
         List<LotModel> GetByFilters(FiltersModel filtersModel);
         List<LotModel> GetLotsBySeller(Func<User, bool> predicate);
-        List<LotModel> GetPageOfLots();
+        List<LotModel> GetPageOfLots(FiltersModel filtersModel);
         Task<LotModel> UpdateLotAsync(int lotId, LotModel modelForUpdate);
         List<LotModel> GetAcquiredLots(int loginId);
 

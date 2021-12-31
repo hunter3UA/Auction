@@ -75,7 +75,7 @@ namespace Auction.BLL.Services
         public List<LotModel> GetByFilters(FiltersModel filtersModel)
         {
             List<Lot> allLots = _unitOfWork.LotRepository.GetAll().ToList();
-            if (filtersModel != null && filtersModel.Categories != null)
+            if (filtersModel != null && filtersModel.Categories.Count() >0)
             {
                 allLots = allLots.Where(l => filtersModel.Categories.Contains(l.Category.CategoryName)).ToList();
             }
@@ -97,16 +97,15 @@ namespace Auction.BLL.Services
             }
             return _mapper.Map<List<LotModel>>(allLots);
         }
-        public List<LotModel> GetPageOfLots()
+        public List<LotModel> GetPageOfLots(FiltersModel filtersModel)
         {
-            List<Lot> allLots = _unitOfWork.LotRepository.GetAll().ToList();
-          //  FiltersModel FiltersModel = filtersModel;
-            //if (!string.IsNullOrEmpty(Filters))
-            //    FiltersModel = JsonConvert.DeserializeObject<FiltersModel>(Filters);
+            FiltersModel FiltersModel = filtersModel;
+    
            
-           
-            return _mapper.Map<List<LotModel>>(allLots);
+            List<LotModel> lotModels= GetByFilters(FiltersModel);           
+            return _mapper.Map<List<LotModel>>(lotModels);
         }
+
 
         public List<LotModel> GetAcquiredLots(int loginId)
         {

@@ -5,7 +5,7 @@
 @{
 
     CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
-   // Model.FiltersModel.Order = "Asc";
+
     List<SelectListItem> orderItems = new List<SelectListItem>()
 {
         new SelectListItem(){ Value="Asc", Text = "за зростанням" },
@@ -15,7 +15,7 @@
 
 
     List<SelectListItem> criterions = new List<SelectListItem>()
-    {
+{
         new SelectListItem(){ Value="", Text="--"},
         new SelectListItem(){ Value="PriceCriterion", Text="за ціною"},
         new SelectListItem(){ Value="DateCriterion", Text="за датою"}
@@ -30,27 +30,29 @@
     <div class="flex-item-row filters-item" id="filtersSection">
         <label> Фільтри:</label>
         <div class="flex-container flex-item-col">
-            @using (Ajax.BeginForm("Index", new { page = 1 }, null, new { id = "filtersForm" }))
+            @using (Html.BeginForm("Index", "Home", new { page = 1, Filters = "" }, FormMethod.Post))
             {
-            <div class="flex-item-row" id="chbFlags">
-                Категорія:
-                @foreach (var item in categories.Categories)
-                {
-                <p>
-                    @if (Model.FiltersModel.Categories.Contains(item.CategoryName))
+                <div class="flex-item-row" id="chbFlags">
+                    Категорія:
+                    @foreach (var item in categories.Categories)
                     {
-                        @item.CategoryName <input type="checkbox" id="@item.CategoryId" checked name="Categories" value="@item.CategoryName" />
-                    }
-                    else
-                    {
-                        @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName" />
+                    <p>
 
+                        @if (Model.FiltersModel.Categories.Contains(item.CategoryName))
+                        {
+                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" checked name="Categories" value="@item.CategoryName" />
+
+                        }
+                        else
+                        {
+                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName" />
+                        }
+
+                    </p>
                     }
-                </p>
-                }
-            </div>
+                </div>
                 <div class="flex-item-row">
-                    Назва:@Html.TextBox("LotName", "", new { id = "txtLotName" })
+                    Назва:@Html.TextBoxFor(m=>m.FiltersModel.LotName, "", new { id = "txtLotName" })
                 </div>
                 <div class="flex-item-row">
                     Порядок: @Html.DropDownList("Order", orderItems)
@@ -68,16 +70,6 @@
                     </div>
                 }
             }
-            @if ((User as CustomPrincipal) != null && (User as CustomPrincipal).IsInRole("Admin"))
-            {
-                <div>
-                    за статусом
-                </div>
-            }
-
-
-
-
             @using (Ajax.BeginForm("Pages", new { page = 1, Filters = "" }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
             {
                 <input type="submit" value="Зкинути фільтри" id="btnClearFilters" />
@@ -144,29 +136,24 @@
     </div>
 </div>
 
+
+
 <div class="btn-group flex-container" id="btnPages">
     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
     {
-
-
-        string str = JsonConvert.SerializeObject(Model.FiltersModel.Categories.ToString());
-        string newStr = Model.FiltersModel.Categories.FirstOrDefault();
-        //var obj = new { page = i, filters = newStr };
-        string link = $"https://localhost:44328/Home/Index?filters={newStr}&page="+i;
-        <a href=@link>@i</a>
-        @*using (Ajax.BeginForm("Index", new { page = i, filters = str }, new AjaxOptions { UpdateTargetId = "updatedPage" }, new { @class = "flex-item-row", style = "padding:0px;width:30px" }))
-        {
-
-            <input type="submit" value="@i" />
-        }*@
-
+        var str = JsonConvert.SerializeObject(Model.FiltersModel);
+        @Html.ActionLink($"{i}","Index","Home", new { page = i, Filters = str }, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
+       
     }
 </div>
+
+
 
 
 @section scripts{
 
     <script>
+
 
         let btnClearFilters = document.querySelector("#btnClearFilters");
         btnClearFilters.addEventListener('click', function () {

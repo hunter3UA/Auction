@@ -1,0 +1,71 @@
+﻿@model Auction.BLL.ViewModels.IndexViewModel<LotModel>
+@using Newtonsoft.Json;
+@using Auction.BLL.ViewModels;
+@using Auction.BLL.LoginModels;
+
+@foreach (var item in Model.Collection)
+{
+    <div id="lotItem" class="flex-container">
+        <div class="flex-item-row">
+            @{
+                var picture = item.Pictures.Where(p => p.IsTittle == true).FirstOrDefault();
+                if (picture == null)
+                {
+                    <img src="~/Content/img/noImage_search.png" />
+                }
+                else
+                {
+                    string path = Path.GetFileNameWithoutExtension(picture.Name)
+                                + "_"
+                                + "search"
+                                + Path.GetExtension(picture.Name);
+                    <img src="/Pictures/Lots/@picture.LotId/@path" />
+                }
+            }
+        </div>
+        <div class="flex-item-row lot-details">
+            Назва: @item.LotName
+            <br />
+            Стартова ціна: @item.Price
+            <br />
+            Категорія: @item.Category.CategoryName
+            <br />
+        </div>
+        <div class="flex-item-row">
+            <div class="flex-container flex-item-col">
+                <div class="flex-item-row">
+                    @Html.ActionLink("Дивитись сторінку", "LotPage", "Lot", new { lotId = item.LotId }, new { @class = "btn btn-info" })
+                </div>
+                <div class="flex-item-row">
+                    @{
+                        if ((User as CustomPrincipal) != null && (User as CustomPrincipal).LoginId == item.LoginId)
+                        {
+                            @Html.ActionLink("Редагувати", "Edit", "Lot", new { id = item.LotId }, new { @class = "btn btn-success" });
+
+                        }
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+        var str = JsonConvert.SerializeObject(Model.FiltersModel);
+        using (Ajax.BeginForm("Pages", new { page = i, Filters = str }, new AjaxOptions { UpdateTargetId = "updatedPage" }, new { @class = "flex-item-row", style = "padding:0px;width:30px" }))
+        {
+
+            <input type="submit" value="@i" />
+        }
+    }
+</div>
+
+
+
+
+
+
+

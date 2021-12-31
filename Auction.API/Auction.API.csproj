@@ -429,6 +429,7 @@
     <Content Include="Views\Admin\SearchUser.cshtml" />
     <Content Include="Views\Admin\GetUserInfo.cshtml" />
     <Content Include="Views\Admin\DisableUser.cshtml" />
+    <Content Include="Views\Home\Pages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
