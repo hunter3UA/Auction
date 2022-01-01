@@ -18,6 +18,10 @@ namespace Auction.BLL.ViewModels
         public string Order { get; set; }
         public string Criterion { get; set; }
 
+        public string Status { get; set; }
+
+        public string LotCode { get; set; }
+
 
     }
 }

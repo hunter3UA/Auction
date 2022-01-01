@@ -11,7 +11,7 @@ namespace Auction.BLL.Services.Abstract
         Task<bool> UpdatePasswordAsync(string oldPassword, string newPassword, int loginId);
         bool Login(LoginModel loginModel);
         UserModel GetUser(Func<User,bool> predicate);
-        Task UpdateAsync(UserModel userModel, int loginId);
+        Task<bool> UpdateUserAsync(UserModel userModel, int loginId);
         Task<bool> DisableUserAsync(int loginId);
     }
 }

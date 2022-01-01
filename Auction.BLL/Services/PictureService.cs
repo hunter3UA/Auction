@@ -27,33 +27,36 @@ namespace Auction.BLL.Services
             Lot lotOfPictures = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
             List<Picture> pictures = new List<Picture>();
             HttpPostedFileBase checkFile = request.Files[0];
-            if (checkFile.FileName != "" && !lotOfPictures.IsSoldOut)
-            {
+            if (checkFile.FileName != "" && !lotOfPictures.IsSoldOut )
+            {         
                 for (int i = 0; i < request.Files.Count; i++)
                 {
                     HttpPostedFileBase postedFileBase = request.Files[i];
-                    Picture picture = Save(postedFileBase, lotOfPictures.LotId, ConfigurationManager.AppSettings["LotsPictures"]);
-                    picture.IsTittle = false;
-                    picture.LotId = lotOfPictures.LotId;
-                    pictures.Add(picture);
-                    CreateThumb(
-                        picture,
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
-                        ConfigurationManager.AppSettings["PictureGallerySize"]
-                        );
-                    CreateThumb(
-                        picture,
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
-                        ConfigurationManager.AppSettings["PictureMainSize"]
-                        );
-                    CreateThumb(
-                        picture,
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
-                        Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
-                        ConfigurationManager.AppSettings["PictureSearchingSize"]
-                        );
+                    if (CheckPictureExtension(Path.GetExtension(postedFileBase.FileName)))
+                    {
+                        Picture picture = Save(postedFileBase, lotOfPictures.LotId, ConfigurationManager.AppSettings["LotsPictures"]);
+                        picture.IsTittle = false;
+                        picture.LotId = lotOfPictures.LotId;
+                        pictures.Add(picture);
+                        CreateThumb(
+                            picture,
+                            Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
+                            Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
+                            ConfigurationManager.AppSettings["PictureGallerySize"]
+                            );
+                        CreateThumb(
+                            picture,
+                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
+                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
+                            ConfigurationManager.AppSettings["PictureMainSize"]
+                            );
+                        CreateThumb(
+                            picture,
+                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
+                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
+                            ConfigurationManager.AppSettings["PictureSearchingSize"]
+                            );
+                    }
                 }
                 _unitOfWork.PictureRepository.AddRange(pictures);
                 await _unitOfWork.SaveAsync();
@@ -185,19 +188,23 @@ namespace Auction.BLL.Services
             }
             return false;
         }
-
         public void SetTittle(int lotId,int pictureId)
         {
             Lot lotToUpdate= _unitOfWork.LotRepository.Get(l=>l.LotId == lotId && !l.IsSoldOut);
             if(lotToUpdate!=null)
                 _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
         }
-
         public List<Picture> GetList(Func<Picture,bool> predicate)
         {
             return _unitOfWork.PictureRepository.GetList(predicate);
 
         }
-
+        private bool CheckPictureExtension(string ext)
+        {
+            if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
+                return true;
+            else
+                return false;
+        }
     }
 }

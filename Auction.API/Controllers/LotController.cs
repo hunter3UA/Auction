@@ -70,7 +70,7 @@ namespace Auction.API.Controllers
         public ActionResult LotPage(int lotId=0)
         {
             LotModel lotModel = _lotService.GetLot(lotId);
-          
+       
             if (lotModel==null || lotModel.LotId==0)
                 return RedirectToAction("Index","Home");
             return View(lotModel);
@@ -81,7 +81,7 @@ namespace Auction.API.Controllers
         {
             LotModel lotModel= _lotService.GetLot(id);
            
-            if(lotModel != null && lotModel.LoginId == User.LoginId)
+            if(lotModel != null && lotModel.LoginId == User.LoginId || User.AccountType.AccountTypeName=="Admin")
             {
                 ViewData["Categories"] = _categoryService.GetCategories();
                 return View(lotModel);           
@@ -92,8 +92,7 @@ namespace Auction.API.Controllers
         [HttpPost,Authentication(true),ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int lotId, LotModel modelToUpdate)
         {
-            await _lotService.UpdateLotAsync(lotId, modelToUpdate);
-           
+            await _lotService.UpdateLotAsync(lotId, modelToUpdate);          
             return RedirectToAction("Edit", new { id=modelToUpdate.LotId});
         }
 

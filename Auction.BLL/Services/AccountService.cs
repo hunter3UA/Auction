@@ -173,13 +173,17 @@ namespace Auction.BLL.Services
            
         }
 
-        public async Task UpdateAsync(UserModel userModel,int loginId)
+        public async Task<bool> UpdateUserAsync(UserModel userModel,int loginId)
         {
             User userToSearch= _unitOfWork.UserRepository.Get(u=>u.LoginId == loginId);
-            userToSearch.FirstName = userModel.FirstName;
-            userToSearch.LastName = userModel.LastName;
-            _unitOfWork.UserRepository.Update(userToSearch);
-            await _unitOfWork.SaveAsync();
+            if (userToSearch != null)
+            {
+                userToSearch.FirstName = userModel.FirstName;
+                userToSearch.LastName = userModel.LastName;          
+                await _unitOfWork.SaveAsync();
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> DisableUserAsync(int loginId)

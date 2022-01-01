@@ -28,10 +28,6 @@ namespace Auction.DAL.Repositories
         {
             return _dbContext.Lots.Include("Category").Include("Pictures").Include("Seller").Include("Status").ToList();
         }
-        public IEnumerable<Lot> GetAllList(int sellerId)
-        {
-            return _dbContext.Lots.Include("Category").Where(l=>l.SellerId==sellerId).ToList();
-        }
         public Lot Update(Lot lotToUpdate)
         {
             _dbContext.Entry(lotToUpdate).State = System.Data.Entity.EntityState.Modified;
@@ -40,7 +36,7 @@ namespace Auction.DAL.Repositories
 
         public IEnumerable<Lot> GetList(Func<Lot,bool> predicate)
         {
-            return _dbContext.Lots.Include("Category").Include("Seller").Include("Pictures").Include("Stakes").Where(predicate).ToList();
+            return _dbContext.Lots.Include("Category").Include("Seller").Include("Pictures").Include("Stakes").Include("Status").Where(predicate).ToList();
         }
     }
 }

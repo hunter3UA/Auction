@@ -2,7 +2,9 @@
 using Auction.BLL.Services;
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -57,14 +59,24 @@ namespace Auction.API.Controllers
             return PartialView(searchedUser);
         }
 
-        //public Task<ActionResult> ShowProcessedLots(int page=1)
-        //{
-        //    List<LotModel> processedLots = _lotService.GetList(l => l.Status.LotStatusName == "Processed");
-       
+        public ActionResult LotsByStatus(int page = 1)
+        {
+            List<LotModel> lots = _lotService.GetList(l => l.Status.LotStatusName != "Processed" && !l.IsSoldOut);
 
-        //}
+            IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
+                page,
+                Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLots"]),
+                lots
+                );
+            ViewData["Statuses"] = _statusService.GetList();
+            return View(ivm);
+        }
 
-
+        public async Task<ActionResult> UpdateLotStatus(int statusId,int lotId)
+        {
+            await _lotService.UpdateLotStatusAsync(lotId,statusId);
+            return RedirectToAction("LotsByStatus");
+        }
 
     }
 }

@@ -29,7 +29,7 @@ namespace Auction.API.Controllers
         public new async Task<ActionResult> Profile(UserModel updateUserModel)
         {
             updateUserModel.Email=User.Identity.Name;
-            await _accountService.UpdateAsync(updateUserModel,User.LoginId);
+            await _accountService.UpdateUserAsync(updateUserModel,User.LoginId);
             return View(updateUserModel);
         }
 

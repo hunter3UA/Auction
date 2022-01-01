@@ -1,5 +1,7 @@
 ﻿using Quartz;
 using Quartz.Impl;
+using System;
+using System.Configuration;
 using System.Threading.Tasks;
 
 namespace Auction.BLL.Services.BgServices
@@ -15,7 +17,7 @@ namespace Auction.BLL.Services.BgServices
                 .WithIdentity("trigger1", "group1")     
                 .StartNow()                            
                 .WithSimpleSchedule(x => x          
-                    .WithIntervalInSeconds(100)         
+                    .WithIntervalInSeconds(Convert.ToInt32(ConfigurationManager.AppSettings["TimeToCheckLotsInSeconds"])) 
                     .RepeatForever())                  
                 .Build(); 
             

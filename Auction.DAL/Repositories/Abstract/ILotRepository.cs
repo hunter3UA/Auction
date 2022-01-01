@@ -7,7 +7,7 @@ namespace Auction.DAL.Repositories.Abstract
     public interface ILotRepository
     {
 
-        IEnumerable<Lot> GetAllList(int sellerId);
+   
         Lot Add(Lot lotToAdd);
         Lot Get(Func<Lot, bool> predicate);
         IEnumerable<Lot> GetAll();

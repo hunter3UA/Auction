@@ -1,0 +1,77 @@
+﻿@model Auction.BLL.ViewModels.IndexViewModel<LotModel>
+@using Auction.BLL.ViewModels;
+@using Auction.BLL.LoginModels;
+@using Auction.DAL.Models;
+@using Newtonsoft.Json;
+
+
+
+<div class="flex-container">
+    <div class="flex-item-col">
+        fjkdsljaflas
+    </div>
+    <div class="flex-item-col">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Ідентифікатор")
+                </th>
+                <th>
+                    @Html.DisplayName("Назва")
+                </th>
+                <th>
+                    @Html.DisplayName("Код")
+                </th>
+                <th>
+                    @Html.DisplayName("Статус")
+                </th>
+                <th>
+                    @Html.DisplayName("Ідентифікатор продавця")
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Collection)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LotId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LotName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LotCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.LotStatusName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoginId)
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("Оглянути", "Edit", "Lot", new { id = item.LotId }, null) |
+                        @Html.ActionLink("Дозволити лот", "UpdateLotStatus", "Admin", new { statusId = 2, lotId = item.LotId }, null) |
+                        @Html.ActionLink("Заблокувати лот", "UpdateLotStatus", "Admin", new { statusId = 3, lotId = item.LotId }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
+
+
+
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+        var str = JsonConvert.SerializeObject(Model.FiltersModel);
+        @Html.ActionLink($"{i}", "LotsByStatus", "Admin", new { page = i,}, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
+
+    }
+</div>

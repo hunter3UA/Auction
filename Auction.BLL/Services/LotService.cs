@@ -95,18 +95,13 @@ namespace Auction.BLL.Services
                         break;
                 }
             }
+            if (!string.IsNullOrEmpty(filtersModel.Status))
+            {
+                allLots=allLots.Where(l=>l.Status.LotStatusName== filtersModel.Status).ToList();
+            }
             return _mapper.Map<List<LotModel>>(allLots);
         }
-        public List<LotModel> GetPageOfLots(FiltersModel filtersModel)
-        {
-            FiltersModel FiltersModel = filtersModel;
-    
-           
-            List<LotModel> lotModels= GetByFilters(FiltersModel);           
-            return _mapper.Map<List<LotModel>>(lotModels);
-        }
-
-
+       
         public List<LotModel> GetAcquiredLots(int loginId)
         {
             User userByLogin= _unitOfWork.UserRepository.Get(u=>u.LoginId==loginId);
@@ -128,6 +123,18 @@ namespace Auction.BLL.Services
             }
             return new LotModel();
 
+        }
+
+        public async Task<bool> UpdateLotStatusAsync(int lotId, int statusId)
+        {
+            Lot lotById=_unitOfWork.LotRepository.Get(l=>l.LotId==lotId);
+            if (lotById != null)
+            {
+                lotById.StatusId= statusId;
+                await _unitOfWork.SaveAsync();
+                return true;
+            }
+            return false;
         }
 
         public List<LotModel> GetList(Func<Lot,bool> predicate)
