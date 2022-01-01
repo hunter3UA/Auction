@@ -41,9 +41,7 @@ namespace Auction.API.Controllers
         {
             return PartialView();
         }
-
-
-        
+   
         public async Task<ActionResult> RemoveUser(int id=0)
         {
             bool isEnabled = await _accountService.DisableUserAsync(id);
@@ -62,7 +60,6 @@ namespace Auction.API.Controllers
         public ActionResult LotsByStatus(int page = 1)
         {
             List<LotModel> lots = _lotService.GetList(l => l.Status.LotStatusName != "Processed" && !l.IsSoldOut);
-
             IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
                 page,
                 Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLots"]),

@@ -22,7 +22,6 @@ namespace Auction.BLL.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IPictureService _pictureService;   
-
         public LotService(IUnitOfWork unitOfWork,IPictureService pictureService)
         {
             _unitOfWork = unitOfWork;
@@ -53,10 +52,9 @@ namespace Auction.BLL.Services
                 return new Lot();
             }
         }      
-        public LotModel GetLot(int lotId)
+        public LotModel GetLot(Func<Lot,bool> predicate)
         {
-           Lot lotById= _unitOfWork.LotRepository.Get(l=>l.LotId==lotId);       
-        
+           Lot lotById= _unitOfWork.LotRepository.Get(predicate);             
            return _mapper.Map<LotModel>(lotById);;
         }
         public List<LotModel> GetLotsBySeller(Func<User,bool> predicate)
@@ -70,7 +68,6 @@ namespace Auction.BLL.Services
             }       
             return new List<LotModel>();
         }
-
 
         public List<LotModel> GetByFilters(FiltersModel filtersModel)
         {
@@ -101,7 +98,7 @@ namespace Auction.BLL.Services
             }
             return _mapper.Map<List<LotModel>>(allLots);
         }
-       
+      
         public List<LotModel> GetAcquiredLots(int loginId)
         {
             User userByLogin= _unitOfWork.UserRepository.Get(u=>u.LoginId==loginId);

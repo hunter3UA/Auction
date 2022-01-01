@@ -8,7 +8,11 @@
 
 <div class="flex-container">
     <div class="flex-item-col">
-        fjkdsljaflas
+        @using (Html.BeginForm()) 
+        { 
+
+            <input type="submit" value="Фільтр" />
+        }
     </div>
     <div class="flex-item-col">
         <table class="table">

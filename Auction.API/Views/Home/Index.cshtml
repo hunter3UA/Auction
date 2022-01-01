@@ -4,24 +4,25 @@
 @using Newtonsoft.Json;
 @{
 
-    CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
+CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
 
-    List<SelectListItem> orderItems = new List<SelectListItem>()
+List<SelectListItem> orderItems = new List<SelectListItem>()
 {
         new SelectListItem(){ Value="Asc", Text = "за зростанням" },
         new SelectListItem(){ Value="Desc", Text="за спаданням"},
 
 };
 
-
-    List<SelectListItem> criterions = new List<SelectListItem>()
+List<SelectListItem> criterions = new List<SelectListItem>()
 {
         new SelectListItem(){ Value="", Text="--"},
         new SelectListItem(){ Value="PriceCriterion", Text="за ціною"},
         new SelectListItem(){ Value="DateCriterion", Text="за датою"}
 
 
-    };
+};
+
+
 }
 
 
@@ -32,27 +33,30 @@
         <div class="flex-container flex-item-col">
             @using (Html.BeginForm("Index", "Home", new { page = 1, Filters = "" }, FormMethod.Post))
             {
-                <div class="flex-item-row" id="chbFlags">
-                    Категорія:
-                    @foreach (var item in categories.Categories)
-                    {
-                    <p>
+            <div class="flex-item-row" id="chbFlags">
+                Категорія:
+                @foreach (var item in categories.Categories)
+                {
 
-                        @if (Model.FiltersModel.Categories.Contains(item.CategoryName))
-                        {
+                    if (Model.FiltersModel.Categories.Contains(item.CategoryName))
+                    {
+                        <p>
                             @item.CategoryName <input type="checkbox" id="@item.CategoryId" checked name="Categories" value="@item.CategoryName" />
 
-                        }
-                        else
-                        {
-                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName" />
-                        }
-
-                    </p>
+                        </p>
                     }
-                </div>
+                    else
+                    {
+                        <p>
+                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName" />
+
+                        </p>
+                    }
+
+                }
+            </div>
                 <div class="flex-item-row">
-                    Назва:@Html.TextBoxFor(m=>m.FiltersModel.LotName, "", new { id = "txtLotName" })
+                    Назва:@Html.TextBox("LotName", "", new { id = "txtLotName" })
                 </div>
                 <div class="flex-item-row">
                     Порядок: @Html.DropDownList("Order", orderItems)
@@ -63,18 +67,10 @@
                 <div class="flex-item-row">
                     <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
                 </div>
-                if ((User as CustomPrincipal) != null && (User as CustomPrincipal).IsInRole("Admin"))
-                {
-                    <div>
-                        за статусом
-                    </div>
-                }
-            }
-            @using (Ajax.BeginForm("Pages", new { page = 1, Filters = "" }, new AjaxOptions { UpdateTargetId = "updatedPage" }, null))
-            {
-                <input type="submit" value="Зкинути фільтри" id="btnClearFilters" />
+
             }
 
+            @Html.ActionLink("Зкинути фільти", "Index", "Home", new {page=1,Filters=""},new {@class="btn btn-info"})
         </div>
     </div>
     <div class="flex-item-row">

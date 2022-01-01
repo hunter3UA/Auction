@@ -41,7 +41,7 @@ namespace Auction.API.Controllers
                 GetPage(
                 page,
                 3,
-                lotModels.Where(l=>l.Status.LotStatusName=="Permitted").ToList()
+                lotModels
                 );
             ivm.FiltersModel = filters;
             ViewData["Categories"] = _categoryService.GetCategories();

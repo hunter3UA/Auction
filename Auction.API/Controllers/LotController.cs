@@ -64,13 +64,10 @@ namespace Auction.API.Controllers
             ivm.Collection.Reverse();
             return View(ivm);
         }
-
-
         [HttpGet]
         public ActionResult LotPage(int lotId=0)
         {
-            LotModel lotModel = _lotService.GetLot(lotId);
-       
+            LotModel lotModel = _lotService.GetLot(l=>l.LotId==lotId);     
             if (lotModel==null || lotModel.LotId==0)
                 return RedirectToAction("Index","Home");
             return View(lotModel);
@@ -79,8 +76,7 @@ namespace Auction.API.Controllers
         [HttpGet,Authentication(true)]
         public ActionResult Edit(int id=0)
         {
-            LotModel lotModel= _lotService.GetLot(id);
-           
+            LotModel lotModel= _lotService.GetLot(l=>l.LotId==id);          
             if(lotModel != null && lotModel.LoginId == User.LoginId || User.AccountType.AccountTypeName=="Admin")
             {
                 ViewData["Categories"] = _categoryService.GetCategories();
@@ -116,7 +112,7 @@ namespace Auction.API.Controllers
         [Authentication(true)]
         public async Task<ActionResult> RemovePicture(int lotId,int pictureId)
         {
-            LotModel lotModel= _lotService.GetLot(lotId);
+            LotModel lotModel= _lotService.GetLot(l=>l.LotId==lotId);
             if (!lotModel.IsSoldOut)
             {
                 await _pictureService.RemovePicture(lotModel.LotId,
@@ -134,7 +130,6 @@ namespace Auction.API.Controllers
         {
             await _pictureService.AddPicturesAsync(Request, lotId);
             return RedirectToAction("Edit",new { id=lotId });
-
         }
 
 
