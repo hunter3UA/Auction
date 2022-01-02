@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-//TODO: Переделать метод фильтрации 
 
 
 namespace Auction.BLL.Services
@@ -57,17 +56,7 @@ namespace Auction.BLL.Services
            Lot lotById= _unitOfWork.LotRepository.Get(predicate);             
            return _mapper.Map<LotModel>(lotById);;
         }
-        public List<LotModel> GetLotsBySeller(Func<User,bool> predicate)
-        {
-            User user = _unitOfWork.UserRepository.Get(predicate);
-            if (user != null)
-            {
-                List<Lot> lots = _unitOfWork.LotRepository.GetList(u=>u.SellerId==user.UserId).ToList();                 
-                List<LotModel> lotModels=   _mapper.Map<List<LotModel>>(lots);
-                return lotModels;
-            }       
-            return new List<LotModel>();
-        }
+     
 
         public List<LotModel> GetByFilters(FiltersModel filtersModel)
         {
@@ -94,19 +83,12 @@ namespace Auction.BLL.Services
             }
             if (!string.IsNullOrEmpty(filtersModel.Status))
             {
-                allLots=allLots.Where(l=>l.Status.LotStatusName== filtersModel.Status).ToList();
+                allLots=allLots.Where(l=>l.StatusId== Convert.ToInt32(filtersModel.Status)).ToList();
             }
             return _mapper.Map<List<LotModel>>(allLots);
         }
       
-        public List<LotModel> GetAcquiredLots(int loginId)
-        {
-            User userByLogin= _unitOfWork.UserRepository.Get(u=>u.LoginId==loginId);
-            ShopptingCart cart = _unitOfWork.CartRepository.Get(c => c.UserId == userByLogin.UserId);
-            List<LotModel> lotModels=_mapper.Map<List<LotModel>>(cart.Lots);
-            return lotModels;
-
-        }
+        
         public async Task<LotModel> UpdateLotAsync(int lotId,LotModel modelForUpdate)
         {
             Lot lotToUpdate = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
@@ -134,13 +116,38 @@ namespace Auction.BLL.Services
             return false;
         }
 
+        public async Task<bool> DisableLot(int lotId)
+        {
+            Lot lot = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
+            if (lot != null)
+            {
+                List<Stake> stakesToRemove = _unitOfWork.StakeRepository.GetList(s=>s.LotId==lot.LotId);
+                bool isDisabled = _unitOfWork.StakeRepository.RemoveRangeStake(stakesToRemove);
+                if (isDisabled)
+                {                
+                    lot.StatusId = 3;
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
         public List<LotModel> GetList(Func<Lot,bool> predicate)
         {
             List<Lot> lots=_unitOfWork.LotRepository.GetList(predicate).ToList();
             return _mapper.Map<List<LotModel>>(lots);
 
         }
-        
-      
+
+        public List<LotModel> GetAcquiredLots(int loginId)
+        {
+            User userByLogin= _unitOfWork.UserRepository.Get(u=>u.LoginId==loginId);
+            ShopptingCart cart = _unitOfWork.CartRepository.Get(c => c.UserId == userByLogin.UserId); 
+            return _mapper.Map<List<LotModel>>(cart.Lots);;
+
+        }
     }
 }

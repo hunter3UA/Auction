@@ -133,6 +133,10 @@
     <Compile Include="Migrations\202112291333297_UpdateLot1.designer.cs">
       <DependentUpon>202112291333297_UpdateLot1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201021502450_UpdateLotsBuyerId.cs" />
+    <Compile Include="Migrations\202201021502450_UpdateLotsBuyerId.designer.cs">
+      <DependentUpon>202201021502450_UpdateLotsBuyerId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="Models\ShopptingCart.cs" />
     <Compile Include="Models\Stake.cs" />
     <Compile Include="Models\Subscription.cs" />
+    <Compile Include="Models\SupportForm.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstract\IAccountTypeRepository.cs" />
@@ -234,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112291333297_UpdateLot1.resx">
       <DependentUpon>202112291333297_UpdateLot1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201021502450_UpdateLotsBuyerId.resx">
+      <DependentUpon>202201021502450_UpdateLotsBuyerId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

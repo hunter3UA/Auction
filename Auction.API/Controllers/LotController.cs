@@ -54,8 +54,7 @@ namespace Auction.API.Controllers
         [HttpGet,Authentication(true)]
         public ActionResult BySeller(int page=1)
         {
-
-            List<LotModel> lotsOfSeller = _lotService.GetLotsBySeller(u => u.LoginId == User.LoginId);
+            List<LotModel> lotsOfSeller = _lotService.GetList(l=>l.Seller.LoginId==User.LoginId);
             IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
                  page,
                  Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLotBySeller"]),
@@ -76,11 +75,15 @@ namespace Auction.API.Controllers
         [HttpGet,Authentication(true)]
         public ActionResult Edit(int id=0)
         {
-            LotModel lotModel= _lotService.GetLot(l=>l.LotId==id);          
-            if(lotModel != null && lotModel.LoginId == User.LoginId || User.AccountType.AccountTypeName=="Admin")
+          
+            LotModel lotModel= _lotService.GetLot(l=>l.LotId==id);
+            if (lotModel != null )
             {
-                ViewData["Categories"] = _categoryService.GetCategories();
-                return View(lotModel);           
+                if (lotModel.LoginId == User.LoginId || User.AccountType.AccountTypeName == "Admin")
+                {
+                    ViewData["Categories"] = _categoryService.GetCategories();
+                    return View(lotModel);
+                }
             }
             return RedirectToAction("BySeller");
         }
@@ -133,11 +136,17 @@ namespace Auction.API.Controllers
         }
 
 
-        [HttpDelete]
-        public ActionResult RemoveLotPicture(int lotId,int pictureId)
+
+        [HttpPost]
+        public async Task<ActionResult> DisableLot(int lotId)
         {
-            return RedirectToAction("Edit", new { id = lotId });
+
+
+
+            return null;
         }
+
+
 
 
         [HttpGet,Authentication(true)]

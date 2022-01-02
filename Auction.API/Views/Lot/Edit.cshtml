@@ -46,64 +46,69 @@
             using (Html.BeginForm("Edit", "Lot", new { lotId = Model.LotId }, FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-                <div class="form-horizontal">
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.LotName, htmlAttributes: new { @class = "control-label col-md-1" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.LotName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.LotName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Price,"Ціна", htmlAttributes: new { @class = "control-label col-md-1" })
-                        <div class="col-md-2">
-                            @Model.Price
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-1" })
-                        <div class="col-md-2">
-                            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Description, "Опис", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.CategoryId, "Категорія: ", htmlAttributes: new { @class = "control-label col-md-1" })
-                        <div class="col-md-2">
-                            @Model.Category.CategoryName
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Step,"Крок:", htmlAttributes: new { @class = "control-label col-md-1" })
-                        <div class="col-md-1">
-                            @Model.Step                     
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EndAt, htmlAttributes: new { @class = "control-label col-md-1" })
-                        <div class="col-md-1">
-                            @Model.EndAt
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.LotCode, htmlAttributes: new { @class = "control-label col-md-1" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.LotCode, new { htmlAttributes = new { @class = "form-control", disabled = true } })
-                            @Html.ValidationMessageFor(model => model.LotCode, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-1">
-                            <input type="submit" value="Оновити" class="btn btn-default" />
-                        </div>
-                    </div>
-
-
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.LotName,"Назва", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LotName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LotName, "", new { @class = "text-danger" })
                 </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, "Ціна", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-2">
+                    @Model.Price
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, "Опис",htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-2">
+                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryId, "Категорія: ", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-2">
+                    @Model.Category.CategoryName
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Step, "Крок:", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-1">
+                    @Model.Step
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EndAt, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-1">
+                    @Model.EndAt
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-1">
+                    @Model.Status.LotStatusName
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LotCode, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LotCode, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    @Html.ValidationMessageFor(model => model.LotCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-1">
+                    <input type="submit" value="Оновити" class="btn btn-default" />
+                </div>
+            </div>
+
+
+        </div>
             }
         }
         else

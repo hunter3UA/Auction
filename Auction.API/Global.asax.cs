@@ -31,6 +31,7 @@ namespace Auction.API
             kernel.Unbind<ModelValidatorProvider>();
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
             await GettingLotScheduler.Start();
+            await UpdatingLotSheduler.Start();
 
           
         }

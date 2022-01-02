@@ -38,6 +38,7 @@ namespace Auction.BLL.Services.BgServices
                     }                   
                     lot.IsSoldOut = true; 
                     lot.SoldAt = DateTime.Now;
+                    lot.BuyerId = maxStake.UserId;
                     _unitOfWork.LotRepository.Update(lot);
                     cartOfUser.Lots.Add(lot);
                     await _unitOfWork.SaveAsync();

@@ -21,9 +21,6 @@ namespace Auction.DAL.Models
         [Required]
         public string Description { get; set; }
 
-        
-
-
         [Required]
         public bool IsSoldOut { get; set; }        
         [Required]
@@ -34,6 +31,7 @@ namespace Auction.DAL.Models
 
         [Required]
         public long LotCode { get; set; }      
+     
         public DateTime? SoldAt { get; set; }
          
         [Column("fk_SellerId")]
@@ -51,11 +49,16 @@ namespace Auction.DAL.Models
         public int StatusId { get; set; }
         [ForeignKey(nameof(StatusId))]
         public LotStatus Status { get; set; }
+
+
         public List<Picture> Pictures { get; set; }     
         public List<Stake> Stakes { get; set; }
         [Column("fk_CartId")]
         public int? CartId { get; set; }
+      
 
+        [Column("fk_BuyerId")]
+        public int? BuyerId { get; set; }
 
     }
 }

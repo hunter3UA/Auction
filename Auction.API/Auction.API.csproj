@@ -206,6 +206,7 @@
     <Compile Include="Controllers\LotController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\StakeController.cs" />
+    <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="DependencyResolverModule.cs" />
     <Compile Include="Filters\AuthenticationAttribute.cs" />
     <Compile Include="Filters\MyAuthAttribute.cs" />
@@ -435,6 +436,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Support\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

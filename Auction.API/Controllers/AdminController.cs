@@ -2,6 +2,7 @@
 using Auction.BLL.Services;
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -41,7 +42,7 @@ namespace Auction.API.Controllers
         {
             return PartialView();
         }
-   
+        [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveUser(int id=0)
         {
             bool isEnabled = await _accountService.DisableUserAsync(id);
@@ -56,16 +57,21 @@ namespace Auction.API.Controllers
             UserModel searchedUser= _accountService.GetUser(u=>u.Login.Email==userToSearch);
             return PartialView(searchedUser);
         }
-
-        public ActionResult LotsByStatus(int page = 1)
-        {
-            List<LotModel> lots = _lotService.GetList(l => l.Status.LotStatusName != "Processed" && !l.IsSoldOut);
-            IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
+        [HttpGet]
+        public ActionResult LotsByStatus(int page = 1,FiltersModel filtersModel=null,string Filters=null)
+        {   
+          
+            IndexViewModel<LotModel> ivm=new IndexViewModel<LotModel>();
+            filtersModel =string.IsNullOrEmpty(Filters) ? filtersModel :  JsonConvert.DeserializeObject<FiltersModel>(Filters);
+            List<LotModel> lots = _lotService.GetByFilters(filtersModel);
+            ivm = PageService<LotModel>.GetPage(
                 page,
                 Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLots"]),
                 lots
                 );
-            ViewData["Statuses"] = _statusService.GetList();
+            ivm.FiltersModel = filtersModel;
+            int selectId= filtersModel!=null ? Convert.ToInt32(filtersModel.Status) : 1;                
+            ViewData["Statuses"] = new SelectList(_statusService.GetList(), "LotStatusId", "LotStatusName", selectId);              
             return View(ivm);
         }
 

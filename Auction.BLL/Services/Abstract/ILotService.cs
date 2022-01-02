@@ -13,10 +13,10 @@ namespace Auction.BLL.Services.Abstract
         Task<Lot> CreateLotAsync(CreateLotModel lotModel, int loginId, HttpRequestBase request);
         LotModel GetLot(Func<Lot,bool> predicate);
         List<LotModel> GetByFilters(FiltersModel filtersModel);
-        List<LotModel> GetLotsBySeller(Func<User, bool> predicate);
         Task<LotModel> UpdateLotAsync(int lotId, LotModel modelForUpdate);
         List<LotModel> GetAcquiredLots(int loginId);
         Task<bool> UpdateLotStatusAsync(int lotId, int statusId);
+        Task<bool> DisableLot(int lotId);
 
     }
 }

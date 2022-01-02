@@ -124,6 +124,8 @@
     <Compile Include="Services\Abstract\ICategoryService.cs" />
     <Compile Include="Services\BgServices\GettingLotScheduler.cs" />
     <Compile Include="Services\BgServices\GettingLotService.cs" />
+    <Compile Include="Services\BgServices\UpdatingLotService.cs" />
+    <Compile Include="Services\BgServices\UpdatingLotSheduler.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\Abstract\IPictureService.cs" />
     <Compile Include="Services\LotService.cs" />

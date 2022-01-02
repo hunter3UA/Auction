@@ -3,8 +3,6 @@ using Auction.DAL.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.DAL.Repositories
 {
@@ -38,11 +36,26 @@ namespace Auction.DAL.Repositories
         {
             if (stakeToRemove != null)
             {
+
+                
                 _dbContext.Stakes.Remove(stakeToRemove);
                 return true;
             }
             return false;
         }
+
+
+        public bool RemoveRangeStake(List<Stake> stakesToRemove)
+        {
+            if (stakesToRemove != null && stakesToRemove.Capacity>0)
+            {
+                _dbContext.Stakes.RemoveRange(stakesToRemove);
+                return true;
+            }
+            return false;
+        }
+
+
 
     }
 }

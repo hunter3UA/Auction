@@ -6,66 +6,77 @@
 
 
 
+
+
+
 <div class="flex-container">
     <div class="flex-item-col">
-        @using (Html.BeginForm()) 
-        { 
-
-            <input type="submit" value="Фільтр" />
+        @using (Html.BeginForm("LotsByStatus", "Admin",FormMethod.Get))
+        {
+        <div class="form-horizontal">        
+            <div class="form-group">
+                @Html.LabelFor(model => model.FiltersModel.Status, "Статус: ", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-3">
+                    @Html.DropDownList("Status", (SelectList)ViewData["Statuses"])
+                </div>
+            </div>           
+            <input type="submit" value="Фільтр"  class="btn btn-info"/>
+        </div>
         }
-    </div>
-    <div class="flex-item-col">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayName("Ідентифікатор")
-                </th>
-                <th>
-                    @Html.DisplayName("Назва")
-                </th>
-                <th>
-                    @Html.DisplayName("Код")
-                </th>
-                <th>
-                    @Html.DisplayName("Статус")
-                </th>
-                <th>
-                    @Html.DisplayName("Ідентифікатор продавця")
-                </th>
+        @Html.ActionLink("Зкинути фільтр","LotsByStatus","Admin",new {page=1,Filters=""},new { @class="btn btn-info"})
+            </div>
+            <div class="flex-item-col">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Ідентифікатор")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Назва")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Код")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Статус")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Ідентифікатор продавця")
+                        </th>
 
-                <th></th>
-            </tr>
+                        <th></th>
+                    </tr>
 
-            @foreach (var item in Model.Collection)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LotId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LotName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LotCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status.LotStatusName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LoginId)
-                    </td>
-                    <td>
+                    @foreach (var item in Model.Collection)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LotId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LotName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LotCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status.LotStatusName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LoginId)
+                            </td>
+                            <td>
 
-                        @Html.ActionLink("Оглянути", "Edit", "Lot", new { id = item.LotId }, null) |
-                        @Html.ActionLink("Дозволити лот", "UpdateLotStatus", "Admin", new { statusId = 2, lotId = item.LotId }, null) |
-                        @Html.ActionLink("Заблокувати лот", "UpdateLotStatus", "Admin", new { statusId = 3, lotId = item.LotId }, null)
-                    </td>
-                </tr>
-            }
+                                @Html.ActionLink("Оглянути", "Edit", "Lot", new { id = item.LotId }, null) |
+                                @Html.ActionLink("Дозволити лот", "UpdateLotStatus", "Admin", new { statusId = 2, lotId = item.LotId }, null) |
+                                @Html.ActionLink("Заблокувати лот", "UpdateLotStatus", "Admin", new { statusId = 3, lotId = item.LotId }, null)
+                            </td>
+                        </tr>
+                    }
 
-        </table>
-    </div>
-</div>
+                </table>
+            </div>
+        </div>
 
 
 
@@ -75,7 +86,7 @@
     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
     {
         var str = JsonConvert.SerializeObject(Model.FiltersModel);
-        @Html.ActionLink($"{i}", "LotsByStatus", "Admin", new { page = i,}, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
+        @Html.ActionLink($"{i}", "LotsByStatus", "Admin", new { page = i, Filters=str}, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
 
     }
 </div>

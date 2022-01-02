@@ -4,7 +4,7 @@
 <div>
     @using (Html.BeginForm("RemoveUser","Admin",FormMethod.Post))
     {
-      
+       @Html.AntiForgeryToken()
         <div class="form-group">
             <label class="control-label ">Введіть ідентифікатора або email користувача</label>
             <div class="col">

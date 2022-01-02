@@ -14,5 +14,6 @@ namespace Auction.DAL.Repositories.Abstract
         Stake Get(Func<Stake, bool> predicate);
         List<Stake> GetList(Func<Stake, bool> predicate);
         bool RemoveStake(Stake stakeToRemove);
+        bool RemoveRangeStake(List<Stake> stakesToRemove);
     }
 }

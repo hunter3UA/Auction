@@ -13,7 +13,6 @@ namespace Auction.BLL.Services.Abstract
     {
         News GetNews(Func<News, bool> predicate);
         Task<News> CreateNewsAsync(News newsToAdd, HttpRequestBase request);
-        Task<List<Picture>> AddNewsPicturesAsync(HttpRequestBase request, News addedNews);
         List<News> GetListOfNews();
     }
 }
