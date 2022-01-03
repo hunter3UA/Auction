@@ -7,28 +7,26 @@ using Auction.DAL.UoW;
 using AutoMapper;
 using System;
 using System.Configuration;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Security;
 
 
-
 namespace Auction.BLL.Services
 {
-    public class AccountService:IAccountService
+    public class AuthenticationService:IAuthenticationService
     {
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
-        public AccountService(IUnitOfWork unitOfWork,IPasswordService passwordService)
+        public AuthenticationService(IUnitOfWork unitOfWork, IPasswordService passwordService)
         {
             _unitOfWork = unitOfWork;
             _passwordService = passwordService;
             _mapper = AutoMapperConfig.Configure().CreateMapper();
         }
-
         public async Task<User> CreateUserAsync(RegisterModel registerModel)
         {
             try
@@ -46,33 +44,33 @@ namespace Auction.BLL.Services
                 newUser.Login = newLogin;
                 newUser.RegistredAt = DateTime.Now;
                 _unitOfWork.UserRepository.Add(newUser);
-                await _unitOfWork.SaveAsync();
-                SetLoginCookie(newLogin);
+                await _unitOfWork.SaveAsync();  
                 return newUser;
-            }catch (Exception)
+            }
+            catch (Exception)
             {
                 return new User();
             }
-            
+
 
         }
-        public async Task<bool> UpdatePasswordAsync(string oldPassword,string newPassword,int loginId)
+        public async Task<bool> UpdatePasswordAsync(string oldPassword, string newPassword, int loginId)
         {
-            Login loginToUpdate=_unitOfWork.LoginRepository.Get(l=>l.LoginId== loginId);
+            Login loginToUpdate = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
             if (CheckPassword(loginToUpdate, oldPassword))
             {
-                Salted_Hash salt=_passwordService.CreateSaltedHash(newPassword,64);
-                loginToUpdate.PasswordHash= salt.Hash;
+                Salted_Hash salt = _passwordService.CreateSaltedHash(newPassword, 64);
+                loginToUpdate.PasswordHash = salt.Hash;
                 loginToUpdate.PasswordSalt = salt.Salt;
                 await _unitOfWork.SaveAsync();
                 return true;
             }
             return false;
-            
+
 
         }
 
-        private bool CheckPassword(Login loginToCheck,string password)
+        private bool CheckPassword(Login loginToCheck, string password)
         {
             try
             {
@@ -92,17 +90,16 @@ namespace Auction.BLL.Services
             }
             return false;
         }
-
-        public bool Login(LoginModel loginModel)
+        public Login Login(LoginModel loginModel)
         {
-          
+
             Login login = _unitOfWork.LoginRepository.Get(l => l.Email == loginModel.Email);
-            if(CheckPassword(login, loginModel.Password))
+            if (CheckPassword(login, loginModel.Password))
             {
-                SetLoginCookie(login);
-                return true;
+               
+                return login;
             }
-            return false;
+            return new DAL.Models.Login();
         }
 
         /// <summary>
@@ -153,60 +150,48 @@ namespace Auction.BLL.Services
 
         public static void WriteTicketToResponse(DateTime cookieDeathTime, FormsAuthenticationTicket authenticationTicket)
         {
-            
-            string encryptedTicket = FormsAuthentication.Encrypt(authenticationTicket);          
+
+            string encryptedTicket = FormsAuthentication.Encrypt(authenticationTicket);
             HttpCookie loginCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
             loginCookie.Expires = cookieDeathTime;
             HttpContext.Current.Response.Cookies.Add(loginCookie);
         }
 
-        public UserModel GetUser(Func<User,bool> predicate)
+
+        public Login GetLogin(Func<Login,bool> predicate)
         {
-          
-           User userToSearch = _unitOfWork.UserRepository.Get(predicate);
-            if (userToSearch.Login == null)
-                return new UserModel();
-           UserModel model= _mapper.Map<UserModel>(userToSearch);
-           model.Email = userToSearch.Login.Email;
-           return model;
-       
-           
+            Login login = _unitOfWork.LoginRepository.Get(predicate);
+            if (login != null)
+                return login;
+            return new Login();
         }
 
-        public async Task<bool> UpdateUserAsync(UserModel userModel,int loginId)
+
+        public async Task<bool> ConfirmAccount(string Email,string Token)
         {
-            User userToSearch= _unitOfWork.UserRepository.Get(u=>u.LoginId == loginId);
-            if (userToSearch != null)
+
+            Login loginToConfirm= _unitOfWork.LoginRepository.Get(l=>l.Email == Email); 
+            if (loginToConfirm != null)
             {
-                userToSearch.FirstName = userModel.FirstName;
-                userToSearch.LastName = userModel.LastName;         
-               
-                await _unitOfWork.SaveAsync();
-                return true;
+                byte[] PasswordSalt = loginToConfirm.PasswordSalt;
+                string CheckToken = BitConverter.ToString(PasswordSalt);
+                PasswordSalt = Encoding.UTF8.GetBytes(CheckToken);
+                CheckToken = Encoding.UTF8.GetString(PasswordSalt);
+                if (Token == CheckToken)
+                {
+                    loginToConfirm.IsConfirmed = true;
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
             }
             return false;
         }
 
 
 
-
-
-        public async Task<bool> DisableUserAsync(int loginId)
+        public Task<bool> DisableUserAsync(int loginId)
         {
-            Login loginToDisable=_unitOfWork.LoginRepository.Get(l=>l.LoginId== loginId);
-            if (loginToDisable.IsEnabled)
-            {
-                loginToDisable.IsEnabled = false;
-                _unitOfWork.LoginRepository.Update(loginToDisable);
-                await _unitOfWork.SaveAsync();
-                return true;
-            }
-            return false;
-
+            return null;
         }
-
-
-
-       
     }
 }

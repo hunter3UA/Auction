@@ -17,6 +17,9 @@ namespace Auction.DAL.Models
         public bool IsEnabled { get; set; }
        
         
+        public bool IsConfirmed { get; set; }
+
+
         [Column("fk_AccountTypeId")]
         public int? AccountTypeId { get; set; }
         [Required]

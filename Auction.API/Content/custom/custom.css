@@ -51,9 +51,9 @@
 
 }
 .lot-details{
-    margin-left:0px;
-
-
+    left:0px;
+    padding:0px;
+    text-align:left
 
 }
 
@@ -68,6 +68,7 @@
     font-size: 1.1em;
     padding: 1.5em;
     width:100%;
+    
 }
 .flex-item-col{
     flex-direction:column

@@ -6,6 +6,11 @@
 
 <h2>Login</h2>
 
+<div>
+    @ViewBag.Msg
+</div>
+
+
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form", style = "margin-right:auto;margin-left:auto" }))
 {

@@ -19,6 +19,8 @@ namespace Auction.API
             Bind<INewsService>().To<NewsService>();
             Bind<IStatusService>().To<StatusService>();
             Bind<IPasswordService>().To<PasswordService>();
+            Bind<IAuthenticationService>().To<AuthenticationService>();
+            Bind<IEmailService>().To<EmailService>();
          
         }
     }

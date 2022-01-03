@@ -2,6 +2,7 @@
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
 using Auction.DAL.Models;
+using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -9,14 +10,20 @@ using System.Web.Security;
 
 //TODO: Notification  of UpdatedProfiles
 
+
+// TODO: убрать лишнее из accountService
 namespace Auction.API.Controllers
 {
     public class AccountController : BaseController
     {
         private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IEmailService _emailService;
+        public AccountController(IAccountService accountService,IAuthenticationService authenticationService,IEmailService emailService)
         {
             _accountService = accountService;
+            _authenticationService = authenticationService;
+            _emailService = emailService;
         }
 
         [HttpGet, Authentication(true)]
@@ -44,13 +51,15 @@ namespace Auction.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                User newUser= await _accountService.CreateUserAsync(registerModel);
+                User newUser= await _authenticationService.CreateUserAsync(registerModel);
                 if (newUser.UserId == 0)
                 {
                     ViewBag.IncorrectEmail = "Користувач з таким логіном вже існує";
                     return View(registerModel);
                 }
-                return RedirectToAction("Index", "Home");
+                _emailService.SendPasswordConfirmed(registerModel.Email);
+                ViewBag.Msg = "Вам надіслано лист з підтвердженням";
+                return View("Login");
             }         
             return View(registerModel);
         }
@@ -65,18 +74,24 @@ namespace Auction.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool isAuthenticated= _accountService.Login(loginModel);
-                if (!isAuthenticated)
+                Login isAuthenticated = _authenticationService.Login(loginModel);
+                if (isAuthenticated.LoginId==0)
                 {
                     ViewBag.UserNotFound = "Користувача не знайдено";
                     return View(loginModel);
                 }
+                if(isAuthenticated!=null && isAuthenticated.IsConfirmed == false)
+                {
+                    ViewBag.Msg = "Підтвердіть реєстрацію";
+                    return View(loginModel);
+                }
+                _authenticationService.SetLoginCookie(isAuthenticated);
                 return RedirectToAction("Profile", "Account");
             }
             return View(loginModel);
         }
 
-            
+
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> UpdatePassword(string oldPassword,string newPassword)
         {
@@ -91,6 +106,20 @@ namespace Auction.API.Controllers
             }
             ViewBag.Msg = "Пароль невірний";
             return View("Profile");
+        }
+
+
+
+        [Authentication(false)]
+        public async Task<ActionResult> ConfirmRegistration(string Email,string Token)
+        {
+        
+            bool isConfirmed=  await _authenticationService.ConfirmAccount(Email,Token);
+            if (isConfirmed==true)
+            {
+                ViewBag.Msg = "Email підтверджено";  
+            }
+            return View("Login");
         }
 
         public ActionResult LogOut()

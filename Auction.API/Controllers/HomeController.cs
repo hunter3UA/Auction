@@ -23,17 +23,21 @@ namespace Auction.API.Controllers
     {
         private readonly ILotService _lotService;
         private readonly ICategoryService _categoryService;
+        private readonly IEmailService _emailService;
 
-
-        public HomeController(ILotService lotService, ICategoryService categoryService)
+        public HomeController(ILotService lotService, ICategoryService categoryService,IEmailService emailService)
         {
             _lotService = lotService;
             _categoryService = categoryService;
+            _emailService = emailService;
         }
 
 
         public ActionResult Index(int page = 1, string Filters = null, FiltersModel filtersModel = null)
-        {        
+        {
+          
+           
+
             var filters = string.IsNullOrEmpty(Filters) ? filtersModel : JsonConvert.DeserializeObject<FiltersModel>(Filters);
             List<LotModel> lotModels = _lotService.GetByFilters(filters);       
             IndexViewModel<LotModel> ivm = PageService<LotModel>.

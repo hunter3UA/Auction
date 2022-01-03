@@ -137,6 +137,10 @@
     <Compile Include="Migrations\202201021502450_UpdateLotsBuyerId.designer.cs">
       <DependentUpon>202201021502450_UpdateLotsBuyerId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201031009050_UpdatePasswordConfirmed.cs" />
+    <Compile Include="Migrations\202201031009050_UpdatePasswordConfirmed.designer.cs">
+      <DependentUpon>202201031009050_UpdatePasswordConfirmed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -242,6 +246,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201021502450_UpdateLotsBuyerId.resx">
       <DependentUpon>202201021502450_UpdateLotsBuyerId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201031009050_UpdatePasswordConfirmed.resx">
+      <DependentUpon>202201031009050_UpdatePasswordConfirmed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

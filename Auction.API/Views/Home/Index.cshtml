@@ -64,6 +64,7 @@ List<SelectListItem> criterions = new List<SelectListItem>()
                 <div class="flex-item-row">
                     Критерій: @Html.DropDownList("Criterion", criterions)
                 </div>
+                
                 <div class="flex-item-row">
                     <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
                 </div>
@@ -98,12 +99,10 @@ List<SelectListItem> criterions = new List<SelectListItem>()
                                 }
                             </div>
                             <div class="flex-item-row lot-details">
-                                Назва: @item.LotName
-                                <br />
-                                Стартова ціна: @item.Price
-                                <br />
-                                Категорія: @item.Category.CategoryName
-                                <br />
+                                <div class="lot-details"> Назва: @item.LotName</div>                              
+                                <div class="lot-details">Стартова ціна: @item.Price</div>
+                                <div class="lot-details">Категорія: @item.Category.CategoryName</div>
+
                             </div>
                             <div class="flex-item-row">
                                 <div class="flex-container flex-item-col">
