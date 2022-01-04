@@ -92,6 +92,13 @@ namespace Auction.API.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult UpdatePassword()
+        {
+            return View();
+        }
+
+
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> UpdatePassword(string oldPassword,string newPassword)
         {
@@ -100,7 +107,7 @@ namespace Auction.API.Controllers
             {
                 LoginModel loginModel=new LoginModel() { Email = User.Identity.Name, Password = newPassword };
                 FormsAuthentication.SignOut();
-                _accountService.Login(loginModel);
+                _authenticationService.Login(loginModel);
                 ViewBag.Msg = "Пароль оновлено";
                 return View("Profile");
             }
@@ -122,6 +129,21 @@ namespace Auction.API.Controllers
             return View("Login");
         }
 
+
+        public ActionResult ResetPassword()
+        {
+            return null;
+        }
+
+
+        //[HttpPost,Authentication(false)]
+        //public async Task<ActionResult> ResetPassword()
+        //{
+           
+
+        //    return null;
+        //}
+
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
@@ -130,3 +152,4 @@ namespace Auction.API.Controllers
 
     }
 }
+

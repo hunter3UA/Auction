@@ -11,9 +11,7 @@ namespace Auction.BLL.Services.Abstract
     public interface IAuthenticationService
     {
         Task<User> CreateUserAsync(RegisterModel registerModel);
-        Task<bool> UpdatePasswordAsync(string oldPassword, string newPassword, int loginId);
         Login Login(LoginModel loginModel);
-        Task<bool> DisableUserAsync(int loginId);
         Task<bool> ConfirmAccount(string Email,string Token);
         Login GetLogin(Func<Login, bool> predicate);
         void SetLoginCookie(Login login);

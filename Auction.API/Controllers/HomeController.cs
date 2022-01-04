@@ -11,7 +11,7 @@ using System.Web.Mvc;
 TODO: Cart Update
 TODO: проверить все токены
 
-
+TODO: вынести в config
 TODO: добавить сохранение listbox в фильтрах
 
 
@@ -35,9 +35,6 @@ namespace Auction.API.Controllers
 
         public ActionResult Index(int page = 1, string Filters = null, FiltersModel filtersModel = null)
         {
-          
-           
-
             var filters = string.IsNullOrEmpty(Filters) ? filtersModel : JsonConvert.DeserializeObject<FiltersModel>(Filters);
             List<LotModel> lotModels = _lotService.GetByFilters(filters);       
             IndexViewModel<LotModel> ivm = PageService<LotModel>.

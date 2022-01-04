@@ -1,5 +1,6 @@
 ﻿using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
+using Auction.DAL.Models;
 using System;
 using System.Configuration;
 using System.Security.Cryptography;
@@ -69,8 +70,28 @@ namespace Auction.BLL.Services
                 }
                 return true;
         }
+
+        public bool CheckPassword(Login loginToCheck, string password)
+        {
+            try
+            {
+                if (loginToCheck != null)
+                {
+                    Salted_Hash saltedHash = new Salted_Hash();
+                    saltedHash.Hash = loginToCheck.PasswordHash;
+                    saltedHash.Salt = loginToCheck.PasswordSalt;
+                    if (CheckSaltedHash(password, saltedHash) && loginToCheck.IsEnabled)
+                        return true;
+                }
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
+
        
-
-
     }
 }

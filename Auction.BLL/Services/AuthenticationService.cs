@@ -54,49 +54,15 @@ namespace Auction.BLL.Services
 
 
         }
-        public async Task<bool> UpdatePasswordAsync(string oldPassword, string newPassword, int loginId)
-        {
-            Login loginToUpdate = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
-            if (CheckPassword(loginToUpdate, oldPassword))
-            {
-                Salted_Hash salt = _passwordService.CreateSaltedHash(newPassword, 64);
-                loginToUpdate.PasswordHash = salt.Hash;
-                loginToUpdate.PasswordSalt = salt.Salt;
-                await _unitOfWork.SaveAsync();
-                return true;
-            }
-            return false;
+        
 
-
-        }
-
-        private bool CheckPassword(Login loginToCheck, string password)
-        {
-            try
-            {
-                if (loginToCheck != null)
-                {
-                    Salted_Hash saltedHash = new Salted_Hash();
-                    saltedHash.Hash = loginToCheck.PasswordHash;
-                    saltedHash.Salt = loginToCheck.PasswordSalt;
-                    if (_passwordService.CheckSaltedHash(password, saltedHash) && loginToCheck.IsEnabled)
-                        return true;
-                }
-
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return false;
-        }
+    
         public Login Login(LoginModel loginModel)
         {
 
             Login login = _unitOfWork.LoginRepository.Get(l => l.Email == loginModel.Email);
-            if (CheckPassword(login, loginModel.Password))
+            if (_passwordService.CheckPassword(login, loginModel.Password))
             {
-               
                 return login;
             }
             return new DAL.Models.Login();
@@ -189,9 +155,6 @@ namespace Auction.BLL.Services
 
 
 
-        public Task<bool> DisableUserAsync(int loginId)
-        {
-            return null;
-        }
+        
     }
 }
