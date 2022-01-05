@@ -30,21 +30,25 @@ namespace Auction.BLL.Services
             _mapper = AutoMapperConfig.Configure().CreateMapper();
         }
 
-       
+    
         public async Task<bool> UpdatePasswordAsync(string oldPassword,string newPassword,int loginId)
-        {     
-            Login loginToUpdate=_unitOfWork.LoginRepository.Get(l=>l.LoginId== loginId);
-            if (loginToUpdate != null && !string.IsNullOrEmpty(newPassword) && !string.IsNullOrEmpty(oldPassword))
+        {
+            try
             {
-                if (_passwordService.CheckPassword(loginToUpdate, oldPassword))
+                Login loginToUpdate = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
+                if (loginToUpdate != null && !string.IsNullOrEmpty(newPassword) && !string.IsNullOrEmpty(oldPassword))
                 {
-                    Salted_Hash salt = _passwordService.CreateSaltedHash(newPassword, 64);
-                    loginToUpdate.PasswordHash = salt.Hash;
-                    loginToUpdate.PasswordSalt = salt.Salt;
-                    await _unitOfWork.SaveAsync();
-                    return true;
+                    if (_passwordService.CheckPassword(loginToUpdate, oldPassword))
+                    {
+                        Salted_Hash salt = _passwordService.CreateSaltedHash(newPassword, 64);
+                        loginToUpdate.PasswordHash = salt.Hash;
+                        loginToUpdate.PasswordSalt = salt.Salt;
+                        await _unitOfWork.SaveAsync();
+                        return true;
+                    }
                 }
-            }
+            }catch { return false; }
+            
             return false;
             
 
@@ -52,60 +56,70 @@ namespace Auction.BLL.Services
 
         public async Task<bool> ResetPassword(string Email, string Token, string Password)
         {
-            Login login = _unitOfWork.LoginRepository.Get(l=>l.Email==Email);
-            byte[] PasswordSalt = login.PasswordSalt;
-            string LoginToken = BitConverter.ToString(PasswordSalt);
-            PasswordSalt = Encoding.UTF8.GetBytes(Token);
-            LoginToken = Encoding.UTF8.GetString(PasswordSalt);
-            if (Token == LoginToken)
+            try
             {
-                Salted_Hash salt = _passwordService.CreateSaltedHash(Password, 64);
-                login.PasswordHash = salt.Hash;
-                login.PasswordSalt = salt.Salt;
-                await _unitOfWork.SaveAsync();
-                return true;
-            }
+                Login login = _unitOfWork.LoginRepository.Get(l => l.Email == Email);
+                byte[] PasswordSalt = login.PasswordSalt;
+                string LoginToken = BitConverter.ToString(PasswordSalt);
+                PasswordSalt = Encoding.UTF8.GetBytes(Token);
+                LoginToken = Encoding.UTF8.GetString(PasswordSalt);
+                if (Token == LoginToken)
+                {
+                    Salted_Hash salt = _passwordService.CreateSaltedHash(Password, 64);
+                    login.PasswordHash = salt.Hash;
+                    login.PasswordSalt = salt.Salt;
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
+            }catch { return false; }           
             return false;
-
         }
 
         public UserModel GetUser(Func<User,bool> predicate)
         {
-          
-           User userToSearch = _unitOfWork.UserRepository.Get(predicate);
-            if (userToSearch.Login == null)
-                return new UserModel();
-           UserModel model= _mapper.Map<UserModel>(userToSearch);
-           model.Email = userToSearch.Login.Email;
-           return model;
-       
-           
+            try
+            {
+                User userToSearch = _unitOfWork.UserRepository.Get(predicate);
+                if (userToSearch==null && userToSearch.Login == null)
+                    return new UserModel();
+                UserModel model= _mapper.Map<UserModel>(userToSearch);
+                model.Email = userToSearch.Login.Email;
+                return model;
+            }catch { return new UserModel(); }
+            
         }
 
         public async Task<bool> UpdateUserAsync(UserModel userModel,int loginId)
         {
-            User userToSearch= _unitOfWork.UserRepository.Get(u=>u.LoginId == loginId);
-            if (userToSearch != null)
+            try
             {
-                userToSearch.FirstName = userModel.FirstName;
-                userToSearch.LastName = userModel.LastName;         
-               
-                await _unitOfWork.SaveAsync();
-                return true;
-            }
+                User userToSearch = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
+                if (userToSearch != null)
+                {
+                    userToSearch.FirstName = userModel.FirstName;
+                    userToSearch.LastName = userModel.LastName;
+
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
+            }catch { return false; }          
             return false;
         }
 
         public async Task<bool> DisableUserAsync(int loginId)
         {
-            Login loginToDisable=_unitOfWork.LoginRepository.Get(l=>l.LoginId== loginId);
-            if (loginToDisable.IsEnabled)
+            try
             {
-                loginToDisable.IsEnabled = false;
-                _unitOfWork.LoginRepository.Update(loginToDisable);
-                await _unitOfWork.SaveAsync();
-                return true;
+                Login loginToDisable = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
+                if (loginToDisable != null && loginToDisable.IsEnabled)
+                {
+                    loginToDisable.IsEnabled = false;
+                    _unitOfWork.LoginRepository.Update(loginToDisable);
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
             }
+            catch { return false; }
             return false;
 
         }

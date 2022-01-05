@@ -14,6 +14,7 @@ namespace Auction.BLL.Services
         private static int iterations = Convert.ToInt32(ConfigurationManager.AppSettings["HashIterations"]);
         public byte[] CreateToken(int TokenLength)
         {
+           
                 if (TokenLength <= 0)
                 { throw new ArgumentOutOfRangeException("TokenLength", "number must be positive"); }
                 RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
@@ -23,6 +24,8 @@ namespace Auction.BLL.Services
         }
         public Salted_Hash CreateSaltedHash(string stringToHash, int saltLenght)
         {
+            try
+            {
                 int iterations = Convert.ToInt32(ConfigurationManager.AppSettings["HashIterations"]);
                 if (stringToHash == null)
                 { throw new ArgumentNullException("password"); }
@@ -30,18 +33,22 @@ namespace Auction.BLL.Services
                 { throw new ArgumentOutOfRangeException("iterations", "number must be positive"); }
                 else if (saltLenght <= 0)
                 { throw new ArgumentOutOfRangeException("saltLenght", "number must be positive"); }
-                Salted_Hash salted_Hash = new Salted_Hash(){ Salt = CreateToken(saltLenght) };
+                Salted_Hash salted_Hash = new Salted_Hash() { Salt = CreateToken(saltLenght) };
                 using (Rfc2898DeriveBytes hashDriver = new Rfc2898DeriveBytes(
-                    stringToHash,       
-                    salted_Hash.Salt,   
-                    iterations))        
+                    stringToHash,
+                    salted_Hash.Salt,
+                    iterations))
                 {
                     salted_Hash.Hash = hashDriver.GetBytes(hash_length);
                 }
                 return salted_Hash;
+            }catch { return new Salted_Hash(); }
+            
         }
         public bool CheckSaltedHash(string stringToCheck, Salted_Hash saltedHash)
         {
+            try
+            {
                 if (stringToCheck == null)
                 { throw new ArgumentNullException("password"); }
                 else if (saltedHash.Hash == null)
@@ -50,13 +57,14 @@ namespace Auction.BLL.Services
                 { throw new ArgumentNullException("hashedPassword"); }
                 byte[] hashGenerated = null;
                 using (Rfc2898DeriveBytes hashDriver = new Rfc2898DeriveBytes(
-                     stringToCheck,          
-                     saltedHash.Salt,        
-                     iterations)) 
+                     stringToCheck,
+                     saltedHash.Salt,
+                     iterations))
                 {
-                     hashGenerated = hashDriver.GetBytes(hash_length);
+                    hashGenerated = hashDriver.GetBytes(hash_length);
                 }
                 return ByteArraysEqual(hashGenerated, saltedHash.Hash);
+            }catch { return false; }
         }
         private bool ByteArraysEqual(byte[] buff1, byte[] buff2)
         {
@@ -85,10 +93,7 @@ namespace Auction.BLL.Services
                 }
 
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            catch  { return false; }          
             return false;
         }
 

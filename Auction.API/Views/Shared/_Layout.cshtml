@@ -29,8 +29,7 @@
                         <div id="myDropdown" class="dropdown-content">
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @class = "btn btn-success" })</li>
-                                <li>@Html.ActionLink("Підписки", "Subscribes", "Account", null, new { @class = "btn btn-success" })</li>                      
+                                <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @class = "btn btn-success" })</li>                  
                                 <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
 
                             }

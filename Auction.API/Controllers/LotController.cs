@@ -77,7 +77,7 @@ namespace Auction.API.Controllers
         {
           
             LotModel lotModel= _lotService.GetLot(l=>l.LotId==id);
-            if (lotModel != null )
+            if (lotModel != null  && lotModel.LotId!=0)
             {
                 if (lotModel.LoginId == User.LoginId || User.AccountType.AccountTypeName == "Admin")
                 {
@@ -132,21 +132,9 @@ namespace Auction.API.Controllers
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {
             await _pictureService.AddPicturesAsync(Request, lotId);
-            return RedirectToAction("Edit",new { id=lotId });
+            
+            return RedirectToAction("LotPage",new { lotId=lotId });
         }
-
-
-
-        [HttpPost]
-        public async Task<ActionResult> DisableLot(int lotId)
-        {
-
-
-
-            return null;
-        }
-
-
 
 
         [HttpGet,Authentication(true)]

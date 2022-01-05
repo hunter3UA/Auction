@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Auction.DAL.Models
@@ -16,7 +17,9 @@ namespace Auction.DAL.Models
         [Required]
         public bool IsEnabled { get; set; }
        
-        
+
+        public DateTime RegistredAt { get; set; }=DateTime.Now;
+        [Required]
         public bool IsConfirmed { get; set; }
 
 

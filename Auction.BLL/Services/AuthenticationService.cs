@@ -40,32 +40,28 @@ namespace Auction.BLL.Services
                 newLogin = _unitOfWork.LoginRepository.Add(newLogin);
                 await _unitOfWork.SaveAsync();
                 User newUser = _mapper.Map<User>(registerModel);
-                newUser.Balance = 0;
                 newUser.Login = newLogin;
                 newUser.RegistredAt = DateTime.Now;
                 _unitOfWork.UserRepository.Add(newUser);
                 await _unitOfWork.SaveAsync();  
                 return newUser;
             }
-            catch (Exception)
-            {
-                return new User();
-            }
-
+            catch{ return new User();}
 
         }
         
-
-    
         public Login Login(LoginModel loginModel)
         {
-
-            Login login = _unitOfWork.LoginRepository.Get(l => l.Email == loginModel.Email);
-            if (_passwordService.CheckPassword(login, loginModel.Password))
+            try
             {
-                return login;
-            }
-            return new DAL.Models.Login();
+                Login login = _unitOfWork.LoginRepository.Get(l => l.Email == loginModel.Email);
+                if (_passwordService.CheckPassword(login, loginModel.Password))
+                {
+                    return login;
+                }
+            } catch { return new Login(); }
+      
+            return new Login();
         }
 
         /// <summary>
@@ -98,20 +94,24 @@ namespace Auction.BLL.Services
         /// Метод для продвження життя Cookie. При кожному оновленні сторінки оновлюється термін дії Cookie
         /// </summary>
         /// <param name="ticket"></param>
-        public static void ExtendCookieLifer(FormsAuthenticationTicket ticket)
+        public static void ExtendCookieLife(FormsAuthenticationTicket ticket)
         {
-            int LoginCookieInterval = Convert.ToInt32(ConfigurationManager.AppSettings["LoginCookieInterval"]);
+            try
+            {
 
-            DateTime cookieDeathTime = DateTime.Now.AddMinutes(LoginCookieInterval);
-            FormsAuthenticationTicket authenticationTicket = new FormsAuthenticationTicket(
-               1,
-               ticket.Name,
-               DateTime.Now,
-               DateTime.Now.AddDays(1),
-               true,
-               ticket.UserData
-               );
-            WriteTicketToResponse(cookieDeathTime, authenticationTicket);
+
+                int LoginCookieInterval = Convert.ToInt32(ConfigurationManager.AppSettings["LoginCookieInterval"]);
+                DateTime cookieDeathTime = DateTime.Now.AddMinutes(LoginCookieInterval);
+                FormsAuthenticationTicket authenticationTicket = new FormsAuthenticationTicket(
+                   1,
+                   ticket.Name,
+                   DateTime.Now,
+                   DateTime.Now.AddDays(1),
+                   true,
+                   ticket.UserData
+                   );
+                WriteTicketToResponse(cookieDeathTime, authenticationTicket);
+            }catch { }
         }
 
         public static void WriteTicketToResponse(DateTime cookieDeathTime, FormsAuthenticationTicket authenticationTicket)
@@ -123,39 +123,40 @@ namespace Auction.BLL.Services
             HttpContext.Current.Response.Cookies.Add(loginCookie);
         }
 
-
         public Login GetLogin(Func<Login,bool> predicate)
         {
-            Login login = _unitOfWork.LoginRepository.Get(predicate);
-            if (login != null)
-                return login;
-            return new Login();
+            try
+            {
+                Login login = _unitOfWork.LoginRepository.Get(predicate);
+                if (login != null)
+                    return login;
+                else
+                    return new Login();
+            }
+            catch { return new Login(); }
+       
         }
-
 
         public async Task<bool> ConfirmAccount(string Email,string Token)
         {
-
-            Login loginToConfirm= _unitOfWork.LoginRepository.Get(l=>l.Email == Email); 
-            if (loginToConfirm != null)
+            try
             {
-                byte[] PasswordSalt = loginToConfirm.PasswordSalt;
-                string CheckToken = BitConverter.ToString(PasswordSalt);
-                PasswordSalt = Encoding.UTF8.GetBytes(CheckToken);
-                CheckToken = Encoding.UTF8.GetString(PasswordSalt);
-                if (Token == CheckToken)
+                Login loginToConfirm = _unitOfWork.LoginRepository.Get(l => l.Email == Email);
+                if (loginToConfirm != null)
                 {
-                    loginToConfirm.IsConfirmed = true;
-                    await _unitOfWork.SaveAsync();
-                    return true;
+                    byte[] PasswordSalt = loginToConfirm.PasswordSalt;
+                    string CheckToken = BitConverter.ToString(PasswordSalt);
+                    PasswordSalt = Encoding.UTF8.GetBytes(CheckToken);
+                    CheckToken = Encoding.UTF8.GetString(PasswordSalt);
+                    if (Token == CheckToken)
+                    {
+                        loginToConfirm.IsConfirmed = true;
+                        await _unitOfWork.SaveAsync();
+                        return true;
+                    }
                 }
-            }
+            }catch { return false; }
             return false;
         }
-
-
-      
-
-        
     }
 }

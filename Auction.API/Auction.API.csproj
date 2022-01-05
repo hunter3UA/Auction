@@ -423,7 +423,6 @@
     <Content Include="Views\News\CreateNews.cshtml" />
     <Content Include="Views\News\PageNews.cshtml" />
     <Content Include="Views\News\GetNews.cshtml" />
-    <Content Include="Views\News\NewsPartial.cshtml" />
     <Content Include="Views\Lot\AcquiredLots.cshtml" />
     <Content Include="Views\Admin\AdminPanel.cshtml" />
     <Content Include="Views\Admin\SearchUser.cshtml" />

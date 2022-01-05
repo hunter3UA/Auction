@@ -53,93 +53,9 @@
   <ItemGroup>
     <Compile Include="Attributes\MinValueAttribute.cs" />
     <Compile Include="AuctionDbContext.cs" />
-    <Compile Include="Migrations\202112211640395_CreateDb.cs" />
-    <Compile Include="Migrations\202112211640395_CreateDb.designer.cs">
-      <DependentUpon>202112211640395_CreateDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112211643101_UpdateLot.cs" />
-    <Compile Include="Migrations\202112211643101_UpdateLot.designer.cs">
-      <DependentUpon>202112211643101_UpdateLot.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112231041157_CreateNews.cs" />
-    <Compile Include="Migrations\202112231041157_CreateNews.designer.cs">
-      <DependentUpon>202112231041157_CreateNews.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112231600006_UpdatePictureLots.cs" />
-    <Compile Include="Migrations\202112231600006_UpdatePictureLots.designer.cs">
-      <DependentUpon>202112231600006_UpdatePictureLots.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112231637439_UpdateCarts.cs" />
-    <Compile Include="Migrations\202112231637439_UpdateCarts.designer.cs">
-      <DependentUpon>202112231637439_UpdateCarts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112231653081_RemoveNews.cs" />
-    <Compile Include="Migrations\202112231653081_RemoveNews.designer.cs">
-      <DependentUpon>202112231653081_RemoveNews.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112231708207_AddNewsTable.cs" />
-    <Compile Include="Migrations\202112231708207_AddNewsTable.designer.cs">
-      <DependentUpon>202112231708207_AddNewsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112231740278_NewsUpdating.cs" />
-    <Compile Include="Migrations\202112231740278_NewsUpdating.designer.cs">
-      <DependentUpon>202112231740278_NewsUpdating.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112251053340_AddedNotifications.cs" />
-    <Compile Include="Migrations\202112251053340_AddedNotifications.designer.cs">
-      <DependentUpon>202112251053340_AddedNotifications.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112262150091_UpdateLotStatus.cs" />
-    <Compile Include="Migrations\202112262150091_UpdateLotStatus.designer.cs">
-      <DependentUpon>202112262150091_UpdateLotStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112262153434_UpdateLotStatusNotNull.cs" />
-    <Compile Include="Migrations\202112262153434_UpdateLotStatusNotNull.designer.cs">
-      <DependentUpon>202112262153434_UpdateLotStatusNotNull.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112262224479_UpdateLotStatuses.cs" />
-    <Compile Include="Migrations\202112262224479_UpdateLotStatuses.designer.cs">
-      <DependentUpon>202112262224479_UpdateLotStatuses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112271700035_UpdateStatuses.cs" />
-    <Compile Include="Migrations\202112271700035_UpdateStatuses.designer.cs">
-      <DependentUpon>202112271700035_UpdateStatuses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112271702039_RemoveNitfications.cs" />
-    <Compile Include="Migrations\202112271702039_RemoveNitfications.designer.cs">
-      <DependentUpon>202112271702039_RemoveNitfications.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112271709309_UpdateDbContext.cs" />
-    <Compile Include="Migrations\202112271709309_UpdateDbContext.designer.cs">
-      <DependentUpon>202112271709309_UpdateDbContext.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112271711263_RemoveTable.cs" />
-    <Compile Include="Migrations\202112271711263_RemoveTable.designer.cs">
-      <DependentUpon>202112271711263_RemoveTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112271714482_UpdateDbTables.cs" />
-    <Compile Include="Migrations\202112271714482_UpdateDbTables.designer.cs">
-      <DependentUpon>202112271714482_UpdateDbTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112271715278_UpdateLotStatus1.cs" />
-    <Compile Include="Migrations\202112271715278_UpdateLotStatus1.designer.cs">
-      <DependentUpon>202112271715278_UpdateLotStatus1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112271718502_UpdateDbStatuses.cs" />
-    <Compile Include="Migrations\202112271718502_UpdateDbStatuses.designer.cs">
-      <DependentUpon>202112271718502_UpdateDbStatuses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112291333297_UpdateLot1.cs" />
-    <Compile Include="Migrations\202112291333297_UpdateLot1.designer.cs">
-      <DependentUpon>202112291333297_UpdateLot1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201021502450_UpdateLotsBuyerId.cs" />
-    <Compile Include="Migrations\202201021502450_UpdateLotsBuyerId.designer.cs">
-      <DependentUpon>202201021502450_UpdateLotsBuyerId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201031009050_UpdatePasswordConfirmed.cs" />
-    <Compile Include="Migrations\202201031009050_UpdatePasswordConfirmed.designer.cs">
-      <DependentUpon>202201031009050_UpdatePasswordConfirmed.cs</DependentUpon>
+    <Compile Include="Migrations\202201051713086_First.cs" />
+    <Compile Include="Migrations\202201051713086_First.designer.cs">
+      <DependentUpon>202201051713086_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
@@ -184,71 +100,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112211640395_CreateDb.resx">
-      <DependentUpon>202112211640395_CreateDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112211643101_UpdateLot.resx">
-      <DependentUpon>202112211643101_UpdateLot.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112231041157_CreateNews.resx">
-      <DependentUpon>202112231041157_CreateNews.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112231600006_UpdatePictureLots.resx">
-      <DependentUpon>202112231600006_UpdatePictureLots.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112231637439_UpdateCarts.resx">
-      <DependentUpon>202112231637439_UpdateCarts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112231653081_RemoveNews.resx">
-      <DependentUpon>202112231653081_RemoveNews.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112231708207_AddNewsTable.resx">
-      <DependentUpon>202112231708207_AddNewsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112231740278_NewsUpdating.resx">
-      <DependentUpon>202112231740278_NewsUpdating.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112251053340_AddedNotifications.resx">
-      <DependentUpon>202112251053340_AddedNotifications.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112262150091_UpdateLotStatus.resx">
-      <DependentUpon>202112262150091_UpdateLotStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112262153434_UpdateLotStatusNotNull.resx">
-      <DependentUpon>202112262153434_UpdateLotStatusNotNull.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112262224479_UpdateLotStatuses.resx">
-      <DependentUpon>202112262224479_UpdateLotStatuses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112271700035_UpdateStatuses.resx">
-      <DependentUpon>202112271700035_UpdateStatuses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112271702039_RemoveNitfications.resx">
-      <DependentUpon>202112271702039_RemoveNitfications.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112271709309_UpdateDbContext.resx">
-      <DependentUpon>202112271709309_UpdateDbContext.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112271711263_RemoveTable.resx">
-      <DependentUpon>202112271711263_RemoveTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112271714482_UpdateDbTables.resx">
-      <DependentUpon>202112271714482_UpdateDbTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112271715278_UpdateLotStatus1.resx">
-      <DependentUpon>202112271715278_UpdateLotStatus1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112271718502_UpdateDbStatuses.resx">
-      <DependentUpon>202112271718502_UpdateDbStatuses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112291333297_UpdateLot1.resx">
-      <DependentUpon>202112291333297_UpdateLot1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201021502450_UpdateLotsBuyerId.resx">
-      <DependentUpon>202201021502450_UpdateLotsBuyerId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201031009050_UpdatePasswordConfirmed.resx">
-      <DependentUpon>202201031009050_UpdatePasswordConfirmed.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201051713086_First.resx">
+      <DependentUpon>202201051713086_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,8 +15,7 @@ namespace Auction.DAL.Models
         public string LastName { get; set; }    
         [Phone]     
         public string PhoneNumber { get; set; }
-        [Required]
-        public double Balance { get; set; }
+ 
         [Required]
         public DateTime RegistredAt { get; set; }     
         [Required]
@@ -31,6 +30,9 @@ namespace Auction.DAL.Models
         public int? ShoppingCartId { get; set; }
         [ForeignKey(nameof(ShoppingCartId))]
         public ShopptingCart ShopptingCart { get; set; }
+
+
+
         public List<Lot> Lots { get; set; }
 
 

@@ -12,34 +12,39 @@ namespace Auction.BLL.Services
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IPictureService _pictureService;
-
-        public NewsService(IUnitOfWork unitOfWork, IPictureService pictureService)
+        
+        public NewsService(IUnitOfWork unitOfWork)
         {
 
             _unitOfWork = unitOfWork;
-            _pictureService = pictureService;
+        
         }
         public async Task<News> CreateNewsAsync(News newsToAdd,HttpRequestBase request)
         {
+            try
+            {
+                _unitOfWork.NewsRepository.Add(newsToAdd);
+                await _unitOfWork.SaveAsync();
+                return newsToAdd;
+            } catch { return new News(); }
            
-             _unitOfWork.NewsRepository.Add(newsToAdd);
-             await _unitOfWork.SaveAsync();  
-             return newsToAdd;
-                  
         }
         public News GetNews(Func<News,bool> predicate)
         {
-            News newsToView = _unitOfWork.NewsRepository.Get(predicate);
-            if(newsToView==null)
-                return new News();
-            return newsToView;
+            try
+            {
+                News newsToView = _unitOfWork.NewsRepository.Get(predicate);
+                return newsToView != null ? newsToView : new News();
+            }catch { return new News(); }
 
         }   
         public List<News> GetListOfNews()
         {
-            List<News> news = _unitOfWork.NewsRepository.GetList();
-            return news;
+            try
+            {
+                List<News> news = _unitOfWork.NewsRepository.GetList();
+                return news != null ? news : new List<News>();
+            }catch { return new List<News>(); } 
             
         }
     }

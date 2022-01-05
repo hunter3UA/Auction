@@ -2,16 +2,12 @@
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
 using Auction.DAL.Models;
-using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 
 
-//TODO: Notification  of UpdatedProfiles
 
-
-// TODO: убрать лишнее из accountService
 namespace Auction.API.Controllers
 {
     public class AccountController : BaseController
@@ -30,6 +26,8 @@ namespace Auction.API.Controllers
         public new ActionResult Profile()
         {
             UserModel model = _accountService.GetUser(u=>u.LoginId==User.LoginId);
+            if (model.LoginId == 0)
+                return RedirectToAction("Index", "Home");
             return View(model);
         }
         [HttpPost]
@@ -51,14 +49,14 @@ namespace Auction.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                User newUser= await _authenticationService.CreateUserAsync(registerModel);
+                User newUser =  await _authenticationService.CreateUserAsync(registerModel);
                 if (newUser.UserId == 0)
                 {
                     ViewBag.IncorrectEmail = "Користувач з таким логіном вже існує";
                     return View(registerModel);
                 }
-                _emailService.SendPasswordConfirmed(registerModel.Email,"Підтвердження пароля","ConfirmRegistration");
-                ViewBag.Msg = "Вам надіслано лист з підтвердженням";
+                bool isSent = _emailService.SendPasswordConfirmed(registerModel.Email,"Підтвердження пароля","ConfirmRegistration");
+                ViewBag.Msg = isSent==true ? "Вам надіслано лист з підтвердженням" : "Виникла помилка під час реєстрації";
                 return View("Login");
             }         
             return View(registerModel);
@@ -120,9 +118,8 @@ namespace Auction.API.Controllers
         [Authentication(false)]
         public async Task<ActionResult> ConfirmRegistration(string Email,string Token)
         {
-        
             bool isConfirmed=  await _authenticationService.ConfirmAccount(Email,Token);
-            if (isConfirmed==true)
+            if (isConfirmed)
             {
                 ViewBag.Msg = "Email підтверджено";  
             }
@@ -135,11 +132,11 @@ namespace Auction.API.Controllers
             return View();
         }
 
-       
+        [Authentication(false)]
         public ActionResult SendResetToken(string Email)
         {
-            _emailService.SendResetPasswordKey(Email);
-            ViewBag.Msg = "Вам на пошту надіслано листа для скидання пароля";
+            bool isSent = _emailService.SendResetPasswordKey(Email);          
+            ViewBag.Msg =isSent ?  "Вам на пошту надіслано листа для скидання пароля": "Сталася помилка";
             return View("ResetPassword");
         }
 
@@ -148,7 +145,7 @@ namespace Auction.API.Controllers
         public async Task<ActionResult> ResetPassword(string Email,string Token,string Password)
         {
             
-            bool isReset=  await _accountService.ResetPassword(Email,Token,Password);
+            bool isReset = await _accountService.ResetPassword(Email,Token,Password);
             if(isReset==true)
             {
                 ViewBag.Msg = "Пароль оновлено";
@@ -156,10 +153,6 @@ namespace Auction.API.Controllers
             }
             return View("Login");
         }
-
-
-
-
 
         [Authentication(false)]
         public PartialViewResult ForgotPassword()

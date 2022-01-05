@@ -23,44 +23,48 @@ namespace Auction.BLL.Services
         }
         public async Task<List<Picture>> AddPicturesAsync(HttpRequestBase request, int lotId)
         {
-            Lot lotOfPictures = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
-            List<Picture> pictures = new List<Picture>();
-            HttpPostedFileBase checkFile = request.Files[0];
-            if (checkFile.FileName != "" && !lotOfPictures.IsSoldOut )
-            {         
-                for (int i = 0; i < request.Files.Count; i++)
+            try
+            {
+                Lot lotOfPictures = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
+                List<Picture> pictures = new List<Picture>();
+                HttpPostedFileBase checkFile = request.Files[0];
+                if (checkFile.FileName != "" && !lotOfPictures.IsSoldOut)
                 {
-                    HttpPostedFileBase postedFileBase = request.Files[i];
-                    if (CheckPictureExtension(Path.GetExtension(postedFileBase.FileName)))
+                    for (int i = 0; i < request.Files.Count; i++)
                     {
-                        Picture picture = Save(postedFileBase, lotOfPictures.LotId, ConfigurationManager.AppSettings["LotsPictures"]);
-                        picture.IsTittle = false;
-                        picture.LotId = lotOfPictures.LotId;
-                        pictures.Add(picture);
-                        CreateThumb(
-                            picture,
-                            Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
-                            Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
-                            ConfigurationManager.AppSettings["PictureGallerySize"]
-                            );
-                        CreateThumb(
-                            picture,
-                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
-                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
-                            ConfigurationManager.AppSettings["PictureMainSize"]
-                            );
-                        CreateThumb(
-                            picture,
-                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
-                            Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
-                            ConfigurationManager.AppSettings["PictureSearchingSize"]
-                            );
+                        HttpPostedFileBase postedFileBase = request.Files[i];
+                        if (CheckPictureExtension(Path.GetExtension(postedFileBase.FileName)))
+                        {
+                            Picture picture = Save(postedFileBase, lotOfPictures.LotId, ConfigurationManager.AppSettings["LotsPictures"]);
+                            picture.IsTittle = false;
+                            picture.LotId = lotOfPictures.LotId;
+                            pictures.Add(picture);
+                            CreateThumb(
+                                picture,
+                                Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryWidth"]),
+                                Convert.ToInt32(ConfigurationManager.AppSettings["PicturePrevGalleryHeight"]),
+                                ConfigurationManager.AppSettings["PictureGallerySize"]
+                                );
+                            CreateThumb(
+                                picture,
+                                Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhWidth"]),
+                                Convert.ToInt32(ConfigurationManager.AppSettings["PictureMainhHeight"]),
+                                ConfigurationManager.AppSettings["PictureMainSize"]
+                                );
+                            CreateThumb(
+                                picture,
+                                Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchWidth"]),
+                                Convert.ToInt32(ConfigurationManager.AppSettings["PictureSearchHeight"]),
+                                ConfigurationManager.AppSettings["PictureSearchingSize"]
+                                );
+                        }
                     }
+                    _unitOfWork.PictureRepository.AddRange(pictures);
+                    await _unitOfWork.SaveAsync();
                 }
-                _unitOfWork.PictureRepository.AddRange(pictures);
-                await _unitOfWork.SaveAsync();
-            }
-            return pictures;
+                return pictures;
+            } catch { return new List<Picture>(); }
+           
         }
 
         /// <summary>
@@ -101,7 +105,7 @@ namespace Auction.BLL.Services
 
                 postedFile.SaveAs(Path.Combine(picture.Path, picture.Name));
             }
-            catch (Exception ex) { }
+            catch { new Picture(); }
             return picture;
         }
 
@@ -124,10 +128,10 @@ namespace Auction.BLL.Services
                     + resizedFor
                     + Path.GetExtension(pictureInfo.Name);
                 SaveThumb(resizedImage, pictureInfo.Path, FileSaveName);
-            }catch (Exception ex)
-            {
+            }catch{}
 
-            }
+            
+            
         }
 
         public void SaveThumb(Image thumbFileToSave,string savePath,string saveFileName)
@@ -164,34 +168,46 @@ namespace Auction.BLL.Services
 
 
         public async Task<bool> RemovePicture(int id,string directory,string subDirectory, int pictureId)
-        {    
-            Picture pictureToRemove = _unitOfWork.PictureRepository.Get(p => p.PictureId == pictureId);
-            if (pictureToRemove != null)
+        {
+            try
             {
-                string path = Path.Combine(HttpContext.Current.Server.MapPath("~"),directory,subDirectory,id.ToString());
-                if (Directory.Exists(path))
+                Picture pictureToRemove = _unitOfWork.PictureRepository.Get(p => p.PictureId == pictureId);
+                if (pictureToRemove != null)
                 {
-                    string[] fs = Directory.GetFiles(path);                                    
-                    List<string> filesToRemove = fs.Where(f => f.Contains(Path.GetFileNameWithoutExtension(pictureToRemove.Name))).ToList();
-                    try
+                    string path = Path.Combine(HttpContext.Current.Server.MapPath("~"), directory, subDirectory, id.ToString());
+                    if (Directory.Exists(path))
                     {
+                        string[] fs = Directory.GetFiles(path);
+                        List<string> filesToRemove = fs.Where(f => f.Contains(Path.GetFileNameWithoutExtension(pictureToRemove.Name))).ToList();                      
                         foreach (var file in filesToRemove)
                         {
                             File.Delete(Path.Combine(path, file));
                         }
-                    }catch (Exception ex) { }
-                    bool isDeleted = _unitOfWork.PictureRepository.Remove(pictureToRemove);
-                    await _unitOfWork.SaveAsync();
-                    return isDeleted;
+                       
+                        bool isDeleted = _unitOfWork.PictureRepository.Remove(pictureToRemove);
+                        await _unitOfWork.SaveAsync();
+                        return isDeleted;
+                    }
                 }
+                return false;
             }
-            return false;
+            catch { return false; }
+
         }
-        public void SetTittle(int lotId,int pictureId)
+        public bool SetTittle(int lotId,int pictureId)
         {
-            Lot lotToUpdate= _unitOfWork.LotRepository.Get(l=>l.LotId == lotId && !l.IsSoldOut);
-            if(lotToUpdate!=null)
-                _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
+            try
+            {
+                Lot lotToUpdate = _unitOfWork.LotRepository.Get(l => l.LotId == lotId && !l.IsSoldOut);
+                Picture pictureToSet = _unitOfWork.PictureRepository.Get(p => p.PictureId == pictureId);
+                if (lotToUpdate != null && pictureToSet != null)
+                {
+                    _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
+                    return true;
+                }
+                return false;
+            }catch { return false; }
+           
         }
         public List<Picture> GetList(Func<Picture,bool> predicate)
         {

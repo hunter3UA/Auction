@@ -19,8 +19,6 @@ namespace Auction.API
     {
         protected async  void Application_Start()
         {
-             
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -48,7 +46,7 @@ namespace Auction.API
                 loggedInUser.LoginId = loginCookieModel.LoginId;
                 loggedInUser.AccountType = loginCookieModel.AccountType;
                 HttpContext.Current.User = loggedInUser;
-                AuthenticationService.ExtendCookieLifer(authenticationTicket);
+                AuthenticationService.ExtendCookieLife(authenticationTicket);
 
             }
 
