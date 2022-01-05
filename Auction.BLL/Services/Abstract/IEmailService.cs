@@ -8,6 +8,7 @@ namespace Auction.BLL.Services.Abstract
 {
     public interface IEmailService
     {
-        void SendPasswordConfirmed(string Email);
+        void SendPasswordConfirmed(string email, string subject, string action);
+        void SendResetPasswordKey(string email);
     }
 }

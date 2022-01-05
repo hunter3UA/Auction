@@ -2,166 +2,167 @@
 @using Auction.BLL.ViewModels;
 @using Auction.BLL.LoginModels;
 @using Newtonsoft.Json;
-@{
+    
+    @{
 
-CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
+    CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
 
-List<SelectListItem> orderItems = new List<SelectListItem>()
-{
-        new SelectListItem(){ Value="Asc", Text = "за зростанням" },
-        new SelectListItem(){ Value="Desc", Text="за спаданням"},
+    List<SelectListItem> orderItems = new List<SelectListItem>()
+    {
+            new SelectListItem(){ Value="Asc", Text = "за зростанням" },
+            new SelectListItem(){ Value="Desc", Text="за спаданням"},
 
-};
+    };
 
-List<SelectListItem> criterions = new List<SelectListItem>()
-{
-        new SelectListItem(){ Value="", Text="--"},
-        new SelectListItem(){ Value="PriceCriterion", Text="за ціною"},
-        new SelectListItem(){ Value="DateCriterion", Text="за датою"}
-
-
-};
+    List<SelectListItem> criterions = new List<SelectListItem>()
+    {
+            new SelectListItem(){ Value="", Text="--"},
+            new SelectListItem(){ Value="PriceCriterion", Text="за ціною"},
+            new SelectListItem(){ Value="DateCriterion", Text="за датою"}
 
 
-}
+    };
+
+
+    }
 
 
 
-<div class="flex-container">
-    <div class="flex-item-row filters-item" id="filtersSection">
-        <label> Фільтри:</label>
-        <div class="flex-container flex-item-col">
-            @using (Html.BeginForm("Index", "Home", new { page = 1, Filters = "" }, FormMethod.Post))
-            {
-            <div class="flex-item-row" id="chbFlags">
-                Категорія:
-                @foreach (var item in categories.Categories)
+    <div class="flex-container">
+        <div class="flex-item-row filters-item" id="filtersSection">
+            <label> Фільтри:</label>
+            <div class="flex-container flex-item-col">
+                @using (Html.BeginForm("Index", "Home", new { page = 1, Filters = "" }, FormMethod.Post))
                 {
-
-                    if (Model.FiltersModel.Categories.Contains(item.CategoryName))
+                <div class="flex-item-row" id="chbFlags">
+                    Категорія:
+                    @foreach (var item in categories.Categories)
                     {
-                        <p>
-                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" checked name="Categories" value="@item.CategoryName" />
 
-                        </p>
-                    }
-                    else
-                    {
-                        <p>
-                            @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName" />
+                        if (Model.FiltersModel.Categories.Contains(item.CategoryName))
+                        {
+                            <p>
+                                @item.CategoryName <input type="checkbox" id="@item.CategoryId" checked name="Categories" value="@item.CategoryName" />
 
-                        </p>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                @item.CategoryName <input type="checkbox" id="@item.CategoryId" name="Categories" value="@item.CategoryName" />
+
+                            </p>
+                        }
+
                     }
+                </div>
+                    <div class="flex-item-row">
+                        Назва:@Html.TextBox("LotName", "", new { id = "txtLotName" })
+                    </div>
+                    <div class="flex-item-row">
+                        Порядок: @Html.DropDownList("Order", orderItems)
+                    </div>
+                    <div class="flex-item-row">
+                        Критерій: @Html.DropDownList("Criterion", criterions)
+                    </div>
+
+                    <div class="flex-item-row">
+                        <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
+                    </div>
 
                 }
+
+                @Html.ActionLink("Зкинути фільти", "Index", "Home", new {page=1,Filters=""},new {@class="btn btn-info"})
             </div>
-                <div class="flex-item-row">
-                    Назва:@Html.TextBox("LotName", "", new { id = "txtLotName" })
-                </div>
-                <div class="flex-item-row">
-                    Порядок: @Html.DropDownList("Order", orderItems)
-                </div>
-                <div class="flex-item-row">
-                    Критерій: @Html.DropDownList("Criterion", criterions)
-                </div>
-                
-                <div class="flex-item-row">
-                    <input type="submit" value="Enter" class="btn btn-info" id="btnFiltersSubmit" />
-                </div>
-
-            }
-
-            @Html.ActionLink("Зкинути фільти", "Index", "Home", new {page=1,Filters=""},new {@class="btn btn-info"})
         </div>
-    </div>
-    <div class="flex-item-row">
-        <div class="flex-container flex-item-col">
-            <div class="flex-item-row">
-                <div id="updatedPage">
-                    @foreach (var item in Model.Collection)
-                    {
-                        <div id="lotItem" class="flex-container">
-                            <div class="flex-item-row">
-                                @{
-                                    var picture = item.Pictures.Where(p => p.IsTittle == true).FirstOrDefault();
-                                    if (picture == null)
-                                    {
-                                        <img src="~/Content/img/noImage_search.png" />
+        <div class="flex-item-row">
+            <div class="flex-container flex-item-col">
+                <div class="flex-item-row">
+                    <div id="updatedPage">
+                        @foreach (var item in Model.Collection)
+                        {
+                            <div id="lotItem" class="flex-container">
+                                <div class="flex-item-row">
+                                    @{
+                                        var picture = item.Pictures.Where(p => p.IsTittle == true).FirstOrDefault();
+                                        if (picture == null)
+                                        {
+                                            <img src="~/Content/img/noImage_search.png" />
+                                        }
+                                        else
+                                        {
+                                            string path = Path.GetFileNameWithoutExtension(picture.Name)
+                                                        + "_"
+                                                        + "search"
+                                                        + Path.GetExtension(picture.Name);
+                                            <img src="/Pictures/Lots/@picture.LotId/@path" />
+                                        }
                                     }
-                                    else
-                                    {
-                                        string path = Path.GetFileNameWithoutExtension(picture.Name)
-                                                    + "_"
-                                                    + "search"
-                                                    + Path.GetExtension(picture.Name);
-                                        <img src="/Pictures/Lots/@picture.LotId/@path" />
-                                    }
-                                }
-                            </div>
-                            <div class="flex-item-row lot-details">
-                                <div class="lot-details"> Назва: @item.LotName</div>                              
-                                <div class="lot-details">Стартова ціна: @item.Price</div>
-                                <div class="lot-details">Категорія: @item.Category.CategoryName</div>
+                                </div>
+                                <div class="flex-item-row lot-details">
+                                    <div class="lot-details"> Назва: @item.LotName</div>
+                                    <div class="lot-details">Стартова ціна: @item.Price</div>
+                                    <div class="lot-details">Категорія: @item.Category.CategoryName</div>
 
-                            </div>
-                            <div class="flex-item-row">
-                                <div class="flex-container flex-item-col">
-                                    <div class="flex-item-row">
-                                        @Html.ActionLink("Дивитись сторінку", "LotPage", "Lot", new { lotId = item.LotId }, new { @class = "btn btn-info" })
-                                    </div>
-                                    <div class="flex-item-row">
-                                        @{
-                                            if ((User as CustomPrincipal) != null && (User as CustomPrincipal).LoginId == item.LoginId)
-                                            {
-                                                @Html.ActionLink("Редагувати", "Edit", "Lot", new { id = item.LotId }, new { @class = "btn btn-success" });
+                                </div>
+                                <div class="flex-item-row">
+                                    <div class="flex-container flex-item-col">
+                                        <div class="flex-item-row">
+                                            @Html.ActionLink("Дивитись сторінку", "LotPage", "Lot", new { lotId = item.LotId }, new { @class = "btn btn-info" })
+                                        </div>
+                                        <div class="flex-item-row">
+                                            @{
+                                                if ((User as CustomPrincipal) != null && (User as CustomPrincipal).LoginId == item.LoginId)
+                                                {
+                                                    @Html.ActionLink("Редагувати", "Edit", "Lot", new { id = item.LotId }, new { @class = "btn btn-success" });
+
+                                                }
 
                                             }
-
-                                        }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+
+                    </div>
 
                 </div>
-
             </div>
         </div>
     </div>
-</div>
 
 
 
-<div class="btn-group flex-container" id="btnPages">
-    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
-    {
-        var str = JsonConvert.SerializeObject(Model.FiltersModel);
-        @Html.ActionLink($"{i}","Index","Home", new { page = i, Filters = str }, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
-       
-    }
-</div>
+    <div class="btn-group flex-container" id="btnPages">
+        @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+        {
+            var str = JsonConvert.SerializeObject(Model.FiltersModel);
+            @Html.ActionLink($"{i}","Index","Home", new { page = i, Filters = str }, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
+
+        }
+    </div>
 
 
 
 
-@section scripts{
+    @section scripts{
 
-    <script>
+        <script>
 
 
-        let btnClearFilters = document.querySelector("#btnClearFilters");
-        btnClearFilters.addEventListener('click', function () {
-            let allChbx = document.getElementsByName('Categories');
-            let txtLotName = document.querySelector('#txtLotName');
-            txtLotName.value = "";
             let btnClearFilters = document.querySelector("#btnClearFilters");
-            for (let i = 0; i < allChbx.length; i++) {
-                allChbx[i].checked = false;
-            }
-        });
+            btnClearFilters.addEventListener('click', function () {
+                let allChbx = document.getElementsByName('Categories');
+                let txtLotName = document.querySelector('#txtLotName');
+                txtLotName.value = "";
+                let btnClearFilters = document.querySelector("#btnClearFilters");
+                for (let i = 0; i < allChbx.length; i++) {
+                    allChbx[i].checked = false;
+                }
+            });
 
 
-    </script>
+        </script>
 
-}
+    }

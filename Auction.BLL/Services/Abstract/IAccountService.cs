@@ -13,5 +13,7 @@ namespace Auction.BLL.Services.Abstract
         UserModel GetUser(Func<User,bool> predicate);
         Task<bool> UpdateUserAsync(UserModel userModel, int loginId);
         Task<bool> DisableUserAsync(int loginId);
+        Task<bool> ResetPassword(string Email, string Token, string Password);
+       
     }
 }

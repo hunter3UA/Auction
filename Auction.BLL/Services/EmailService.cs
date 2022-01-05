@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
+
+
+//TODO: оптимизировать сервис
 namespace Auction.BLL.Services
 {
     public class EmailService:IEmailService
@@ -21,22 +24,45 @@ namespace Auction.BLL.Services
         {
             _unitOfWork = unitOfWork;
         }
-
-        public void SendPasswordConfirmed(string Email)
+        private MailMessage CreateMessage(string email,string subject)
         {
             MailAddress from = new MailAddress("hunter3ua@gmail.com", "Torg-company");
-            MailAddress to = new MailAddress(Email);
+            MailAddress to = new MailAddress(email);
             MailMessage message = new MailMessage(from, to);
-            message.Subject = "Підтвердження пароля";
-            Login login = _unitOfWork.LoginRepository.Get(l => l.Email==Email);
+            message.Subject = subject;
+            return message;
+        }
+
+
+        public void SendPasswordConfirmed(string email,string subject,string action)
+        {
+            MailMessage message= CreateMessage(email,subject);          
+            Login login = _unitOfWork.LoginRepository.Get(l => l.Email==email);
             byte[] PasswordSalt = login.PasswordSalt;
             string Token = BitConverter.ToString(PasswordSalt);           
             PasswordSalt=Encoding.UTF8.GetBytes(Token);
             Token = Encoding.UTF8.GetString(PasswordSalt);
 
             message.Body = string.Format("Для завершення реєстрації перейдіть за посиланням:" +
-                            $"<a href=\"https://localhost:44328/Account/ConfirmRegistration?Email={Email}&Token={Token}\" title=Подтвердить регистрацию>Підтвердити </a>"
+                            $"<a href=\"https://localhost:44328/Account/{action}?Email={email}&Token={Token}\" title=Підтвердити реєстрацію>Підтвердити </a>"
                             );
+           
+            message.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 25);
+            smtp.EnableSsl = true;
+            smtp.Credentials = new System.Net.NetworkCredential("hunter3ua@gmail.com", "hunter3UA112233");
+            smtp.Send(message);
+        }
+
+        public void SendResetPasswordKey(string email)
+        {
+            MailMessage message = CreateMessage(email, "Скидання пароля");
+            Login login = _unitOfWork.LoginRepository.Get(l => l.Email == email);
+            byte[] PasswordSalt = login.PasswordSalt;
+            string Token = BitConverter.ToString(PasswordSalt);
+            PasswordSalt = Encoding.UTF8.GetBytes(Token);
+            Token = Encoding.UTF8.GetString(PasswordSalt);
+            message.Body = string.Format($"Код для скидання пароля: {Token}" );
             message.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 25);
             smtp.EnableSsl = true;

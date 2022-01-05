@@ -61,6 +61,7 @@
         <br />
         <label>Кінець аукціона: @Model.EndAt</label><br />
         <label>Кількість ставок: @Model.Stakes.Count()</label><br />
+        @Model.Seller
         @{
 
             if ((User as CustomPrincipal) != null && Model.LoginId != (User as CustomPrincipal).LoginId && !Model.IsSoldOut)

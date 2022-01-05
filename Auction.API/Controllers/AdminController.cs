@@ -64,6 +64,7 @@ namespace Auction.API.Controllers
             IndexViewModel<LotModel> ivm=new IndexViewModel<LotModel>();
             filtersModel =string.IsNullOrEmpty(Filters) ? filtersModel :  JsonConvert.DeserializeObject<FiltersModel>(Filters);
             List<LotModel> lots = _lotService.GetByFilters(filtersModel);
+            lots.Reverse();
             ivm = PageService<LotModel>.GetPage(
                 page,
                 Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLots"]),

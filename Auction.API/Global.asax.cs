@@ -37,7 +37,7 @@ namespace Auction.API
         }
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
-           
+
             HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie != null)
             {
@@ -49,7 +49,7 @@ namespace Auction.API
                 loggedInUser.AccountType = loginCookieModel.AccountType;
                 HttpContext.Current.User = loggedInUser;
                 AuthenticationService.ExtendCookieLifer(authenticationTicket);
-         
+
             }
 
         }

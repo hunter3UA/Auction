@@ -168,6 +168,7 @@
     <Compile Include="ViewModels\LotModel.cs" />
     <Compile Include="ViewModels\PageInfo.cs" />
     <Compile Include="ViewModels\RegisterModel.cs" />
+    <Compile Include="ViewModels\ResetPasswordModel.cs" />
     <Compile Include="ViewModels\Salted_Hash.cs" />
     <Compile Include="ViewModels\UpdateUserModel.cs" />
     <Compile Include="ViewModels\UserModel.cs" />

@@ -7,6 +7,7 @@ using Auction.DAL.UoW;
 using AutoMapper;
 using System;
 using System.Configuration;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -48,7 +49,26 @@ namespace Auction.BLL.Services
             
 
         }
-    
+
+        public async Task<bool> ResetPassword(string Email, string Token, string Password)
+        {
+            Login login = _unitOfWork.LoginRepository.Get(l=>l.Email==Email);
+            byte[] PasswordSalt = login.PasswordSalt;
+            string LoginToken = BitConverter.ToString(PasswordSalt);
+            PasswordSalt = Encoding.UTF8.GetBytes(Token);
+            LoginToken = Encoding.UTF8.GetString(PasswordSalt);
+            if (Token == LoginToken)
+            {
+                Salted_Hash salt = _passwordService.CreateSaltedHash(Password, 64);
+                login.PasswordHash = salt.Hash;
+                login.PasswordSalt = salt.Salt;
+                await _unitOfWork.SaveAsync();
+                return true;
+            }
+            return false;
+
+        }
+
         public UserModel GetUser(Func<User,bool> predicate)
         {
           

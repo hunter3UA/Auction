@@ -43,6 +43,19 @@
     <input type="submit" value="Enter" class="btn btn-info" />
 
 }
+@Ajax.ActionLink("Забули пароль?", "ForgotPassword", "Account", null, new AjaxOptions { UpdateTargetId = "ForgotPassword" }, new { @class = "btn btn-danger" })
+
+<div id="ForgotPassword">
+
+</div>
+
+
+
+
+
+
+
+
 
 
 @if (Model != null && Model.Password != null)

@@ -57,7 +57,7 @@ namespace Auction.API.Controllers
                     ViewBag.IncorrectEmail = "Користувач з таким логіном вже існує";
                     return View(registerModel);
                 }
-                _emailService.SendPasswordConfirmed(registerModel.Email);
+                _emailService.SendPasswordConfirmed(registerModel.Email,"Підтвердження пароля","ConfirmRegistration");
                 ViewBag.Msg = "Вам надіслано лист з підтвердженням";
                 return View("Login");
             }         
@@ -129,20 +129,44 @@ namespace Auction.API.Controllers
             return View("Login");
         }
 
-
+        [HttpGet,Authentication(false)]
         public ActionResult ResetPassword()
         {
-            return null;
+            return View();
+        }
+
+       
+        public ActionResult SendResetToken(string Email)
+        {
+            _emailService.SendResetPasswordKey(Email);
+            ViewBag.Msg = "Вам на пошту надіслано листа для скидання пароля";
+            return View("ResetPassword");
         }
 
 
-        //[HttpPost,Authentication(false)]
-        //public async Task<ActionResult> ResetPassword()
-        //{
-           
+        [HttpPost,Authentication(false)]
+        public async Task<ActionResult> ResetPassword(string Email,string Token,string Password)
+        {
+            
+            bool isReset=  await _accountService.ResetPassword(Email,Token,Password);
+            if(isReset==true)
+            {
+                ViewBag.Msg = "Пароль оновлено";
+                return View("Login");
+            }
+            return View("Login");
+        }
 
-        //    return null;
-        //}
+
+
+
+
+        [Authentication(false)]
+        public PartialViewResult ForgotPassword()
+        {
+            return PartialView();
+        }
+
 
         public ActionResult LogOut()
         {
