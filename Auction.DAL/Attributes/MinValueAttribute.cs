@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.DAL.Attributes
 {
     public class MinValueAttribute:ValidationAttribute
     {
-        int minNum;
+        ulong minNum;
 
-        public MinValueAttribute(int minNum)
+        public MinValueAttribute(ulong minNum)
         {
             this.minNum = minNum;
         }
@@ -19,7 +15,7 @@ namespace Auction.DAL.Attributes
         {
             if (value != null)
             {
-                int num=Convert.ToInt32(value);
+                ulong num=(ulong)value;
                 if (num >= minNum)
                     return true;
                 else
@@ -29,18 +25,3 @@ namespace Auction.DAL.Attributes
         }
     }
 }
-/*public class UserNameAttribute : ValidationAttribute
-{
-    public override bool IsValid(object value)
-    {
-        if (value != null)
-        {
-            string userName = value.ToString();
-            if (!userName.StartsWith("T"))
-                return true;
-            else
-                this.ErrorMessage = "Имя не должно начинаться с буквы T";
-        }
-        return false;
-    }
-}*/

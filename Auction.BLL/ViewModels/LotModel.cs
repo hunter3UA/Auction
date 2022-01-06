@@ -14,7 +14,7 @@ namespace Auction.BLL.ViewModels
         public int LotId { get; set; }
         [Required]
         public string LotName { get; set; }
-        [Required,MinValue(0,ErrorMessage ="Error")]
+        [Required]
         public double Price { get; set; }
 
 

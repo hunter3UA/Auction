@@ -1,9 +1,10 @@
 ﻿@model Auction.BLL.ViewModels.LotModel
 @using Auction.BLL.ViewModels;
+@using Auction.DAL.Models;
 @{
     List<SelectListItem> selectCategories = new List<SelectListItem>();
-    CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
-    foreach (var category in categories.Categories)
+    List<Category> categories = ViewData["Categories"] as List<Category>;
+    foreach (var category in categories)
     {
         selectCategories.Add(new SelectListItem
         {

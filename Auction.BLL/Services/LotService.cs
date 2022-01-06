@@ -102,11 +102,10 @@ namespace Auction.BLL.Services
             try
             {
                 Lot lotToUpdate = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
-                if (lotToUpdate != null && lotToUpdate.IsSoldOut)
+                if (lotToUpdate != null && !lotToUpdate.IsSoldOut)
                 {
                     lotToUpdate.LotName = modelForUpdate.LotName;
                     lotToUpdate.Description = modelForUpdate.Description;
-                    _unitOfWork.LotRepository.Update(lotToUpdate);
                     await _unitOfWork.SaveAsync();
                     return modelForUpdate;
                 }

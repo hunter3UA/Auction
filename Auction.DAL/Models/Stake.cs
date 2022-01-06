@@ -20,5 +20,8 @@ namespace Auction.DAL.Models
         [Required]
         public double Sum { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        [Required]
+        public bool IsRemoved { get; set; } = false;
     }
 }

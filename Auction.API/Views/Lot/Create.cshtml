@@ -1,19 +1,19 @@
 ﻿@model Auction.BLL.ViewModels.CreateLotModel
 @using Auction.BLL.ViewModels;
-
+@using Auction.DAL.Models;
 
 
 @{
     List<SelectListItem> selectDateItems = new List<SelectListItem>()
-    {
+{
         new SelectListItem{ Value="1", Text="24 години" },
         new SelectListItem{ Value="7", Text="1 тиждень" },
         new SelectListItem{ Value="30", Text="місяць"}
     };
 
     List<SelectListItem> selectCategories = new List<SelectListItem>();
-    CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
-    foreach (var category in categories.Categories)
+    List<Category> categories = ViewData["Categories"] as List<Category>;
+    foreach (var category in categories)
     {
         selectCategories.Add(new SelectListItem
         {
@@ -52,7 +52,7 @@
     <div class="row form-group">
         @Html.LabelFor(m => m.Price, "Ціна: ", new { @class = "col-sm-1" })
         <div class="col">
-            @Html.TextBoxFor(m => m.Price, new { type="number",@class="createLotPrice" })       
+            @Html.TextBoxFor(m => m.Price, new { type = "number", @class = "createLotPrice" })
             <small>
                 @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
             </small>
@@ -79,7 +79,7 @@
             @Html.DropDownList("EndAt", selectDateItems);
         </div>
     </div>
-    
+
     <div class="row form-group">
         Фото:
         <div class="col">
@@ -89,4 +89,5 @@
     <input type="submit" value="Enter" class="btn btn-info" />
 
 }
+
 

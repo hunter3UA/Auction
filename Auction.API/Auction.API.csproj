@@ -403,7 +403,6 @@
     <Content Include="Views\Account\Admin.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="Views\Lot\Create.cshtml" />
     <Content Include="Views\Lot\LotPage.cshtml" />
     <Content Include="Views\Lot\BySeller.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -432,12 +431,13 @@
     <Content Include="Views\Account\UpdatePassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Lot\Create.cshtml" />
+    <Content Include="Views\Admin\EnableUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Support\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

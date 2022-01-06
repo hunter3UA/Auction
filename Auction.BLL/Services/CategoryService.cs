@@ -1,7 +1,8 @@
 ﻿using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
+using Auction.DAL.Models;
 using Auction.DAL.UoW;
-
+using System.Collections.Generic;
 
 namespace Auction.BLL.Services
 {
@@ -13,11 +14,11 @@ namespace Auction.BLL.Services
             _unitOfWork = unitOfWork;
         }
 
-        public CategoriesModel GetCategories()
+        public List<Category> GetCategories()
         {
-            CategoriesModel model = new CategoriesModel();
-            model.Categories = _unitOfWork.CategoryRepository.GetAll();
-            return model;
+           
+            List<Category> categories = _unitOfWork.CategoryRepository.GetAll();
+            return categories;
         }
        
         

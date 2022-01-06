@@ -61,6 +61,7 @@ namespace Auction.BLL.Services
                     }
                     _unitOfWork.PictureRepository.AddRange(pictures);
                     await _unitOfWork.SaveAsync();
+                    
                 }
                 return pictures;
             } catch { return new List<Picture>(); }
@@ -79,16 +80,8 @@ namespace Auction.BLL.Services
             try
             {
                 string webSiteFolder = HttpContext.Current.Server.MapPath("~");
-                string fileSaveFolder = string.Empty;
-                try
-                {
-                    fileSaveFolder = ConfigurationManager.AppSettings["PicturesFolder"];
-                }
-                catch (ConfigurationException)
-                {
-                    fileSaveFolder = "PictureFiles";
-                }
-
+                string fileSaveFolder = string.Empty;              
+                fileSaveFolder = ConfigurationManager.AppSettings["PicturesFolder"];               
                 if (!Directory.Exists(Path.Combine(webSiteFolder,fileSaveFolder)))
                     Directory.CreateDirectory(Path.Combine(webSiteFolder, fileSaveFolder));
               
@@ -165,8 +158,6 @@ namespace Auction.BLL.Services
 
         }    
 
-
-
         public async Task<bool> RemovePicture(int id,string directory,string subDirectory, int pictureId)
         {
             try
@@ -182,8 +173,7 @@ namespace Auction.BLL.Services
                         foreach (var file in filesToRemove)
                         {
                             File.Delete(Path.Combine(path, file));
-                        }
-                       
+                        }                     
                         bool isDeleted = _unitOfWork.PictureRepository.Remove(pictureToRemove);
                         await _unitOfWork.SaveAsync();
                         return isDeleted;

@@ -1,19 +1,15 @@
 ﻿
-
-
 <div>
-    @using (Html.BeginForm("EnableUser","Admin", new { Enable = false }, FormMethod.Post, null))
+    @using (Html.BeginForm("EnableUser", "Admin", new { Enable = true }, FormMethod.Post, null))
     {
-       @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
         <div class="form-group">
             <label class="control-label ">Введіть ідентифікатора або email користувача</label>
             <div class="col">
-                <input type="text" class="form-control" name="id"/>
+                <input type="text" class="form-control" name="id" />
             </div>
         </div>
-        <p><input type="submit" value="Блокувати"  id="btnConfirm" /></p>  
+        <p><input type="submit" value="Розблокувати" id="btnConfirm" /></p>
         <div id="validate"></div>
     }
 </div>
-
-

@@ -1,10 +1,11 @@
-﻿using Auction.BLL.ViewModels;
+﻿using Auction.DAL.Models;
+using System.Collections.Generic;
 
 namespace Auction.BLL.Services.Abstract
 {
     public interface ICategoryService
     {
 
-        CategoriesModel GetCategories();
+        List<Category> GetCategories();
     }
 }

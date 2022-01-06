@@ -14,7 +14,7 @@ TODO: проверить все токены
 TODO: вынести в config
 TODO: добавить сохранение listbox в фильтрах
 
-
+TODO: удаление картинки 
  */
 
 namespace Auction.API.Controllers

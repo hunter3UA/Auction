@@ -46,7 +46,7 @@ namespace Auction.API.Controllers
                 Lot addedLot =  await _lotService.CreateLotAsync(lotModel,User.LoginId, Request);
                 return RedirectToAction("Edit","Lot",new { id=addedLot.LotId});
             }
-            
+            ViewData["Categories"] = _categoryService.GetCategories();
             return View("Create",lotModel);
         }
 
@@ -63,10 +63,11 @@ namespace Auction.API.Controllers
             ivm.Collection.Reverse();
             return View(ivm);
         }
+
         [HttpGet]
         public ActionResult LotPage(int lotId=0)
         {
-            LotModel lotModel = _lotService.GetLot(l=>l.LotId==lotId);     
+            LotModel lotModel = _lotService.GetLot(l=>l.LotId==lotId && l.StatusId==2);     
             if (lotModel==null || lotModel.LotId==0)
                 return RedirectToAction("Index","Home");
             return View(lotModel);
@@ -131,8 +132,7 @@ namespace Auction.API.Controllers
         [HttpPost,Authentication(true)]
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {
-            await _pictureService.AddPicturesAsync(Request, lotId);
-            
+            await _pictureService.AddPicturesAsync(Request, lotId);            
             return RedirectToAction("LotPage",new { lotId=lotId });
         }
 

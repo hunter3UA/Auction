@@ -28,8 +28,8 @@ namespace Auction.API.Filters
             else if(!isAuth && currentUser!=null)
             {
                 RouteValueDictionary profileDictionary = new RouteValueDictionary();
-                profileDictionary.Add("controller", "Account");
-                profileDictionary.Add("action", "LogOut");
+                profileDictionary.Add("controller", "Home");
+                profileDictionary.Add("action", "Index");
 
                 filterContext.Result = new RedirectToRouteResult(profileDictionary);
             }

@@ -37,24 +37,32 @@ namespace Auction.API.Controllers
         {
             return PartialView();
         }
+
+        public PartialViewResult EnableUser()
+        {
+            return PartialView();
+        }
+
         [HttpGet]
         public ActionResult DisableUser()
         {
             return PartialView();
         }
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemoveUser(int id=0)
+        public async Task<ActionResult> EnableUser(int id=0,bool enable=true)
         {
-            bool isEnabled = await _accountService.DisableUserAsync(id);
+            bool isEnabled = await _accountService.EnableUserAsync(id,enable);
             if (isEnabled)
-                ViewBag.NotifyMsg = "Користувача заблоковано";
+                ViewBag.NotifyMsg = "Дані користувача оновлено";
             return View("AdminPanel");
         }
 
         [ValidateAntiForgeryToken]
         public ActionResult GetUserInfo(string userToSearch)
         {
-            UserModel searchedUser= _accountService.GetUser(u=>u.Login.Email==userToSearch);
+            UserModel searchedUser= _accountService.GetUser( u=>u.Login.Email==userToSearch);
+            if (searchedUser.LoginId == 0)
+                searchedUser = _accountService.GetUser(u => u.LoginId == Convert.ToInt32(userToSearch));
             return PartialView(searchedUser);
         }
         [HttpGet]

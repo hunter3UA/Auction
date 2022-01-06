@@ -97,7 +97,7 @@ namespace Auction.API.Controllers
         }
 
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost,Authentication(true),ValidateAntiForgeryToken]
         public async Task<ActionResult> UpdatePassword(string oldPassword,string newPassword)
         {
             bool isUpdated=await _accountService.UpdatePasswordAsync(oldPassword,newPassword,User.LoginId);

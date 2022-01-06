@@ -1,11 +1,12 @@
 ﻿@model Auction.BLL.ViewModels.IndexViewModel<LotModel>
 @using Auction.BLL.ViewModels;
 @using Auction.BLL.LoginModels;
+@using Auction.DAL.Models;
 @using Newtonsoft.Json;
     
     @{
 
-    CategoriesModel categories = ViewData["Categories"] as CategoriesModel;
+    List<Category> categories = ViewData["Categories"] as List<Category>;
 
     List<SelectListItem> orderItems = new List<SelectListItem>()
     {
@@ -36,7 +37,7 @@
                 {
                 <div class="flex-item-row" id="chbFlags">
                     Категорія:
-                    @foreach (var item in categories.Categories)
+                    @foreach (var item in categories)
                     {
 
                         if (Model.FiltersModel.Categories.Contains(item.CategoryName))

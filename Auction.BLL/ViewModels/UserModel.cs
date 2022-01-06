@@ -18,5 +18,8 @@ namespace Auction.BLL.ViewModels
         public string Email { get; set; }
         [Phone]
         public string PhoneNumber { get; set; }
+
+
+        public bool IsEnabled { get; set; }
     }
 }

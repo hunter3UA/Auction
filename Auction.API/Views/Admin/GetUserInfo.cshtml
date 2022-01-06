@@ -6,7 +6,10 @@
     <p>Ім'я: @Model.FirstName</p>
     <p>Прізвище: @Model.LastName</p>
     <p>Пошта: @Model.Email</p>
-
+    if(!Model.IsEnabled)
+    {
+        <p>Користувача заблоковано</p>
+    }
 
 }
 else

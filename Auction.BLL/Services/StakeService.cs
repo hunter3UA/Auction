@@ -42,7 +42,7 @@ namespace Auction.BLL.Services
             try
             {
                 User userOfStakes = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId);
-                List<Stake> stakesByUser = _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId);
+                List<Stake> stakesByUser = _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId && !s.IsRemoved);
                 stakesByUser.Reverse();
                 return stakesByUser;
             }catch { return new List<Stake>(); }
@@ -59,7 +59,8 @@ namespace Auction.BLL.Services
                     Lot lotOfStake = _unitOfWork.LotRepository.Get(l => l.LotId == stakeToRemove.LotId);
                     if (!lotOfStake.IsSoldOut)
                     {
-                        _unitOfWork.StakeRepository.RemoveStake(stakeToRemove);
+                       // _unitOfWork.StakeRepository.RemoveStake(stakeToRemove);
+                        stakeToRemove.IsRemoved = true;
                         await _unitOfWork.SaveAsync();
                         List<Stake> stakesOfLot = _unitOfWork.StakeRepository.GetList(s => s.LotId == lotOfStake.LotId);
                         if (stakesOfLot.Count() > 0)

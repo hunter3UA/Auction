@@ -1,17 +1,12 @@
-﻿using Auction.BLL.LoginModels;
-using Auction.BLL.Mapper;
+﻿using Auction.BLL.Mapper;
 using Auction.BLL.Services.Abstract;
 using Auction.BLL.ViewModels;
 using Auction.DAL.Models;
 using Auction.DAL.UoW;
 using AutoMapper;
 using System;
-using System.Configuration;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Script.Serialization;
-using System.Web.Security;
 
 
 
@@ -80,9 +75,10 @@ namespace Auction.BLL.Services
             try
             {
                 User userToSearch = _unitOfWork.UserRepository.Get(predicate);
-                if (userToSearch==null && userToSearch.Login == null)
+                if (userToSearch==null || userToSearch.Login == null)
                     return new UserModel();
                 UserModel model= _mapper.Map<UserModel>(userToSearch);
+                model.IsEnabled = userToSearch.Login.IsEnabled;
                 model.Email = userToSearch.Login.Email;
                 return model;
             }catch { return new UserModel(); }
@@ -106,14 +102,14 @@ namespace Auction.BLL.Services
             return false;
         }
 
-        public async Task<bool> DisableUserAsync(int loginId)
+        public async Task<bool> EnableUserAsync(int loginId,bool enable)
         {
             try
             {
                 Login loginToDisable = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
-                if (loginToDisable != null && loginToDisable.IsEnabled)
+                if (loginToDisable != null && loginToDisable.IsEnabled!=enable)
                 {
-                    loginToDisable.IsEnabled = false;
+                    loginToDisable.IsEnabled = enable;
                     _unitOfWork.LoginRepository.Update(loginToDisable);
                     await _unitOfWork.SaveAsync();
                     return true;

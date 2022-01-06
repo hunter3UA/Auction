@@ -51,11 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MaxValueAttribute.cs" />
     <Compile Include="Attributes\MinValueAttribute.cs" />
     <Compile Include="AuctionDbContext.cs" />
     <Compile Include="Migrations\202201051713086_First.cs" />
     <Compile Include="Migrations\202201051713086_First.designer.cs">
       <DependentUpon>202201051713086_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201061830136_UpdateStake.cs" />
+    <Compile Include="Migrations\202201061830136_UpdateStake.designer.cs">
+      <DependentUpon>202201061830136_UpdateStake.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
@@ -102,6 +107,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202201051713086_First.resx">
       <DependentUpon>202201051713086_First.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201061830136_UpdateStake.resx">
+      <DependentUpon>202201061830136_UpdateStake.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
