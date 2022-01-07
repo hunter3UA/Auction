@@ -129,6 +129,8 @@
                         fk_UserId = c.Int(nullable: false),
                         Sum = c.Double(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
+                        IsRemoved = c.Boolean(nullable: false),
+                        IsMain = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.StakeId)
                 .ForeignKey("dbo.Lots", t => t.fk_LotId, cascadeDelete: true)

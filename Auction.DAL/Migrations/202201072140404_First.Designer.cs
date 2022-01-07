@@ -13,7 +13,7 @@ namespace Auction.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202201051713086_First"; }
+            get { return "202201072140404_First"; }
         }
         
         string IMigrationMetadata.Source
