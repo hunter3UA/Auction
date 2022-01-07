@@ -1,8 +1,6 @@
 ﻿using Auction.DAL.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Auction.DAL.Repositories.Abstract
@@ -15,5 +13,6 @@ namespace Auction.DAL.Repositories.Abstract
         List<Stake> GetList(Func<Stake, bool> predicate);
         bool RemoveStake(Stake stakeToRemove);
         bool RemoveRangeStake(List<Stake> stakesToRemove);
+        void SetStakeAsMain(int lotId, long stakeId);
     }
 }

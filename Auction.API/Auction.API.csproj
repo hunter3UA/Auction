@@ -433,6 +433,7 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Lot\Create.cshtml" />
     <Content Include="Views\Admin\EnableUser.cshtml" />
+    <Content Include="Views\Account\ConfirmRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

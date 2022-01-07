@@ -15,15 +15,16 @@ namespace Auction.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<Lot> Lots { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
-        public DbSet<ShopptingCart> ShoppingCarts { get; set;
-        }
+        public DbSet<ShopptingCart> ShoppingCarts { get; set;}
+        
         public AuctionDbContext() : base("AuctionDb")
         { 
          
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-      
+                
         }
 
 

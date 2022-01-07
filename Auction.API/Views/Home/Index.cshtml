@@ -77,12 +77,11 @@
             </div>
         </div>
         <div class="flex-item-row">
-            <div class="flex-container flex-item-col">
-                <div class="flex-item-row">
-                 
-                        @foreach (var item in Model.Collection)
-                        {
-                            <div id="lotItem" class="flex-container">
+           
+                
+            @foreach (var item in Model.Collection)
+             {
+                   <div id="lotItem" class="flex-container">
                                 <div class="flex-item-row">
                                     @{
                                         var picture = item.Pictures.Where(p => p.IsTittle == true).FirstOrDefault();
@@ -123,13 +122,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                   </div>
+             }
 
-                  
-
-                </div>
-            </div>
+              
+      
         </div>
     </div>
 

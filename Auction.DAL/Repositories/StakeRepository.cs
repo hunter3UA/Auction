@@ -2,6 +2,7 @@
 using Auction.DAL.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Auction.DAL.Repositories
@@ -23,7 +24,7 @@ namespace Auction.DAL.Repositories
 
         public List<Stake> GetList(Func<Stake, bool> predicate)
         {
-            return _dbContext.Stakes.Where(predicate).ToList();
+            return _dbContext.Stakes.Include("Lot").Where(predicate).ToList();
         }
 
         public Stake Get(Func<Stake, bool> predicate)
@@ -52,8 +53,15 @@ namespace Auction.DAL.Repositories
             }
             return false;
         }
-
+        public void SetStakeAsMain(int lotId,long stakeId)
+        {
+            SqlParameter lotParam=new SqlParameter("@LotId",lotId);
+            SqlParameter stakeParam = new SqlParameter("@StakeId", stakeId);
+            _dbContext.Database.ExecuteSqlCommand("exec stp_Stake_SetMain @StakeId, @LotId", stakeParam, lotParam);
+        }
 
 
     }
 }
+
+

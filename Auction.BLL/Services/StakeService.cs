@@ -33,6 +33,7 @@ namespace Auction.BLL.Services
                 lotOfStake.CurrentPrice = stake + lotOfStake.Step;
                 _unitOfWork.LotRepository.Update(lotOfStake);
                 await _unitOfWork.SaveAsync();
+                _unitOfWork.StakeRepository.SetStakeAsMain(lotOfStake.LotId,stakeToAdd.StakeId);
                 return stakeToAdd;
             }
             catch { return new Stake(); }
@@ -66,12 +67,15 @@ namespace Auction.BLL.Services
                         if (stakesOfLot.Count() > 0)
                         {
                             double maxStake = stakesOfLot.Max(s => s.Sum);
+
+                             _unitOfWork.StakeRepository.SetStakeAsMain(
+                                    stakesOfLot.FirstOrDefault(s => s.Sum == maxStake).LotId,
+                                    stakesOfLot.FirstOrDefault(s => s.Sum == maxStake).StakeId
+                                ) ; 
                             lotOfStake.CurrentPrice = maxStake + lotOfStake.Step;
                         }
                         else              
                             lotOfStake.CurrentPrice = lotOfStake.Price + lotOfStake.Step;
-                       
-
                         await _unitOfWork.SaveAsync();
                         return true;
                     }

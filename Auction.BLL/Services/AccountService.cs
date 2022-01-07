@@ -56,7 +56,7 @@ namespace Auction.BLL.Services
                 Login login = _unitOfWork.LoginRepository.Get(l => l.Email == Email);
                 byte[] PasswordSalt = login.PasswordSalt;
                 string LoginToken = BitConverter.ToString(PasswordSalt);
-                PasswordSalt = Encoding.UTF8.GetBytes(Token);
+                PasswordSalt = Encoding.UTF8.GetBytes(LoginToken);
                 LoginToken = Encoding.UTF8.GetString(PasswordSalt);
                 if (Token == LoginToken)
                 {
@@ -122,20 +122,3 @@ namespace Auction.BLL.Services
        
     }
 }
-/* public async Task<bool> EnableUserAsync(int loginId,bool enable)
-        {
-            try
-            {
-                Login loginToDisable = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
-                if (loginToDisable != null && loginToDisable.IsEnabled!=enable)
-                {
-                    loginToDisable.IsEnabled = enable;
-                    _unitOfWork.LoginRepository.Update(loginToDisable);
-                    await _unitOfWork.SaveAsync();
-                    return true;
-                }
-            }
-            catch { return false; }
-            return false;
-
-        }*/

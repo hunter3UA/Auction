@@ -16,7 +16,7 @@
 
 
 <div class="flex-container">
-    <div class="flex-item-col" style="width:30%">
+    <div class="flex-item-col" style="width: 650px; height: 500px">
         <div id="lightSlider">
             @{ if (Model.Pictures.Count() > 0)
                 {
@@ -35,7 +35,7 @@
                         }
 
                         <li data-thumb="/Pictures/Lots/@picture.LotId/@picturePrevName">
-                            <img src="~/Pictures/Lots/@picture.LotId/@pictureMainName" />
+                            <img src="~/Pictures/Lots/@picture.LotId/@pictureMainName"  />
                         </li>
                     }
                 }
@@ -102,13 +102,14 @@
             });
         })
 
-        let minStake = document.querySelector("#stake").value
+       
         
         
 
 
         let btnStake = document.querySelector("#btnStake");
         if (btnStake != null) {
+            let minStake = document.querySelector("#stake").value
             btnStake.addEventListener('click', function (e) {
                 let chbConfirm = document.querySelector("#chbConfirm");
                 let validate = document.querySelector("#validate");

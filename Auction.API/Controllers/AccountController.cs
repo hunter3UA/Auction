@@ -141,6 +141,21 @@ namespace Auction.API.Controllers
         }
 
 
+
+        [HttpGet,Authentication(false)]
+        public ActionResult ConfirmRegister()
+        {
+            return View();
+        }
+
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public ActionResult RepeatConfirmRegister(string Email)
+        {
+            _emailService.SendPasswordConfirmed(Email, "Підтвердження реєстрації", "ConfirmRegistration");
+            return View("Login");
+        }
+
         [HttpPost,Authentication(false)]
         public async Task<ActionResult> ResetPassword(string Email,string Token,string Password)
         {

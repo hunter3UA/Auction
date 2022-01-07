@@ -60,6 +60,18 @@
     <Compile Include="Migrations\202201061830136_UpdateStake.designer.cs">
       <DependentUpon>202201061830136_UpdateStake.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201071903184_UpdateStakeIsFirst.cs" />
+    <Compile Include="Migrations\202201071903184_UpdateStakeIsFirst.designer.cs">
+      <DependentUpon>202201071903184_UpdateStakeIsFirst.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201071909104_UpdateStakeIsMain.cs" />
+    <Compile Include="Migrations\202201071909104_UpdateStakeIsMain.designer.cs">
+      <DependentUpon>202201071909104_UpdateStakeIsMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201072107270_UpdateStakeModel.cs" />
+    <Compile Include="Migrations\202201072107270_UpdateStakeModel.designer.cs">
+      <DependentUpon>202201072107270_UpdateStakeModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -105,6 +117,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201061830136_UpdateStake.resx">
       <DependentUpon>202201061830136_UpdateStake.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201071903184_UpdateStakeIsFirst.resx">
+      <DependentUpon>202201071903184_UpdateStakeIsFirst.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201071909104_UpdateStakeIsMain.resx">
+      <DependentUpon>202201071909104_UpdateStakeIsMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201072107270_UpdateStakeModel.resx">
+      <DependentUpon>202201072107270_UpdateStakeModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,6 +15,11 @@ namespace Auction.DAL.Models
 
         [Required,Column("fk_LotId")]
         public int LotId { get; set; }    
+        [ForeignKey(nameof(LotId))]
+        public Lot Lot { get; set; }
+
+
+
         [Required,Column("fk_UserId")]
         public int UserId { get; set; } 
         [Required]
@@ -23,5 +28,8 @@ namespace Auction.DAL.Models
 
         [Required]
         public bool IsRemoved { get; set; } = false;
+
+        [Required]
+        public bool IsMain { get; set; }
     }
 }

@@ -43,8 +43,8 @@
     <input type="submit" value="Enter" class="btn btn-info" />
 
 }
-@Ajax.ActionLink("Забули пароль?", "ForgotPassword", "Account", null, new AjaxOptions { UpdateTargetId = "ForgotPassword" }, new { @class = "btn btn-danger" })
-
+@Ajax.ActionLink("Забули пароль?", "ForgotPassword", "Account", null, new AjaxOptions { UpdateTargetId = "ForgotPassword" }, null)
+@Html.ActionLink("Повторно надіслати підтвердження", "ConfirmRegister", "Account", null);
 <div id="ForgotPassword">
 
 </div>
