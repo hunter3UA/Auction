@@ -13,14 +13,17 @@
     <div class="flex-item-col">
         @using (Html.BeginForm("LotsByStatus", "Admin",FormMethod.Get))
         {
-        <div class="form-horizontal">        
-            <div class="form-group">
-                @Html.LabelFor(model => model.FiltersModel.Status, "Статус: ", htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-3">
-                    @Html.DropDownList("Status", (SelectList)ViewData["Statuses"])
-                </div>
-            </div>           
-            <input type="submit" value="Фільтр"  class="btn btn-info"/>
+        <div class="flex-container flex-item-col">
+            <div class="flex-item-row">
+                Cтатус:@Html.DropDownList("Status", (SelectList)ViewData["Statuses"])
+            </div>
+            <div class="flex-item-row">
+                Назва: @Html.TextBox("LotName", "", new { id = "txtLotName" })
+            </div>
+            <div class="flex-item-row">
+                Код: @Html.TextBox("LotCode", "", new { id = "txtLotName", type="number" })
+            </div>
+            <input type="submit" value="Фільтр" class="btn btn-info" />
         </div>
         }
         @Html.ActionLink("Зкинути фільтр","LotsByStatus","Admin",new {page=1,Filters=""},new { @class="btn btn-info"})

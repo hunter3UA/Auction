@@ -24,14 +24,13 @@
         <div>
             @if (!Model.IsSoldOut)
             {
-
-
-            using (Html.BeginForm("UploadLotPictures", "Lot", new { lotId = Model.LotId }, FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
-            {
+        
+                using (Html.BeginForm("UploadLotPictures", "Lot",new { lotId=Model.LotId }, FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+                {
                 <div class="row form-group">
                     Фото:
                     <div class="col">
-                        <input type="file" name="uploadFile" multiple />
+                        <input type="file" name="uploadFile" accept=".jpg,.jpeg,.png" multiple />
                     </div>
                 </div>
                 <input type="submit" class="btn btn-success" />

@@ -51,7 +51,7 @@ namespace Auction.API.Controllers
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableUser(int id=0,bool enable=true)
         {
-            bool isEnabled = await _accountService.EnableUserAsync(id,enable);
+            bool isEnabled = await _accountService.EnableUserAsync(l=>l.LoginId==id,enable);
             if (isEnabled)
                 ViewBag.NotifyMsg = "Дані користувача оновлено";
             return View("AdminPanel");
@@ -69,11 +69,11 @@ namespace Auction.API.Controllers
         public ActionResult LotsByStatus(int page = 1,FiltersModel filtersModel=null,string Filters=null)
         {   
           
-            IndexViewModel<LotModel> ivm=new IndexViewModel<LotModel>();
+      
             filtersModel =string.IsNullOrEmpty(Filters) ? filtersModel :  JsonConvert.DeserializeObject<FiltersModel>(Filters);
             List<LotModel> lots = _lotService.GetByFilters(filtersModel);
             lots.Reverse();
-            ivm = PageService<LotModel>.GetPage(
+            IndexViewModel<LotModel> ivm = PageService<LotModel>.GetPage(
                 page,
                 Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLots"]),
                 lots

@@ -79,7 +79,7 @@
         <div class="flex-item-row">
             <div class="flex-container flex-item-col">
                 <div class="flex-item-row">
-                    <div id="updatedPage">
+                 
                         @foreach (var item in Model.Collection)
                         {
                             <div id="lotItem" class="flex-container">
@@ -126,7 +126,7 @@
                             </div>
                         }
 
-                    </div>
+                  
 
                 </div>
             </div>
@@ -145,25 +145,3 @@
     </div>
 
 
-
-
-    @section scripts{
-
-        <script>
-
-
-            let btnClearFilters = document.querySelector("#btnClearFilters");
-            btnClearFilters.addEventListener('click', function () {
-                let allChbx = document.getElementsByName('Categories');
-                let txtLotName = document.querySelector('#txtLotName');
-                txtLotName.value = "";
-                let btnClearFilters = document.querySelector("#btnClearFilters");
-                for (let i = 0; i < allChbx.length; i++) {
-                    allChbx[i].checked = false;
-                }
-            });
-
-
-        </script>
-
-    }

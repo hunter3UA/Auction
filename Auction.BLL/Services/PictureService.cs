@@ -121,7 +121,10 @@ namespace Auction.BLL.Services
                     + resizedFor
                     + Path.GetExtension(pictureInfo.Name);
                 SaveThumb(resizedImage, pictureInfo.Path, FileSaveName);
-            }catch{}
+                imageToResize.Dispose();
+                resizedImage.Dispose();
+            }
+            catch{}
 
             
             
@@ -170,6 +173,7 @@ namespace Auction.BLL.Services
                     {
                         string[] fs = Directory.GetFiles(path);
                         List<string> filesToRemove = fs.Where(f => f.Contains(Path.GetFileNameWithoutExtension(pictureToRemove.Name))).ToList();                      
+                        
                         foreach (var file in filesToRemove)
                         {
                             File.Delete(Path.Combine(path, file));

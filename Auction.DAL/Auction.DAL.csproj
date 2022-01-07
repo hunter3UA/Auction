@@ -51,8 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\MaxValueAttribute.cs" />
-    <Compile Include="Attributes\MinValueAttribute.cs" />
     <Compile Include="AuctionDbContext.cs" />
     <Compile Include="Migrations\202201051713086_First.cs" />
     <Compile Include="Migrations\202201051713086_First.designer.cs">
@@ -70,11 +68,8 @@
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Lot.cs" />
-    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\ShopptingCart.cs" />
     <Compile Include="Models\Stake.cs" />
-    <Compile Include="Models\Subscription.cs" />
-    <Compile Include="Models\SupportForm.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstract\IAccountTypeRepository.cs" />

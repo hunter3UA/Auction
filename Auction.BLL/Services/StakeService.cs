@@ -8,19 +8,18 @@ using System.Threading.Tasks;
 
 namespace Auction.BLL.Services
 {
-    public class StakeService:IStakeService
+    public class StakeService : IStakeService
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILotService _lotService;
 
 
-        public StakeService(IUnitOfWork unitOfWork,ILotService lotService)
-        {     
-            _unitOfWork = unitOfWork; 
-            _lotService = lotService;
+        public StakeService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+         
         }
-        public async Task<Stake> AddStakeAsync(int lotId, double stake,int loginId)
+        public async Task<Stake> AddStakeAsync(int lotId, double stake, int loginId)
         {
             try
             {
@@ -35,7 +34,8 @@ namespace Auction.BLL.Services
                 _unitOfWork.LotRepository.Update(lotOfStake);
                 await _unitOfWork.SaveAsync();
                 return stakeToAdd;
-            }catch{ return new Stake(); }
+            }
+            catch { return new Stake(); }
         }
         public List<Stake> GetListOfStakes(int loginId)
         {
@@ -45,8 +45,9 @@ namespace Auction.BLL.Services
                 List<Stake> stakesByUser = _unitOfWork.StakeRepository.GetList(s => s.UserId == userOfStakes.UserId && !s.IsRemoved);
                 stakesByUser.Reverse();
                 return stakesByUser;
-            }catch { return new List<Stake>(); }
-            
+            }
+            catch { return new List<Stake>(); }
+
         }
 
         public async Task<bool> RemoveStakeAsync(int stakeId)
@@ -59,8 +60,7 @@ namespace Auction.BLL.Services
                     Lot lotOfStake = _unitOfWork.LotRepository.Get(l => l.LotId == stakeToRemove.LotId);
                     if (!lotOfStake.IsSoldOut)
                     {
-                       // _unitOfWork.StakeRepository.RemoveStake(stakeToRemove);
-                        stakeToRemove.IsRemoved = true;
+                         _unitOfWork.StakeRepository.RemoveStake(stakeToRemove);                     
                         await _unitOfWork.SaveAsync();
                         List<Stake> stakesOfLot = _unitOfWork.StakeRepository.GetList(s => s.LotId == lotOfStake.LotId);
                         if (stakesOfLot.Count() > 0)
@@ -68,18 +68,18 @@ namespace Auction.BLL.Services
                             double maxStake = stakesOfLot.Max(s => s.Sum);
                             lotOfStake.CurrentPrice = maxStake + lotOfStake.Step;
                         }
-                        else
-                        {
+                        else              
                             lotOfStake.CurrentPrice = lotOfStake.Price + lotOfStake.Step;
-                        }
+                       
 
                         await _unitOfWork.SaveAsync();
                         return true;
                     }
                 }
                 return false;
-            }catch { return false; }
-            
+            }
+            catch { return false; }
+
         }
     }
 }

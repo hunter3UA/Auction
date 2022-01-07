@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Auction.DAL.Repositories
 {
-    public class StakeRepository:IStakeRepository
+    public class StakeRepository : IStakeRepository
     {
         private readonly AuctionDbContext _dbContext;
 
@@ -21,23 +21,21 @@ namespace Auction.DAL.Repositories
         }
 
 
-        public List<Stake> GetList(Func<Stake,bool> predicate)
+        public List<Stake> GetList(Func<Stake, bool> predicate)
         {
             return _dbContext.Stakes.Where(predicate).ToList();
         }
 
-        public Stake Get(Func<Stake,bool> predicate)
+        public Stake Get(Func<Stake, bool> predicate)
         {
             return _dbContext.Stakes.FirstOrDefault(predicate);
         }
 
-        
+
         public bool RemoveStake(Stake stakeToRemove)
         {
             if (stakeToRemove != null)
             {
-
-                
                 _dbContext.Stakes.Remove(stakeToRemove);
                 return true;
             }
@@ -47,7 +45,7 @@ namespace Auction.DAL.Repositories
 
         public bool RemoveRangeStake(List<Stake> stakesToRemove)
         {
-            if (stakesToRemove != null && stakesToRemove.Capacity>0)
+            if (stakesToRemove != null && stakesToRemove.Capacity > 0)
             {
                 _dbContext.Stakes.RemoveRange(stakesToRemove);
                 return true;

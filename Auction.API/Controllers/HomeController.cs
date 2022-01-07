@@ -11,8 +11,6 @@ using System.Web.Mvc;
 TODO: Cart Update
 TODO: проверить все токены
 
-TODO: вынести в config
-TODO: добавить сохранение listbox в фильтрах
 
 TODO: удаление картинки 
  */

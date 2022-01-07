@@ -129,11 +129,14 @@ namespace Auction.API.Controllers
         }
 
 
-        [HttpPost,Authentication(true)]
+      
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {
-            await _pictureService.AddPicturesAsync(Request, lotId);            
-            return RedirectToAction("LotPage",new { lotId=lotId });
+
+         
+            await _pictureService.AddPicturesAsync(Request, lotId);
+            return RedirectToAction("Edit", new {  id =lotId});
+           
         }
 
 

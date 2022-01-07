@@ -78,7 +78,6 @@ namespace Auction.BLL.Services
                 }
                 return true;
         }
-
         public bool CheckPassword(Login loginToCheck, string password)
         {
             try
@@ -95,8 +94,6 @@ namespace Auction.BLL.Services
             }
             catch  { return false; }          
             return false;
-        }
-
-       
+        }     
     }
 }

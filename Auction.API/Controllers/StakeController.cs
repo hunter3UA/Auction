@@ -45,6 +45,7 @@ namespace Auction.API.Controllers
         public ActionResult MyStakes(int page = 1, string msg=null)
         {
             List<Stake> stakes = _stakeService.GetListOfStakes(User.LoginId);
+         
             if(msg!=null)
                 ViewBag.StakeMsg = msg;
             IndexViewModel<Stake> ivm = PageService<Stake>.GetPage(

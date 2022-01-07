@@ -1,5 +1,4 @@
-﻿using Auction.DAL.Attributes;
-using System;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace Auction.BLL.ViewModels

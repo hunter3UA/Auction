@@ -102,11 +102,11 @@ namespace Auction.BLL.Services
             return false;
         }
 
-        public async Task<bool> EnableUserAsync(int loginId,bool enable)
+        public async Task<bool> EnableUserAsync(Func<Login,bool> predicate,bool enable)
         {
             try
             {
-                Login loginToDisable = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
+                Login loginToDisable = _unitOfWork.LoginRepository.Get(predicate);
                 if (loginToDisable != null && loginToDisable.IsEnabled!=enable)
                 {
                     loginToDisable.IsEnabled = enable;
@@ -122,3 +122,20 @@ namespace Auction.BLL.Services
        
     }
 }
+/* public async Task<bool> EnableUserAsync(int loginId,bool enable)
+        {
+            try
+            {
+                Login loginToDisable = _unitOfWork.LoginRepository.Get(l => l.LoginId == loginId);
+                if (loginToDisable != null && loginToDisable.IsEnabled!=enable)
+                {
+                    loginToDisable.IsEnabled = enable;
+                    _unitOfWork.LoginRepository.Update(loginToDisable);
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
+            }
+            catch { return false; }
+            return false;
+
+        }*/
