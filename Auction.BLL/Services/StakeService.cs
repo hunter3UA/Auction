@@ -25,6 +25,8 @@ namespace Auction.BLL.Services
             {
                 Stake stakeToAdd = new Stake();
                 Lot lotOfStake = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
+                if (stake < lotOfStake.CurrentPrice)
+                    return new Stake();
                 stakeToAdd.CreatedAt = DateTime.Now;
                 stakeToAdd.UserId = _unitOfWork.UserRepository.Get(u => u.LoginId == loginId).UserId;
                 stakeToAdd.Sum = stake;

@@ -14,7 +14,6 @@ namespace Auction.BLL.ViewModels
         public string Password { get; set; }
         [Required,Compare("Password")]
         public string PasswordRepeat { get; set; }
-        [Phone]
-        public string PhoneNumber { get; set; }
+
     }
 }

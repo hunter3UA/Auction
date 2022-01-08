@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Auction.BLL.ViewModels
 {
@@ -15,7 +14,6 @@ namespace Auction.BLL.ViewModels
 
         [Required]
         public int EndAt { get; set; }
-
 
         [Required]
         public string Description { get; set; }

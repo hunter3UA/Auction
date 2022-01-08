@@ -3,6 +3,8 @@
 <div>
     @using (Html.BeginForm("CreateNews", "News", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
     {
+
+        @Html.AntiForgeryToken()
         <div class="row form-group">
             <div class="form-group">
                 @Html.LabelFor(model => model.NewsTittle, htmlAttributes: new { @class = "control-label col-md-1" })
@@ -20,11 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="row form-group">
-            <div class="col">
-                <input type="file" name="uploadFile" multiple />
-            </div>
-        </div>
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-1">

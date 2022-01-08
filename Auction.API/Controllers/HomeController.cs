@@ -6,14 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-/*
-
-TODO: Cart Update
-TODO: проверить все токены
-
-
-TODO: удаление картинки 
- */
 
 namespace Auction.API.Controllers
 {
@@ -21,13 +13,12 @@ namespace Auction.API.Controllers
     {
         private readonly ILotService _lotService;
         private readonly ICategoryService _categoryService;
-        private readonly IEmailService _emailService;
+   
 
-        public HomeController(ILotService lotService, ICategoryService categoryService,IEmailService emailService)
+        public HomeController(ILotService lotService, ICategoryService categoryService)
         {
             _lotService = lotService;
-            _categoryService = categoryService;
-            _emailService = emailService;
+            _categoryService = categoryService;       
         }
 
 

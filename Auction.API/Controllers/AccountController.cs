@@ -30,7 +30,7 @@ namespace Auction.API.Controllers
                 return RedirectToAction("Index", "Home");
             return View(model);
         }
-        [HttpPost]
+        [HttpPost,ValidateAntiForgeryToken]
         public new async Task<ActionResult> Profile(UserModel updateUserModel)
         {
             updateUserModel.Email=User.Identity.Name;
@@ -67,6 +67,7 @@ namespace Auction.API.Controllers
         {
             return View();
         }
+
         [HttpPost,ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel loginModel)
         {
@@ -90,7 +91,7 @@ namespace Auction.API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet,Authentication(true)]
         public ActionResult UpdatePassword()
         {
             return View();
@@ -100,17 +101,19 @@ namespace Auction.API.Controllers
         [HttpPost,Authentication(true),ValidateAntiForgeryToken]
         public async Task<ActionResult> UpdatePassword(string oldPassword,string newPassword)
         {
-            bool isUpdated=await _accountService.UpdatePasswordAsync(oldPassword,newPassword,User.LoginId);
-            if (isUpdated)
+            if (ModelState.IsValid)
             {
-                LoginModel loginModel=new LoginModel() { Email = User.Identity.Name, Password = newPassword };
-                FormsAuthentication.SignOut();
-                _authenticationService.Login(loginModel);
-                ViewBag.Msg = "Пароль оновлено";
-                return View("Profile");
-            }
+                bool isUpdated = await _accountService.UpdatePasswordAsync(oldPassword, newPassword, User.LoginId);
+                if (isUpdated)
+                {
+                    LoginModel loginModel = new LoginModel() { Email = User.Identity.Name, Password = newPassword };
+                    ViewBag.Msg = "Пароль оновлено";
+                    return RedirectToAction("Profile");
+                }
+               
+            } 
             ViewBag.Msg = "Пароль невірний";
-            return View("Profile");
+            return View();
         }
 
 

@@ -52,9 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionDbContext.cs" />
-    <Compile Include="Migrations\202201072140404_First.cs" />
-    <Compile Include="Migrations\202201072140404_First.designer.cs">
-      <DependentUpon>202201072140404_First.cs</DependentUpon>
+    <Compile Include="Migrations\202201072218071_First.cs" />
+    <Compile Include="Migrations\202201072218071_First.designer.cs">
+      <DependentUpon>202201072218071_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201081509270_RemovePhoneFromUser.cs" />
+    <Compile Include="Migrations\202201081509270_RemovePhoneFromUser.designer.cs">
+      <DependentUpon>202201081509270_RemovePhoneFromUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
@@ -96,8 +100,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201072140404_First.resx">
-      <DependentUpon>202201072140404_First.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201072218071_First.resx">
+      <DependentUpon>202201072218071_First.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201081509270_RemovePhoneFromUser.resx">
+      <DependentUpon>202201081509270_RemovePhoneFromUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

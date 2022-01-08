@@ -14,7 +14,6 @@ namespace Auction.BLL.ViewModels
         [Required]
         public double Price { get; set; }
 
-
         public double CurrentPrice { get; set; }
 
         [Required]

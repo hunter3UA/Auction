@@ -32,11 +32,11 @@ namespace Auction.API.Controllers
          
         }
 
-   
         public async Task<ActionResult> RemoveStake(int stakeId)
         {
-            await _stakeService.RemoveStakeAsync(stakeId);
-            return RedirectToAction("MyStakes", new { msg="Ставку видалено"});
+            bool isRemoved = await _stakeService.RemoveStakeAsync(stakeId);
+            return isRemoved ? RedirectToAction("MyStakes", new { msg = "Ставку видалено" }) : RedirectToAction("MyStakes", new { msg = "Сталася помилка при видаленні ставки" });
+      
         }
 
 

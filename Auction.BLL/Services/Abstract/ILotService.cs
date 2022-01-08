@@ -16,7 +16,7 @@ namespace Auction.BLL.Services.Abstract
         Task<LotModel> UpdateLotAsync(int lotId, LotModel modelForUpdate);
         List<LotModel> GetAcquiredLots(int loginId);
         Task<bool> UpdateLotStatusAsync(int lotId, int statusId);
-        Task<bool> DisableLot(int lotId);
+
 
     }
 }

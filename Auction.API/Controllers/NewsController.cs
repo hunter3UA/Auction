@@ -29,7 +29,7 @@ namespace Auction.API.Controllers
             return View();
         }
 
-        [HttpPost,MyAuth("Admin")]
+        [HttpPost,MyAuth("Admin"),ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateNews(News news)
         {
             await _newsService.CreateNewsAsync(news, Request);

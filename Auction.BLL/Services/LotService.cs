@@ -67,15 +67,11 @@ namespace Auction.BLL.Services
             try
             {
                 List<Lot> allLots = _unitOfWork.LotRepository.GetAll().ToList();
-                allLots = allLots.Where(l => !l.IsSoldOut).ToList();
-                if (filtersModel != null && filtersModel.Categories.Count() > 0)
-                {
-                    allLots = allLots.Where(l => filtersModel.Categories.Contains(l.Category.CategoryName)).ToList();
-                }
+            
+                if (filtersModel != null && filtersModel.Categories.Count() > 0)       
+                    allLots = allLots.Where(l => filtersModel.Categories.Contains(l.Category.CategoryName)).ToList();            
                 if (!string.IsNullOrEmpty(filtersModel.LotName))
-                {
-                    allLots = allLots.Where(l => l.LotName.ToLower().Contains(filtersModel.LotName.ToLower())).ToList();
-                }
+                    allLots = allLots.Where(l => l.LotName.ToLower().Contains(filtersModel.LotName.ToLower())).ToList();              
                 if (!string.IsNullOrEmpty(filtersModel.Criterion))
                 {
                     switch (filtersModel.Criterion)
@@ -88,10 +84,10 @@ namespace Auction.BLL.Services
                             break;
                     }
                 }
-                if (!string.IsNullOrEmpty(filtersModel.Status))
-                {
-                    allLots = allLots.Where(l => l.StatusId == Convert.ToInt32(filtersModel.Status)).ToList();
-                }
+                if (!string.IsNullOrEmpty(filtersModel.Status))               
+                    allLots = allLots.Where(l => l.StatusId == Convert.ToInt32(filtersModel.Status)).ToList();     
+                if(!string.IsNullOrEmpty(filtersModel.LotCode))
+                    allLots=allLots.Where(l=>l.LotCode==Convert.ToInt64(filtersModel.LotCode)).ToList();
                 return _mapper.Map<List<LotModel>>(allLots);
             }catch { return new List<LotModel>();}          
         }
@@ -119,7 +115,7 @@ namespace Auction.BLL.Services
             try
             {
                 Lot lotById = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
-                if (lotById != null)
+                if (lotById != null )
                 {
                     lotById.StatusId = statusId;
                     await _unitOfWork.SaveAsync();
@@ -129,22 +125,7 @@ namespace Auction.BLL.Services
             return false;
         }
 
-        public async Task<bool> DisableLot(int lotId)
-        {
-            Lot lot = _unitOfWork.LotRepository.Get(l => l.LotId == lotId);
-            if (lot != null)
-            {
-                List<Stake> stakesToRemove = _unitOfWork.StakeRepository.GetList(s=>s.LotId==lot.LotId);
-                bool isDisabled = _unitOfWork.StakeRepository.RemoveRangeStake(stakesToRemove);
-                if (isDisabled)
-                {                
-                    lot.StatusId = 3;
-                    await _unitOfWork.SaveAsync();
-                    return true;
-                }
-            }
-            return false;
-        }
+      
 
         public List<LotModel> GetList(Func<Lot,bool> predicate)
         {

@@ -13,9 +13,7 @@ namespace Auction.DAL.Models
         public string FirstName { get; set; }
         [Required,MaxLength(100),MinLength(2)]
         public string LastName { get; set; }    
-        [Phone]     
-        public string PhoneNumber { get; set; }
- 
+      
         [Required]
         public DateTime RegistredAt { get; set; }     
         [Required]

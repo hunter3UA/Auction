@@ -1,5 +1,4 @@
-﻿using Auction.DAL.Models;
-using Auction.DAL.Repositories.Abstract;
+﻿using Auction.DAL.Repositories.Abstract;
 using System.Threading.Tasks;
 
 namespace Auction.DAL.UoW

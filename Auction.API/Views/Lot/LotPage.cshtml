@@ -58,6 +58,7 @@
         <div>
             @Model.Description
         </div>
+        <label>Код: @Model.LotCode</label>
         <br />
         <label>Кінець аукціона: @Model.EndAt</label><br />
         <label>Кількість ставок: @Model.Stakes.Count()</label><br />
@@ -120,10 +121,10 @@
                     validate.className = "text-danger";
 
                 }
-                if (document.querySelector("#stake").value < minStake) {
+                if (document.querySelector("#stake").value < minStake || document.querySelector("#stake").value>1000000000) {
                     e.preventDefault();
 
-                    validate.innerHTML = `Cтавка не може бути менша за ${minStake}`;
+                    validate.innerHTML = `Cтавка не може бути менша за ${minStake} і більше за 1000000000`;
                     validate.className = "text-danger";
 
                 }

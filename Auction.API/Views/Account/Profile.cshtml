@@ -18,12 +18,11 @@
             @Html.ActionLink("Керування лотами","LotsByStatus","Admin",null,new {@class="btn btn-warning"})
         }
     }
-    @Html.ActionLink("Повідомлення","GetNotify",null,new {@class="btn btn-warning"})
-    
 </div>
 <div>
 @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form" }))
 {
+    @Html.AntiForgeryToken()
     <div class="row form-group">
 
         @Html.LabelFor(m => m.Email, "Email: ", htmlAttributes: new { @class = "col-sm-1" })

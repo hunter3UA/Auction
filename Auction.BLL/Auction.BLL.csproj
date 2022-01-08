@@ -160,7 +160,6 @@
     <Compile Include="Services\PictureService.cs" />
     <Compile Include="Services\StakeService.cs" />
     <Compile Include="Services\StatusService.cs" />
-    <Compile Include="ViewModels\CategoriesModel.cs" />
     <Compile Include="ViewModels\CreateLotModel.cs" />
     <Compile Include="ViewModels\FiltersModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
@@ -170,7 +169,6 @@
     <Compile Include="ViewModels\RegisterModel.cs" />
     <Compile Include="ViewModels\ResetPasswordModel.cs" />
     <Compile Include="ViewModels\Salted_Hash.cs" />
-    <Compile Include="ViewModels\UpdateUserModel.cs" />
     <Compile Include="ViewModels\UserModel.cs" />
   </ItemGroup>
   <ItemGroup />
