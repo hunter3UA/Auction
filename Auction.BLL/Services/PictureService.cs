@@ -188,13 +188,13 @@ namespace Auction.BLL.Services
             catch { return false; }
 
         }
-        public bool SetTittle(int lotId,int pictureId)
+        public bool SetTittle(int lotId,int pictureId,int loginId)
         {
             try
             {
                 Lot lotToUpdate = _unitOfWork.LotRepository.Get(l => l.LotId == lotId && !l.IsSoldOut);
                 Picture pictureToSet = _unitOfWork.PictureRepository.Get(p => p.PictureId == pictureId);
-                if (lotToUpdate != null && pictureToSet != null)
+                if (lotToUpdate != null && lotToUpdate.Seller.LoginId==loginId && pictureToSet != null)
                 {
                     _unitOfWork.PictureRepository.SetPictureAsTittle(lotId, pictureId);
                     return true;

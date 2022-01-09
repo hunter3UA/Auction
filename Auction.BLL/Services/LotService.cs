@@ -88,6 +88,8 @@ namespace Auction.BLL.Services
                     allLots = allLots.Where(l => l.StatusId == Convert.ToInt32(filtersModel.Status)).ToList();     
                 if(!string.IsNullOrEmpty(filtersModel.LotCode))
                     allLots=allLots.Where(l=>l.LotCode==Convert.ToInt64(filtersModel.LotCode)).ToList();
+
+                allLots.Reverse();
                 return _mapper.Map<List<LotModel>>(allLots);
             }catch { return new List<LotModel>();}          
         }
@@ -132,6 +134,7 @@ namespace Auction.BLL.Services
             try
             {
                 List<Lot> lots = _unitOfWork.LotRepository.GetList(predicate).ToList();
+                lots.Reverse();
                 return lots != null ? _mapper.Map<List<LotModel>>(lots) : new List<LotModel>();
             }catch { return new List<LotModel>(); }
             

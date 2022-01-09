@@ -18,7 +18,7 @@ namespace Auction.BLL.Services.Abstract
         void CreateThumb(Picture pictureInfo, int width, int height, string resizedFor);
         void SaveThumb(Image thumbFileToSave, string savePath, string saveFileName);
         Image Resize(Image imageToResize, Size size);
-        bool SetTittle(int lotId, int pictureId);
+        bool SetTittle(int lotId, int pictureId,int loginId);
         Task<bool> RemovePicture(int id, string directory, string subDirectory, int pictureId);
 
 

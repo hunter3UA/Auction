@@ -23,6 +23,7 @@ namespace Auction.API.Controllers
 
 
         }
+
         [HttpGet,MyAuth("Admin")]
         public ActionResult CreateNews()
         {

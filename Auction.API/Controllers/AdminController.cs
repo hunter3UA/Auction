@@ -27,6 +27,7 @@ namespace Auction.API.Controllers
             _statusService = statusService;
             _lotService = lotService;
         }
+
         [HttpGet]
         public ActionResult AdminPanel()
         {

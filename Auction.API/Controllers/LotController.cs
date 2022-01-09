@@ -58,7 +58,6 @@ namespace Auction.API.Controllers
                  Convert.ToInt32(ConfigurationManager.AppSettings["CountOfLotBySeller"]),
                  lotsOfSeller
                 );
-            ivm.Collection.Reverse();
             return View(ivm);
         }
 
@@ -73,8 +72,7 @@ namespace Auction.API.Controllers
 
         [HttpGet,Authentication(true)]
         public ActionResult Edit(int id=0)
-        {
-          
+        {       
             LotModel lotModel= _lotService.GetLot(l=>l.LotId==id);
             if (lotModel != null  && lotModel.LotId!=0)
             {
@@ -90,23 +88,26 @@ namespace Auction.API.Controllers
         [HttpPost,Authentication(true),ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int lotId, LotModel modelToUpdate)
         {
-            await _lotService.UpdateLotAsync(lotId, modelToUpdate);          
-            return RedirectToAction("Edit", new { id=modelToUpdate.LotId});
+          
+             await _lotService.UpdateLotAsync(lotId, modelToUpdate);
+             return RedirectToAction("Edit", new { id = modelToUpdate.LotId });
+         
         }
-
+   
 
         [HttpGet]
         public ActionResult LotPictures(int lotId=0)
         {
-            if(lotId== 0)
+            if(lotId==0)
                 return RedirectToAction("BySeller");
             List<Picture> picturesByLotid=_pictureService.GetList(p=>p.LotId==lotId);
             return PartialView(picturesByLotid);
         }     
+
         [Authentication(true)]
         public ActionResult PictureSetAsTittle(int lotId,int pictureId)
         {
-            _pictureService.SetTittle(lotId, pictureId);
+            _pictureService.SetTittle(lotId, pictureId,User.LoginId);
             return RedirectToAction("Edit", new { id = lotId });
         }
 
@@ -114,8 +115,8 @@ namespace Auction.API.Controllers
         [Authentication(true)]
         public async Task<ActionResult> RemovePicture(int lotId,int pictureId)
         {
-            LotModel lotModel= _lotService.GetLot(l=>l.LotId==lotId);
-            if (!lotModel.IsSoldOut)
+            LotModel lotModel = _lotService.GetLot(l=>l.LotId==lotId);
+            if (!lotModel.IsSoldOut && lotModel.LoginId==User.LoginId)
             {
                 await _pictureService.RemovePicture(lotModel.LotId,
                     ConfigurationManager.AppSettings["PicturesFolder"],
@@ -127,14 +128,17 @@ namespace Auction.API.Controllers
         }
 
 
-      
+        [Authentication(true)]
         public async Task<ActionResult> UploadLotPictures(int lotId)
         {
+            LotModel lotModel = _lotService.GetLot(l => l.LotId == lotId);
+            if (lotModel.LotId!=0 && lotModel.LoginId == User.LoginId)
+            {
+                await _pictureService.AddPicturesAsync(Request, lotId);
+                return RedirectToAction("Edit", new { id = lotId });
+            }
+            return RedirectToAction("Index", "Home");
 
-         
-            await _pictureService.AddPicturesAsync(Request, lotId);
-            return RedirectToAction("Edit", new {  id =lotId});
-           
         }
 
 

@@ -23,8 +23,7 @@ namespace Auction.API.Controllers
 
 
         public ActionResult Index(int page = 1, string Filters = null, FiltersModel filtersModel = null)
-        {
-            
+        {           
                 var filters = string.IsNullOrEmpty(Filters) ? filtersModel : JsonConvert.DeserializeObject<FiltersModel>(Filters);
                 List<LotModel> lotModels = _lotService.GetByFilters(filters);
                 IndexViewModel<LotModel> ivm = PageService<LotModel>.
@@ -36,8 +35,6 @@ namespace Auction.API.Controllers
                 ivm.FiltersModel = filters;
                 ViewData["Categories"] = _categoryService.GetCategories();
                 return View(ivm);
-            
-
         }
 
         [HttpGet]
