@@ -1,0 +1,40 @@
+﻿@model Auction.DAL.Models.News
+
+<div>
+    @using (Html.BeginForm("CreateNews", "News", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+    {
+
+        @Html.AntiForgeryToken()
+        <div class="row form-group">
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewsTittle, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-1">
+                    @Html.EditorFor(model => model.NewsTittle, new { htmlAttributes = new { @class = "form-control", style = "width:300px;" } })
+                    @Html.ValidationMessageFor(model => model.NewsTittle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewsText, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-1">
+                    @Html.TextAreaFor(model => model.NewsText, htmlAttributes: new { style = "width:100%" })
+                    @Html.ValidationMessageFor(model => model.NewsTittle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-1">
+                <input type="submit" value="Додати" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+

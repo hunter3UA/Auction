@@ -1,0 +1,69 @@
+﻿@model Auction.BLL.ViewModels.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<div>
+    @ViewBag.Msg
+</div>
+
+
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form", style = "margin-right:auto;margin-left:auto" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Email, "Email: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Password, "Пароль: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="text-danger">
+        @ViewBag.UserNotFound
+
+    </div>
+
+    <input type="submit" value="Enter" class="btn btn-info" />
+
+}
+@Ajax.ActionLink("Забули пароль?", "ForgotPassword", "Account", null, new AjaxOptions { UpdateTargetId = "ForgotPassword" }, null)
+@Html.ActionLink("Повторно надіслати підтвердження", "ConfirmRegister", "Account", null);
+<div id="ForgotPassword">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+@if (Model != null && Model.Password != null)
+{
+    <script>
+
+        const pass = document.querySelector("#Password");
+        pass.value = "@Model.Password";
+
+    </script>
+}

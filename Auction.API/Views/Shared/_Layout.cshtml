@@ -1,43 +1,59 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - приложение ASP.NET</title>
+    <title>@ViewBag.Title - Torg-company</title>
+
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Головна", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Новини", "GetNews", "News", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse ">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Информация", "About", "Home")</li>
-                    <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - мое приложение ASP.NET</p>
-        </footer>
-    </div>
+                    <li>@Html.ActionLink("Контакти", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Профіль</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("Профіль", "Profile", "Account", null, new { @class = "btn btn-success" })</li>                  
+                                <li>@Html.ActionLink("Вийти", "Logout", "Account", null, new { @class = "btn btn-danger" }) </li>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Увійти", "Login", "Account", null, new { @class = "btn btn-success" }) </li>
+                                <li>@Html.ActionLink("Реєстрація", "Register", "Account", null, new { @class = "btn btn-info" })</li>
+                            }
+   
+                        </div>
+                    </div>    
+                </ul>
+             </div>
+         </div>
+     </div>
+     <div class="body-content">
+          @RenderBody()
+          <hr />
+      </div>
+      @Scripts.Render("~/bundles/js")
+      @RenderSection("scripts", required: false)
 </body>
 </html>
+
+
+
+

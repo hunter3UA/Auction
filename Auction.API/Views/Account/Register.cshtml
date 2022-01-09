@@ -1,0 +1,83 @@
+﻿@model Auction.BLL.ViewModels.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.FirstName, "Ім'я: ", new { @class = "col-sm-2" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.LastName, "Прізвище: ", new { @class = "col-sm-2" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.Email, "Пошта: ", new { @class = "col-sm-2" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.Password, "Пароль: ", new { @class = "col-sm-2" })
+        <div class="col">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.PasswordRepeat, "Повторення: ", new { @class = "col-sm-2" })
+        <div class="col">
+            @Html.PasswordFor(m => m.PasswordRepeat, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.PasswordRepeat, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="text-danger">
+        @ViewBag.IncorrectEmail
+    </div>
+    <input type="submit" value="Реєстрація" class="btn btn-success" />
+}
+
+
+
+@if (Model != null && Model.Password != null)
+{
+    <script>
+
+        const pass = document.querySelector("#Password");
+        pass.value = "@Model.Password";
+
+    </script>
+}
+
+@if (Model != null && Model.PasswordRepeat != null)
+{
+    <script>
+
+        const pass = document.querySelector("#PasswordRepeat");
+        pass.value = "@Model.PasswordRepeat";
+
+    </script>
+}

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Auction.DAL.Models.Picture>
+
+
+@{ 
+    string picturePrevName = string.Empty;
+    string pictureMainName = string.Empty;
+
+}
+
+<ul id="lightSlider">
+
+    @{ if (Model.Count() > 0)
+       {
+
+
+              foreach (var picture in Model)
+              {
+                   {
+                                picturePrevName = Path.GetFileNameWithoutExtension(picture.Name)
+                                + "_"
+                                + "gallery"
+                                + Path.GetExtension(picture.Name);
+                                pictureMainName = Path.GetFileNameWithoutExtension(picture.Name)
+                                + "_"
+                                + "main"
+                                + Path.GetExtension(picture.Name);
+                   }
+
+                            <li data-thumb="/Pictures/Lots/@picture.LotId/@picturePrevName">
+                                <img src="~/Pictures/Lots/@picture.LotId/@pictureMainName" />
+
+                                
+                                @Html.ActionLink("Встановити як головну", "PictureSetAsTittle", new { lotId = picture.LotId, pictureId = picture.PictureId })
+                                @Html.ActionLink("Видалити", "RemovePicture", new { lotId = picture.LotId, pictureId = picture.PictureId })
+                                <br />
+                                @if (picture.IsTittle)
+                                {
+                                    <label>Головна картинка</label>
+                                }
+                            </li>
+              }
+       }
+       else
+       {
+              <li data-thumb="/Content/img/noImage_gallery.png">
+                  <img src="~/Content/img/noImage_main.png" />
+              </li>
+
+        }
+
+    }
+
+
+    
+</ul>
+
+    
+ 
+    
+    
+    
+
+
+

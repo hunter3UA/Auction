@@ -1,0 +1,33 @@
+﻿@model IndexViewModel<Stake>
+@using Auction.DAL.Models;
+@using Auction.BLL.ViewModels;
+
+
+<div class="text-success">
+    @ViewBag.StakeMsg
+</div>
+
+
+
+<div class="flex-container>
+    <div class="flex-item-col">
+
+
+    </div>
+    <div class="flex-item-col">
+        <div id="stakePages">
+            @{ 
+                Html.RenderPartial("StakePage");
+
+            }
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+

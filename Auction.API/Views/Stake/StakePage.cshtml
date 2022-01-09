@@ -1,0 +1,60 @@
+﻿@model IndexViewModel<Stake>
+@using Auction.DAL.Models;
+@using Auction.BLL.ViewModels;
+@using Newtonsoft.Json;
+
+<table class="table">
+    <tr>
+        <th>
+            Код лота:
+        </th>
+        <th>
+            Сума:
+        </th>
+        <th>
+            Дата:
+        </th>
+        <th>
+            Лідер:
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Collection)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem=>item.Lot.LotCode)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Sum)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CreatedAt)
+    </td>
+
+
+    <td>
+        @Html.DisplayFor(modelItem => item.IsMain)
+    </td>
+    <td>
+        @Html.ActionLink("Сторінка лоту", "LotPage", "Lot", new { lotId = item.LotId }, null) |
+        @Html.ActionLink("Видалити ставку", "RemoveStake", "Stake", new { stakeId = item.StakeId }, null)
+    </td>
+</tr>
+    }
+
+</table>
+
+
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+        
+        using (Ajax.BeginForm("StakePage", new { page = i }, new AjaxOptions { UpdateTargetId = "stakePages" }, new { @class = "flex-item-row", style = "padding:0px;width:30px" }))
+        {
+            <input type="submit" value="@i" />
+        }
+    }
+</div>

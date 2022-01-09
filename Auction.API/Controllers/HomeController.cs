@@ -1,30 +1,47 @@
-﻿using System;
+﻿using Auction.BLL.Services;
+using Auction.BLL.Services.Abstract;
+using Auction.BLL.ViewModels;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+
 
 namespace Auction.API.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        public ActionResult Index()
+        private readonly ILotService _lotService;
+        private readonly ICategoryService _categoryService;
+   
+
+        public HomeController(ILotService lotService, ICategoryService categoryService)
         {
-            return View();
+            _lotService = lotService;
+            _categoryService = categoryService;       
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
+        public ActionResult Index(int page = 1, string Filters = null, FiltersModel filtersModel = null)
+        {           
+                var filters = string.IsNullOrEmpty(Filters) ? filtersModel : JsonConvert.DeserializeObject<FiltersModel>(Filters);
+                List<LotModel> lotModels = _lotService.GetByFilters(filters);
+                IndexViewModel<LotModel> ivm = PageService<LotModel>.
+                    GetPage(
+                    page,
+                    3,
+                    lotModels.Where(l => l.Status.LotStatusName == "Permitted").ToList()
+                    );
+                ivm.FiltersModel = filters;
+                ViewData["Categories"] = _categoryService.GetCategories();
+                return View(ivm);
         }
 
+        [HttpGet]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
+
     }
 }

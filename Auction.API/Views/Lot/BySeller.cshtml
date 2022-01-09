@@ -1,0 +1,69 @@
+﻿@model IndexViewModel<Auction.BLL.ViewModels.LotModel>
+@using Auction.BLL.ViewModels;
+@{
+    ViewBag.Title = "BySeller";
+}
+
+<h2>Мої лоти</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Назва:
+        </th>
+        <th>
+            Ціна:
+        </th>
+        <th>
+            Опис
+        </th>
+        <th>
+            Категорія
+        </th>
+        <th>
+            Продано:
+        </th>
+        <th>
+            Код:
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Collection) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LotName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsSoldOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LotCode)
+        </td>
+        <td>
+            @Html.ActionLink("Огляд", "Edit","Lot", new { id = item.LotId },null) 
+      
+         
+        </td>
+    </tr>
+}
+
+</table>
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+
+        @Html.ActionLink($"{i}", "BySeller", "Lot", new { page = i }, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
+
+    }
+</div>

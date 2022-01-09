@@ -1,0 +1,21 @@
+﻿@model Auction.BLL.ViewModels.UserModel
+
+@if (Model.Email != null)
+{
+    <p>Ідентифікатор: @Model.LoginId</p>
+    <p>Ім'я: @Model.FirstName</p>
+    <p>Прізвище: @Model.LastName</p>
+    <p>Пошта: @Model.Email</p>
+    if(!Model.IsEnabled)
+    {
+        <p>Користувача заблоковано</p>
+    }
+
+}
+else
+{
+    <div class="text-danger">
+        Користувача не знайдено
+    </div>
+}
+

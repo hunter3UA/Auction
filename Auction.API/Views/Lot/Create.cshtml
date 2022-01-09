@@ -1,0 +1,93 @@
+﻿@model Auction.BLL.ViewModels.CreateLotModel
+@using Auction.BLL.ViewModels;
+@using Auction.DAL.Models;
+
+
+@{
+    List<SelectListItem> selectDateItems = new List<SelectListItem>()
+{
+        new SelectListItem{ Value="1", Text="24 години" },
+        new SelectListItem{ Value="7", Text="1 тиждень" },
+        new SelectListItem{ Value="30", Text="місяць"}
+    };
+
+    List<SelectListItem> selectCategories = new List<SelectListItem>();
+    List<Category> categories = ViewData["Categories"] as List<Category>;
+    foreach (var category in categories)
+    {
+        selectCategories.Add(new SelectListItem
+        {
+            Value = category.CategoryId.ToString(),
+            Text = category.CategoryName
+        });
+    }
+}
+
+
+
+
+
+
+@using (Html.BeginForm("Create", "Lot", FormMethod.Post, new { @class = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row form-group">
+        @Html.LabelFor(m => m.LotName, "Назва: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.LotName, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.LotName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.Description, "Опис: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.Price, "Ціна: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Price, new { type = "number", @class = "createLotPrice" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.Step, "Крок: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Step, new { type = "number", @class = "createLotStep" })
+            <small>
+                @Html.ValidationMessageFor(m => m.Step, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.CategoryId, "Категорія: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.DropDownList("CategoryId", selectCategories, new { id = "CategoryDDL" })
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.EndAt, "Дата закінчення: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.DropDownList("EndAt", selectDateItems);
+        </div>
+    </div>
+
+    <div class="row form-group">
+        Фото:
+        <div class="col">
+            <input type="file" name="uploadFile" accept=".jpg,.jpeg,.png" multiple />
+        </div>
+    </div>
+    <input type="submit" value="Enter" class="btn btn-info" />
+
+}
+
+

@@ -1,0 +1,60 @@
+﻿@model Auction.BLL.ViewModels.UserModel
+@using Auction.BLL.LoginModels;
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div style="display:block">
+    @Html.ActionLink("Оновити пароль","UpdatePassword","Account",new {@class="btn btn-warning"})
+    @Html.ActionLink("Створити лот","Create","Lot",null,new { @class="btn btn-success"})
+    @Html.ActionLink("Мої лоти","BySeller","Lot",null,new { @class= "btn btn-info" })
+    @Html.ActionLink("Мої ставки","MyStakes","Stake",new { page=1},new {@class="btn btn-info"})
+    @Html.ActionLink("Придбані лоти", "AcquiredLots","Lot",null, new {@class="btn btn-warning"})
+    @{ 
+        if((User as CustomPrincipal).AccountType.AccountTypeName == "Admin")
+        {
+            @Html.ActionLink("Додати новину","CreateNews","News",null,new {@class="btn btn-success"})
+            @Html.ActionLink("Керування користувачами", "AdminPanel", "Admin",null,new {@class="btn btn-success"})
+            @Html.ActionLink("Керування лотами","LotsByStatus","Admin",null,new {@class="btn btn-warning"})
+        }
+    }
+</div>
+<div>
+@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row form-group">
+
+        @Html.LabelFor(m => m.Email, "Email: ", htmlAttributes: new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.Email,htmlAttributes: new { @class = "form-control", disabled=true})
+            <small>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.FirstName, "Ім'я: ", htmlAttributes: new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { @class = "form-control"})
+            <small>
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(m => m.LastName, "Прізвище: ", htmlAttributes: new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { @class = "form-control"})
+            <small>
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </small>
+        </div>
+    </div>
+    <input type="submit" value="Оновити" class="btn btn-info" />
+
+}
+</div>
+<div>
+    @ViewBag.Msg
+</div>

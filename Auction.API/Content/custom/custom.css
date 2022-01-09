@@ -1,0 +1,258 @@
+﻿.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+    .dropbtn:hover, .dropbtn:focus {
+        background-color: #2980B9;
+    }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+   
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+.dropdown a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+#lotItem{
+    border:1px solid black;
+    height:300px;
+    width:100%;
+    margin-top:20px;
+
+
+}
+.lot-details{
+    left:0px;
+    padding:0px;
+    text-align:left
+
+}
+
+
+.flex-container {
+    display: flex;
+}
+
+.flex-item-row {
+  
+    text-align: center;
+    font-size: 1.1em;
+    padding: 1.5em;
+    width:100%;
+    
+}
+.flex-item-col{
+    flex-direction:column
+}
+.filters-item{
+    width:30%;
+}
+
+.fade-carousel {
+    position: relative;
+    height: 100vh;
+}
+
+.fade-carousel .carousel-inner .item {
+     height: 100vh;
+}
+
+.fade-carousel .carousel-indicators > li {
+    margin: 0 2px;
+    background-color: #f39c12;
+    border-color: #f39c12;
+    opacity: .7;
+}
+
+        .fade-carousel .carousel-indicators > li.active {
+            width: 10px;
+            height: 10px;
+            opacity: 1;
+        }
+
+/********************************/
+/*          Hero Headers        */
+/********************************/
+.hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+    -webkit-transform: translate3d(-50%,-50%,0);
+    -moz-transform: translate3d(-50%,-50%,0);
+    -ms-transform: translate3d(-50%,-50%,0);
+    -o-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+}
+
+    .hero h1 {
+        font-size: 6em;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+    }
+
+.fade-carousel .carousel-inner .item .hero {
+    opacity: 0;
+    -webkit-transition: 2s all ease-in-out .1s;
+    -moz-transition: 2s all ease-in-out .1s;
+    -ms-transition: 2s all ease-in-out .1s;
+    -o-transition: 2s all ease-in-out .1s;
+    transition: 2s all ease-in-out .1s;
+}
+
+.fade-carousel .carousel-inner .item.active .hero {
+    opacity: 1;
+    -webkit-transition: 2s all ease-in-out .1s;
+    -moz-transition: 2s all ease-in-out .1s;
+    -ms-transition: 2s all ease-in-out .1s;
+    -o-transition: 2s all ease-in-out .1s;
+    transition: 2s all ease-in-out .1s;
+}
+
+/********************************/
+/*            Overlay           */
+/********************************/
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #080d15;
+    opacity: .7;
+}
+
+/********************************/
+/*          Custom Buttons      */
+/********************************/
+.btn.btn-lg {
+    padding: 10px 40px;
+}
+
+.btn.btn-hero,
+.btn.btn-hero:hover,
+.btn.btn-hero:focus {
+    color: #f5f5f5;
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    outline: none;
+    margin: 20px auto;
+}
+
+/********************************/
+/*       Slides backgrounds     */
+/********************************/
+.fade-carousel .slides .slide-1,
+.fade-carousel .slides .slide-2,
+.fade-carousel .slides .slide-3 {
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.fade-carousel .slides .slide-1 {
+    background-image: url(https://ununsplash.imgix.net/photo-1416339134316-0e91dc9ded92?q=75&fm=jpg&s=883a422e10fc4149893984019f63c818);
+}
+
+.fade-carousel .slides .slide-2 {
+    background-image: url(https://ununsplash.imgix.net/photo-1416339684178-3a239570f315?q=75&fm=jpg&s=c39d9a3bf66d6566b9608a9f1f3765af);
+}
+
+.fade-carousel .slides .slide-3 {
+    background-image: url(https://ununsplash.imgix.net/photo-1416339276121-ba1dfa199912?q=75&fm=jpg&s=9bf9f2ef5be5cb5eee5255e7765cb327);
+}
+
+
+
+#filtersSection{
+
+    background-color:darkgray;
+
+
+
+}
+#btnPages{
+    margin-left:auto;
+    margin-right:auto;
+
+}
+/********************************/
+/*          Media Queries       */
+/********************************/
+@media screen and (min-width: 980px) {
+    .hero {
+        width: 980px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .hero h1 {
+        font-size: 4em;
+    }
+}
+
+
+
+.textareas {
+    background: #fce9c0; /* Цвет фона */
+    border: 2px solid #a9c358; /* Параметры рамки */
+    padding: 10px; /* Поля */
+    width: 100%; /* Ширина */
+    height: 200px; /* Высота */
+    box-sizing: border-box; /* Алгоритм расчёта ширины */
+    font-size: 14px; /* Размер шрифта */
+}
+
+.center{
+    text-align:center;
+    margin-right:20%;
+    margin-left:20%;
+}
+
+
+
+
+.news-container{
+    margin-right:auto;
+    margin-left:auto;
+}
+.news-block{
+    border:1px solid black;
+    margin-right:10%;
+    margin-left:10%;
+    height:200px;
+}

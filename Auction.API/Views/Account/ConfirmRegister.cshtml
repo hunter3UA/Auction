@@ -1,0 +1,16 @@
+﻿
+@using (Html.BeginForm("RepeatConfirmRegister", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+            
+    <div class="row form-group">
+        @Html.Label("Email", "Email: ", new { @class = "col-sm-1" })
+        <div class="col">
+            @Html.TextBox("Email", null,new { @class = "form-control" })
+        </div>
+    </div>
+
+<input type="submit" value="Enter" class="btn btn-info" />
+
+
+}

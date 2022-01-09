@@ -1,0 +1,41 @@
+﻿@model Auction.BLL.ViewModels.IndexViewModel<News>
+@using Auction.DAL.Models;
+@using Newtonsoft.Json;
+@using Auction.BLL.ViewModels;
+
+
+
+<div id="newsContainer">
+    <div class="news-container">
+        @{
+            foreach (var item in Model.Collection)
+            {
+                <div class="news-block">
+                    <p>@item.NewsTittle</p>
+                    <p>@item.CreatedAt</p>
+                    @if (item.NewsText.Length > 400)
+                    {
+                        <p>@item.NewsText.Substring(0, 400) ...</p>
+                    }
+                    else
+                    {
+                        <p>@item.NewsText </p>
+                    }
+                    <p>@Html.ActionLink("Детальніше", "PageNews", new { newsId = item.NewsId }, new { @class = "btn btn-success" })</p>
+                </div>
+
+
+
+            }
+
+        }
+    </div>
+</div>
+
+<div class="btn-group flex-container" id="btnPages">
+    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+    {
+        @Html.ActionLink($"{i}","GetNews",new { page=i}, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
+       
+    }
+</div>
