@@ -19,17 +19,21 @@ namespace Auction.BLL.Services
         }
         private MailMessage SendMessage(string email,string subject,string body)
         {
-            MailAddress from = new MailAddress("hunter3ua@gmail.com", "Torg-company");
-            MailAddress to = new MailAddress(email);
-            MailMessage message = new MailMessage(from, to);
-            message.Subject = subject;
-            message.Body = body;
-            message.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient(ConfigurationManager.AppSettings["SmptGmailServer"], 25);
-            smtp.EnableSsl = true;
-            smtp.Credentials = new System.Net.NetworkCredential("hunter3ua@gmail.com", "hunter3UA112233");
-            smtp.Send(message);
-            return message;
+            try
+            {
+                MailAddress from = new MailAddress("hunter3ua@gmail.com", "Torg-company");
+                MailAddress to = new MailAddress(email);
+                MailMessage message = new MailMessage(from, to);
+                message.Subject = subject;
+                message.Body = body;
+                message.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient(ConfigurationManager.AppSettings["SmptGmailServer"], 25);
+                smtp.EnableSsl = true;
+                smtp.Credentials = new System.Net.NetworkCredential("hunter3ua@gmail.com", "hunter3UA112233");
+                smtp.Send(message);
+                return message;
+            }
+            catch { return null; }
         }
 
         public bool SendPasswordConfirmed(string email,string subject,string action)
@@ -58,13 +62,17 @@ namespace Auction.BLL.Services
             try
             {               
                 Login login = _unitOfWork.LoginRepository.Get(l => l.Email == email);
-                byte[] PasswordSalt = login.PasswordSalt;
-                string Token = BitConverter.ToString(PasswordSalt);
-                PasswordSalt = Encoding.UTF8.GetBytes(Token);
-                Token = Encoding.UTF8.GetString(PasswordSalt);
-                string body = string.Format($"Код для скидання пароля: {Token}");
-                MailMessage message = SendMessage(email, "Скидання пароля",body);
-                return true;
+                if (login != null)
+                {
+                    byte[] PasswordSalt = login.PasswordSalt;
+                    string Token = BitConverter.ToString(PasswordSalt);
+                    PasswordSalt = Encoding.UTF8.GetBytes(Token);
+                    Token = Encoding.UTF8.GetString(PasswordSalt);
+                    string body = string.Format($"Код для скидання пароля: {Token}");
+                    MailMessage message = SendMessage(email, "Скидання пароля", body);
+                    return true;
+                }
+                return false;
             }catch { return false; }
         }
        

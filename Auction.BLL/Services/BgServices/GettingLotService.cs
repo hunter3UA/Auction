@@ -1,12 +1,9 @@
 ﻿using Auction.DAL.Models;
 using Auction.DAL.UoW;
-using Microsoft.Extensions.Hosting;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -14,9 +11,6 @@ namespace Auction.BLL.Services.BgServices
 {
     public class GettingLotService : IJob
     {
-      
-
-
         public async Task Execute(IJobExecutionContext context)
         {
             IUnitOfWork _unitOfWork = new UnitOfWork();
@@ -26,8 +20,9 @@ namespace Auction.BLL.Services.BgServices
                 List<Stake> stakesOfLot = _unitOfWork.StakeRepository.GetList(s=>s.LotId == lot.LotId).ToList();
                 if (stakesOfLot != null && stakesOfLot.Count()>0)
                 {
+
                     double maxStakeSum = stakesOfLot.Max(s => s.Sum);
-                    var maxStake = stakesOfLot.FirstOrDefault(s => s.Sum == maxStakeSum);
+                    var maxStake = stakesOfLot.FirstOrDefault(s => s.Sum == maxStakeSum);                
                     ShopptingCart cartOfUser=_unitOfWork.CartRepository.Get(c=>c.UserId==maxStake.UserId);
                     if(cartOfUser == null)
                     {

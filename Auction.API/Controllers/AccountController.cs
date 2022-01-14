@@ -138,8 +138,13 @@ namespace Auction.API.Controllers
         [Authentication(false)]
         public ActionResult SendResetToken(string Email)
         {
-            bool isSent = _emailService.SendResetPasswordKey(Email);          
-            ViewBag.Msg =isSent ?  "Вам на пошту надіслано листа для скидання пароля": "Сталася помилка";
+            bool isSent = _emailService.SendResetPasswordKey(Email);
+            if (!isSent)
+            {
+                ViewBag.Msg = "Сталася помилка";
+                return View("Login");
+            }
+            ViewBag.Msg = "Вам на пошту надіслано листа для скидання пароля";
             return View("ResetPassword");
         }
 
@@ -161,8 +166,7 @@ namespace Auction.API.Controllers
 
         [HttpPost,Authentication(false)]
         public async Task<ActionResult> ResetPassword(string Email,string Token,string Password)
-        {
-            
+        {            
             bool isReset = await _accountService.ResetPassword(Email,Token,Password);
             if(isReset==true)
             {
