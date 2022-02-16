@@ -10,7 +10,7 @@ namespace Auction.BLL.Services
     public class PasswordService:IPasswordService
     {
      
-        public static int hash_length = Convert.ToInt32(ConfigurationManager.AppSettings["HashLength"]);
+        private static int hash_length = Convert.ToInt32(ConfigurationManager.AppSettings["HashLength"]);
         private static int iterations = Convert.ToInt32(ConfigurationManager.AppSettings["HashIterations"]);
         public byte[] CreateToken(int TokenLength)
         {
@@ -69,13 +69,9 @@ namespace Auction.BLL.Services
         private bool ByteArraysEqual(byte[] buff1, byte[] buff2)
         {
                 if (buff1.Length != buff2.Length)
-                {
-                    return false;
-                }
-                for (int i = 0; i < buff2.Length; i++)
-                {
-                    if (buff1[i] != buff2[i]) { return false; }
-                }
+                    return false;          
+                for (int i = 0; i < buff2.Length; i++)               
+                    if (buff1[i] != buff2[i]) { return false; }               
                 return true;
         }
         public bool CheckPassword(Login loginToCheck, string password)
@@ -90,10 +86,10 @@ namespace Auction.BLL.Services
                     if (CheckSaltedHash(password, saltedHash) && loginToCheck.IsEnabled)
                         return true;
                 }
-
+                return false;
             }
             catch  { return false; }          
-            return false;
+            
         }     
     }
 }

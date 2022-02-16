@@ -20,8 +20,6 @@ namespace Auction.API.Controllers
         public NewsController(INewsService newsService)
         {
             _newsService = newsService;
-
-
         }
 
         [HttpGet,MyAuth("Admin")]
@@ -48,7 +46,6 @@ namespace Auction.API.Controllers
                 Convert.ToInt32(ConfigurationManager.AppSettings["CountOfNewsOnPage"]),
                 news
                 );
-            ivm.Collection.Reverse();
             return View(ivm);
         }
 
@@ -56,12 +53,17 @@ namespace Auction.API.Controllers
         public ActionResult PageNews(int newsId = 0)
         {
             News newsToView = _newsService.GetNews(n => n.NewsId == newsId);
+            ViewData["Role"] = User.AccountType;
             if (newsToView.NewsId != 0)
                 return View(newsToView);
-            return  RedirectToAction("GetNews");
-
-           
+            return RedirectToAction("GetNews");
         }
+        [MyAuth("Admin")]
+        public async Task<ActionResult> RemoveNews(int newsId)
+        {
+            await _newsService.RemoveNews(newsId);
+            return RedirectToAction("PageNews");
+        }       
     }
 }
 

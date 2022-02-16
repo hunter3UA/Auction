@@ -11,13 +11,10 @@ namespace Auction.BLL.Services
     public class NewsService:INewsService
     {
 
-        private readonly IUnitOfWork _unitOfWork;
-        
+        private readonly IUnitOfWork _unitOfWork;     
         public NewsService(IUnitOfWork unitOfWork)
         {
-
             _unitOfWork = unitOfWork;
-        
         }
         public async Task<News> CreateNewsAsync(News newsToAdd,HttpRequestBase request)
         {
@@ -43,9 +40,16 @@ namespace Auction.BLL.Services
             try
             {
                 List<News> news = _unitOfWork.NewsRepository.GetList();
+                news.Reverse();
                 return news != null ? news : new List<News>();
             }catch { return new List<News>(); } 
             
+        }
+        public async Task<bool> RemoveNews(int newsId)
+        {
+            bool isDeleted =   _unitOfWork.NewsRepository.Remove(newsId);
+            await _unitOfWork.SaveAsync();
+            return isDeleted;
         }
     }
 }

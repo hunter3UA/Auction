@@ -60,6 +60,10 @@
     <Compile Include="Migrations\202201081509270_RemovePhoneFromUser.designer.cs">
       <DependentUpon>202201081509270_RemovePhoneFromUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202161329065_UpdateNewsPictures.cs" />
+    <Compile Include="Migrations\202202161329065_UpdateNewsPictures.designer.cs">
+      <DependentUpon>202202161329065_UpdateNewsPictures.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\Category.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201081509270_RemovePhoneFromUser.resx">
       <DependentUpon>202201081509270_RemovePhoneFromUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202161329065_UpdateNewsPictures.resx">
+      <DependentUpon>202202161329065_UpdateNewsPictures.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

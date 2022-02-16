@@ -1,9 +1,7 @@
 ﻿using Auction.DAL.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Auction.DAL.Repositories.Abstract
 {
@@ -12,8 +10,7 @@ namespace Auction.DAL.Repositories.Abstract
 
         News Add(News newsToAdd);
         List<News> GetList();
-
-
         News Get(Func<News,bool> predicate);
+        bool Remove(int id);
     }
 }

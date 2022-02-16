@@ -85,14 +85,7 @@ namespace Auction.API.Controllers
             return RedirectToAction("BySeller");
         }
 
-        [HttpPost,Authentication(true),ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int lotId, LotModel modelToUpdate)
-        {
-          
-             await _lotService.UpdateLotAsync(lotId, modelToUpdate);
-             return RedirectToAction("Edit", new { id = modelToUpdate.LotId });
-         
-        }
+       
    
 
         [HttpGet]

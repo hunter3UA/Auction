@@ -15,8 +15,6 @@ namespace Auction.BLL.Services
         {
             _unitOfWork = unitOfWork;
         }
-
-
         public LotStatus GetLotStatus(Func<LotStatus,bool> predicate)
         {
             LotStatus status = _unitOfWork.StatusRepository.Get(predicate);
@@ -24,8 +22,6 @@ namespace Auction.BLL.Services
                 return status;
             return new LotStatus();
         }
-
-
         public List<LotStatus> GetList()
         {
             return _unitOfWork.StatusRepository.GetList();

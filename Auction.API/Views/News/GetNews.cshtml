@@ -1,7 +1,7 @@
 ﻿@model Auction.BLL.ViewModels.IndexViewModel<News>
 @using Auction.DAL.Models;
-@using Newtonsoft.Json;
-@using Auction.BLL.ViewModels;
+@using Auction.BLL.LoginModels;
+
 
 
 
@@ -22,20 +22,23 @@
                         <p>@item.NewsText </p>
                     }
                     <p>@Html.ActionLink("Детальніше", "PageNews", new { newsId = item.NewsId }, new { @class = "btn btn-success" })</p>
+                    @if ((User as CustomPrincipal)!= null && (User as CustomPrincipal).AccountType.AccountTypeName== "Admin"){
+                    <p>@Html.ActionLink("Видалити новину", "RemoveNews", new {newsId=item.NewsId}, new { @class = "btn btn-danger" })</p>
+                    }
+                    </div>
+
+
+
+                    }
+
+                    }
                 </div>
+            </div>
 
+            <div class="btn-group flex-container" id="btnPages">
+                @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+                {
+                    @Html.ActionLink($"{i}", "GetNews", new { page = i }, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
 
-
-            }
-
-        }
-    </div>
-</div>
-
-<div class="btn-group flex-container" id="btnPages">
-    @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
-    {
-        @Html.ActionLink($"{i}","GetNews",new { page=i}, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
-       
-    }
-</div>
+                }
+            </div>

@@ -131,14 +131,13 @@
     </div>
 
 
-
-    <div class="btn-group flex-container" id="btnPages">
+<div class="btn-group flex-container " id="btnPages" style="border:1px solid black; text-align:center">
         @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
         {
             var str = JsonConvert.SerializeObject(Model.FiltersModel);
             @Html.ActionLink($"{i}","Index","Home", new { page = i, Filters = str }, new { @class = "flex-item-row", style = "padding:0px;width:30px" })
 
         }
-    </div>
+</div>
 
 

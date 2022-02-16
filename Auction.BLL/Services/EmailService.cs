@@ -21,15 +21,21 @@ namespace Auction.BLL.Services
         {
             try
             {
-                MailAddress from = new MailAddress("hunter3ua@gmail.com", "Torg-company");
+                MailAddress from = new MailAddress(
+                    ConfigurationManager.AppSettings["CompanyEmail"], 
+                    ConfigurationManager.AppSettings["CompanyName"]);
                 MailAddress to = new MailAddress(email);
                 MailMessage message = new MailMessage(from, to);
                 message.Subject = subject;
                 message.Body = body;
                 message.IsBodyHtml = true;
-                SmtpClient smtp = new SmtpClient(ConfigurationManager.AppSettings["SmptGmailServer"], 25);
+                SmtpClient smtp = new SmtpClient(
+                    ConfigurationManager.AppSettings["SmptGmailServer"], 
+                    Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]));
                 smtp.EnableSsl = true;
-                smtp.Credentials = new System.Net.NetworkCredential("hunter3ua@gmail.com", "hunter3UA112233");
+                smtp.Credentials = new System.Net.NetworkCredential(
+                    ConfigurationManager.AppSettings["CompanyEmail"], 
+                    ConfigurationManager.AppSettings["EmailPassword"]);
                 smtp.Send(message);
                 return message;
             }
@@ -55,6 +61,7 @@ namespace Auction.BLL.Services
                 }
                 return false;
             }catch { return false; }
+       
         }
 
         public bool SendResetPasswordKey(string email)
